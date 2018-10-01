@@ -1,0 +1,23 @@
+input.placeholder {
+    text-align: center;
+}
+.logoimg{padding: 25px;}
+.center {
+    margin: auto;
+    width: 100%;
+    /*border: 3px solid green;*/
+    padding: 10%;
+}
+
+.py-5{
+	padding: 150px;
+}
+body{
+	margin-right: auto;
+  margin-left: auto;
+  max-width: 100%;
+}
+
+.stl{
+	font-size: 20px;
+}

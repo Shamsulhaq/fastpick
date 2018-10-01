@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+
+      <div class="row center">
+
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8 ">
+          <div class="input-group mb-3 ">
+            <input type="text" class="form-control" id="search" placeholder="">
+            <div class="input-group-append">
+              <button style="background-color:#ffa31a;color: black;border-color: #ff9900" class="btn btn-success" type="submit">খুঁজুন</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2"></div>
+      </div>
+{% endblock %}
+{% block js %}
+<script>
+superplaceholder({
+      el: search,
+      sentences: [ 'বইয়ের নাম দিয়ে খুঁজুন ', 'লেখকের নাম দিয়ে খুঁজুন',
+      'বই প্রকাশের সাল লিখে খুঁজুন', 'বই সম্পর্কে বাক্য লিখে খুঁজুন',
+      'বইয়ের ধরন লিখে খুঁজুন','আপনার কীওয়াড লিখে খুঁজুন'],
+      options: {
+        loop: true,
+          letterDelay: 100, // milliseconds
+
+  // delay between sentences (in milliseconds)
+  sentenceDelay: 1000,
+
+  // should start on input focus. Set false to autostart
+  startOnFocus: true,
+
+  // loop through passed sentences
+  loop: true,
+
+  // shuffle the passed sentences
+  shuffle: false,
+
+  // show cursor
+  showCursor: true,
+
+  // cursor character
+  cursor: '|'
+      }
+    })
+</script>
+
+{% endblock %}
