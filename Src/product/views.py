@@ -2,14 +2,9 @@ from django.shortcuts import render
 
 from django.views.generic import ListView
 
-
-#
-# class GetIndex(ListView):
-#     template_name = 'home.html'
-
-def index(request):
-    return render(request, 'index.html')
+from .models import BookList
 
 
-def home(request):
-    return render(request, 'home.html')
+class Book_List_Viwe(ListView):
+    template_name = 'book/booklist.html'
+    model = BookList

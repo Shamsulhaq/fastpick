@@ -12,13 +12,13 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Tag',
+            name='Publication',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('keyword', models.CharField(help_text='Enter Tag keyword', max_length=155)),
+                ('name', models.CharField(max_length=150)),
+                ('info', models.TextField()),
                 ('active', models.BooleanField(default=True)),
                 ('slug', models.SlugField(blank=True, null=True, unique=True)),
-                ('timestamp', models.DateTimeField(auto_now_add=True)),
             ],
         ),
     ]

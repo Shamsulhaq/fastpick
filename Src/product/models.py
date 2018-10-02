@@ -6,6 +6,7 @@ from fastpick.utils import unique_slug_generator
 # from local app --
 from tag.models import Tag
 from category.models import Category
+from publication.models import Publication
 
 
 class BookAuthor(models.Model):
@@ -26,6 +27,7 @@ class BookList(models.Model):
     name = models.CharField(max_length=255, help_text="Enter Book Name")
     author = models.ForeignKey(BookAuthor, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    publication = models.ForeignKey(Publication, on_delete=models.CASCADE)
     publish_date = models.CharField(max_length=4, help_text='Year eg. 1998 , 2018')
     last_edition_publish = models.CharField(max_length=4, help_text='Year eg. 1998 , 2018', blank=True, null=True)
     regular_price = models.DecimalField(max_digits=9, decimal_places=2, default=0, blank=True)

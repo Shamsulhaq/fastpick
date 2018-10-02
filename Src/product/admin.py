@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import (
+from product.models import (
     BookAuthor, BookList,
-    Category, Tag
 )
 
 
@@ -33,5 +32,4 @@ class BookAuthorAdmin(admin.ModelAdmin):
 
 
 admin.site.register(BookAuthor, BookAuthorAdmin)
-admin.site.register(Category)
-admin.site.register(Tag)
+

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'product',
     'tag',
     'category',
+    'publication',
 
 
 
