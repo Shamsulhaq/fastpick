@@ -21,3 +21,10 @@ body{
 .stl{
 	font-size: 20px;
 }
+.form-control:focus{
+    border-color: #ff9900;
+    }
+.btn:focus{
+    border-color: #ff9900;
+    border-shadow:none ;
+}
