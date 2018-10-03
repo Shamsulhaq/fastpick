@@ -7,11 +7,12 @@ from product.models import (
 # Register your models here.
 
 class BookListAdmin(admin.ModelAdmin):
-    list_display = ['name', 'author', 'category', 'price', 'get_rent_charge','get_discount', 'is_stock']
-    # search_fields = ['descriptions', 'tag']
-    # filter_vertical = ['category__mainCat__name']
+    list_display = ['name', 'author', 'price', 'get_rent_charge','get_discount',
+                    'timeStamp', 'active', 'is_stock','is_rent_available', 'slug']
+    search_fields = ['descriptions','name','author__name']
+    filter_vertical = ['tag']
     list_per_page = 15
-    list_filter = ['author', 'category', 'is_stock']
+    list_filter = ['author','price', 'category', 'is_stock','active','timeStamp']
 
     class Meta:
         Model = BookList
