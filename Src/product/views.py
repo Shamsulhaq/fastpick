@@ -7,6 +7,7 @@ from .models import BookList
 
 class BookListView(ListView):
     template_name = 'book/list.html'
+    paginate_by = 25
 
     def get_queryset(self, *args, **kwargs):
         return BookList.objects.all()

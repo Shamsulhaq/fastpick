@@ -161,14 +161,14 @@ sup {
 }
 
 a {
-  color: #007bff;
+  color: #ffb91f;
   text-decoration: none;
   background-color: transparent;
   -webkit-text-decoration-skip: objects;
 }
 
 a:hover {
-  color: #0056b3;
+  color: #ff9c0a;
   text-decoration: underline;
 }
 
@@ -2341,7 +2341,7 @@ select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.for
 
 .btn:focus, .btn.focus {
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(255, 134, 5, 0.25);
 }
 
 .btn.disabled, .btn:disabled {
@@ -2371,6 +2371,18 @@ fieldset:disabled a.btn {
   color: #fff;
   background-color: #0069d9;
   border-color: #0062cc;
+}
+
+.btn-fastpick {
+  color: #ffa31a;
+  background-color: #ffc31b;
+  border-color: #ffba1e;
+}
+
+.btn-fastpick:hover {
+  color: #ff971b;
+  background-color: #ffc31b;
+  border-color: #ffba1e;
 }
 
 .btn-primary:focus, .btn-primary.focus {

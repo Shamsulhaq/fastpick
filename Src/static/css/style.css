@@ -9,9 +9,9 @@ input.placeholder {
     padding: 10%;
 }
 
-.py-5{
-	padding: 150px;
-}
+/*.py-5{*/
+	/*padding: 300px;*/
+/*}*/
 body{
 	margin-right: auto;
   margin-left: auto;
@@ -29,3 +29,38 @@ body{
     border-shadow:none ;
 }
 
+/*pagination css*/
+pagination {
+    text-align: center;
+    margin-top: 1em;
+}
+
+.pagination-current, .pagination-total {
+    padding: 0.5em 0.8em;
+    border-radius: 2px;
+    color: #fff;
+    background-color: #ff9900;
+}
+
+.pagination-total {
+    background-color: #B9B9B9;
+}
+
+.pagination-action {
+    margin: 0 0.1em;
+    display: inline-block;
+    padding: 0.5em 0.5em;
+    color: #ff9900;
+    font-size: 1.2em;
+}
+
+.pagination-of {
+    color: #ffb60f;
+    padding: 0 1em;
+}
+
+
+.pagination-action:hover {
+    color: #160229;
+}
+/*pagination css end*/

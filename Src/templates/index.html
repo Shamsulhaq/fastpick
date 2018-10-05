@@ -8,7 +8,7 @@
             <form action="{% url 'search' %}" method="GET">
                 {% csrf_token %}
                 <div class="input-group mb-3 ">
-                    <input style="border-color:#ff9900;" type="text" class="form-control" name="q" id="search" placeholder="">
+                    <input required style="border-color:#ff9900;" type="text" class="form-control" name="q" id="search" placeholder="">
                     <div class="input-group-append">
                         <button style="background-color:#ffa31a;color: black;border-color: #ff9900" class="btn"
                                 type="submit">খুঁজুন
@@ -16,6 +16,7 @@
                     </div>
                 </div>
             </form>
+            <a href="{% url 'list' %}"><p class="text-center"> সব বই দেখুন</p></a>
         </div>
         <div class="col-sm-2"></div>
     </div>

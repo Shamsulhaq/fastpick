@@ -113,13 +113,14 @@ class BookList(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     publication = models.ForeignKey(Publication, on_delete=models.CASCADE)
     publish_date = models.CharField(max_length=4, help_text='Year eg. 1998 , 2018')
-    last_edition_publish = models.CharField(max_length=4, help_text='Year eg. 1998 , 2018', blank=True, null=True)
+    total_pages = models.PositiveIntegerField(blank=True,null=True)
     regular_price = models.DecimalField(max_digits=9, decimal_places=2, default=0, blank=True)
     price = models.DecimalField(max_digits=9, decimal_places=2, default=0)
     descriptions = models.TextField()
     rent_charge = models.DecimalField(max_digits=9, decimal_places=2, default=0)
     image = models.ImageField(upload_to=upload_book_image_path, blank=True)
     tag = models.ManyToManyField(Tag)
+    is_old = models.BooleanField(default=True)
     is_stock = models.BooleanField(default=True)
     active = models.BooleanField(default=True)
     is_rent_available = models.BooleanField(default=True)
@@ -150,6 +151,9 @@ class BookList(models.Model):
 
         discount = int(discount)
         return str(discount) + '%'
+
+    def get_absolute_url(self):
+        return "/book/detail/{slug}".format(slug = self.slug)
 
 
 def bl_pre_save_receiver(sender, instance, *args, **kwargs):

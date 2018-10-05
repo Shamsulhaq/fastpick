@@ -8,6 +8,7 @@ class IndexView(TemplateView):
 
 class SearchView(ListView):
     template_name = 'search/search_view.html'
+    paginate_by = 20
 
     def get_context_data(self, *args, **kwargs):
         context = super(SearchView, self).get_context_data(*args, **kwargs)

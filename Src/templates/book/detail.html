@@ -14,7 +14,7 @@
     <div class="container">
 
         <div class="row border">
-            <div class="col-sm-6 ">
+            <div class="col-sm ">
                 <br>
                 {% if object.image %}
                     <a href=""><img width="420px" height="480px" src="{{ object.image.url }}"></a>
@@ -24,23 +24,21 @@
                 {% endif %}
                 <br>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm">
                 <br>
                 <br>
                 <p class="text-primary"><b class="text-body"> Book Name: </b>{{ object.name }}</p>
                 <p class="text-primary"><b class="text-body">Author:</b> {{ object.author }}</p>
                 <p class="text-primary"><b class="text-body">Publish Date:</b> {{ object.publish_date }}</p>
-                <p class="text-primary"><b class="text-body">Last Edition Publish:</b> {{ object.last_edition_publish }}
-                </p>
+                <p class="text-primary"><b class="text-body">Total Page:</b> {% if object.total_pages %}{{ object.total_pages }}{% else %}Unknown {% endif %}</p>
                 <p class="text-primary"><b class="text-body">Regular Price:</b> {{ object.regular_price }} BDT</p>
                 <p class="text-primary"><b class="text-body">Now Price:</b> {{ object.price }} BDT</p>
                 <p class="text-primary"><b class="text-body">Rent Status:</b> {% if object.is_rent_available %}
-                    Available{% else %} Not
-                    Available {% endif %}</p>
+                    Available{% else %} N/A {% endif %}</p>
                 <p class="text-primary"><b class="text-body">Rent Charge:</b> {% if object.is_rent_available %}
-                    {{ object.rent_charge }} {% else %} Not
-                    Available {% endif %}</p></p>
+                    {{ object.rent_charge }} {% else %} N/A {% endif %}</p></p>
                 <p class="text-primary"><b class="text-body">Book Type:</b> {{ object.category }}</p>
+                <p class="text-primary"><b class="text-body">Book Status:</b> {% if object.is_old %} Old {% else %} New {% endif %} Book</p>
                 <p class="text-primary"><b class="text-body">Tags:</b> {% for tag in object.tag.all %}
                     {{ tag }}, {% endfor %}</p>
                 <button href='' type="button"
@@ -57,11 +55,13 @@
             </div>
 
         </div>
-        <div class="row ">
+        <br>
+        <div class="row border ">
             <div class="col-sm-12 justify-content-center">
                 <h5 class="text-info">About Book:</h5>
                 <p>{{ object.descriptions }}</p>
             </div>
         </div>
     </div>
+    <br>
 {% endblock %}
