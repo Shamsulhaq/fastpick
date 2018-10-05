@@ -18,6 +18,7 @@ from .views import BookDetailView,BookListView
 urlpatterns = [
     path('list/', BookListView.as_view(), name='list'),
     path('detail/<slug>', BookDetailView.as_view(), name='detail'),
+    # path('search/', BookSearchView.as_view(), name='search'),
     # path('', index, name='index'),
      #path('home/', home, name='home'),
     # path('search/', search, name='search'),

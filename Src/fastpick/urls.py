@@ -17,11 +17,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from .viwes import Index
+from .viwes import IndexView,SearchView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', Index.as_view(), name='index'),
+    path('', IndexView.as_view(), name='index'),
+    path('search/', SearchView.as_view(), name='search'),
     path('book/', include('product.urls'), ),
 ]
 

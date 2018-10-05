@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% block css %}
+    <style>
+        .logoimg {
+            padding: 5px 0 0 0;
+        }
+    </style>
+
+{% endblock %}
+    {% include 'include_html/nav.html' %}
+    <div class="container">
+
+
+    </div>
+    <div class="row">
+        <div class="col-sm-12 ">
+        <p class="text-center bg-light">Search Result for "<b class="text-info">{{ query }}</b>"</p>
+            <table class="table">
+                <thead class="thead-light">
+                <tr>
+                    <th>ছবি</th>
+                    <th>নাম</th>
+                    <th>লেখক</th>
+                    <th>প্রকাশের সাল</th>
+                    <th>প্রকাশনী</th>
+                    <th>বর্তমান দাম</th>
+                    <th>ভাড়া খরচ</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in object_list %}
+                    <tr>
+                        {% if obj.image %}
+                            <td><a href="{% url 'detail' slug=obj.slug %}"><img width="60px" height="60px" src="{{ obj.image.url }}"></a></td>
+                        {% else %}
+                            <td><a href="{% url 'detail' slug=obj.slug %}"><img width="60px" height="60px"
+                                                src="{% static 'img/book_placeholder.png' %}"></a></td>
+                        {% endif %}
+
+                        <td><a href="{% url 'detail' slug=obj.slug %}">{{ obj.name }}</a></td>
+                        <td><a href="">{{ obj.author }}</a></td>
+                        <td><a href="">{{ obj.publish_date }}</a></td>
+
+                        <td><a href="">{{ obj.publication }}</a></td>
+                        <td>{{ obj.price }} ৳</td>
+                        {% if obj.is_rent_available %}
+                            <td>{{ obj.rent_charge }} ৳</td>
+                        {% else %}
+                            <td>Not Available</td>
+                        {% endif %}
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td>Your Search '<b class="bg-warning">{{ query }}</b>' is Not available</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+        </div>
+
+
+    </div>
+{% endblock %}
+
+
+

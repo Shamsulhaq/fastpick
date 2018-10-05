@@ -74,7 +74,7 @@ class BookQuerySet(models.query.QuerySet):
                 Q(publication__name__icontains=keyword) |
                 Q(author__name__icontains=keyword) |
                 Q(author__bio__icontains=keyword) |
-                Q(tag__title__icontains=keyword))
+                Q(tag__keyword__icontains=keyword))
 
         return self.active().filter(lookups).distinct()
 
@@ -104,7 +104,7 @@ class BookManager(models.Manager):
             return qs.first()
 
     def search(self, query):
-        return self.get_queryset().search(query)
+        return self.get_queryset().search(keyword=query)
 
 
 class BookList(models.Model):
@@ -127,6 +127,9 @@ class BookList(models.Model):
     slug = models.SlugField(blank=True, null=True, unique=True)
 
     objects = BookManager()
+
+    class Meta:
+        ordering = ['-timeStamp']
 
     def __str__(self):
         return self.name
