@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'tag',
     'category',
     'publication',
+    'carts',
+
+
 
 
 
