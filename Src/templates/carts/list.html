@@ -6,14 +6,16 @@
             <th>#</th>
             <th>Book Name</th>
             <th>Price</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
         {% for book in cart.books.all %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td>{{ book.name }}</td>
+                <td><a href="{{ book.get_absolute_url }}">{{ book.name }} </a></td>
                 <td>{{ book.price }} TK</td>
+                <td>{% include 'carts/add_or_remove.html' with product=book cart=cart %}</td>
             </tr>
         {% endfor %}
         <tr>
@@ -26,8 +28,8 @@
             <td ><b>Home Delivery fee:</b></td>
             <td>50 TK</td>
         </tr>
-        <
-        <tr bgcolor="#696969">
+
+        <tr>
             <td colspan="1"></td>
             <td><b>Total:</b></td>
             <td>{{ cart.total }} TK</td>
@@ -37,3 +39,4 @@
 {% else %}
     <p>Cart is Empty </p>
 {% endif %}
+

@@ -11,4 +11,5 @@
     {% endblock %}
     {% include 'include_html/nav.html' %}
     {% include 'carts/list.html' with cart=cart %}
+   <center><button onclick="window.location.href='{% url 'list' %}'"  class="btn-success text-center" ><i class="fas fa-luggage-cart"></i>Continue Shopping </button></center>
 {% endblock %}

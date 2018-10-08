@@ -29,7 +29,7 @@
         <a class="nav-link " href="#"><b>যোগাযোগ</b></a>
       </li>
       <li class="nav-item  {% if request.path == cart_home %}active{% endif %}">
-        <a class="nav-link " href="{{cart_home }}"><b>Cart</b></a>
+        <a class="nav-link " href="{{cart_home }}"><b class="text-info">{{ request.session.cart_items }}</b> <i class="fas fa-shopping-cart"></i></a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
