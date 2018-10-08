@@ -1,7 +1,7 @@
 from django.http import Http404
 
 from django.views.generic import ListView, DetailView
-
+from carts.models import Cart
 from .models import BookList
 
 
@@ -17,8 +17,11 @@ class BookDetailView(DetailView):
     template_name = 'book/detail.html'
 
     def get_context_data(self, *args, **kwargs):
+
         context = super(BookDetailView, self).get_context_data(*args, **kwargs)
         context['title'] = '{}'.format(self.get_object().title)
+        cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+        context['cart'] = cart_obj
         return context
 
     def get_object(self, *args, **kwargs):

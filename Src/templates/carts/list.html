@@ -1,0 +1,39 @@
+{% if cart.books.exists %}
+    <h2>Cart List</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Book Name</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for book in cart.books.all %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ book.name }}</td>
+                <td>{{ book.price }} TK</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="1"></td>
+            <td><b>Subtotal:</b></td>
+            <td>{{ cart.sub_total }} TK</td>
+        </tr>
+        <tr>
+            <td colspan="1"></td>
+            <td ><b>Home Delivery fee:</b></td>
+            <td>50 TK</td>
+        </tr>
+        <
+        <tr bgcolor="#696969">
+            <td colspan="1"></td>
+            <td><b>Total:</b></td>
+            <td>{{ cart.total }} TK</td>
+        </tr>
+        </tbody>
+    </table>
+{% else %}
+    <p>Cart is Empty </p>
+{% endif %}

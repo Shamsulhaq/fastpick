@@ -30,7 +30,8 @@
                 <p class="text-primary"><b class="text-body"> Book Name: </b>{{ object.name }}</p>
                 <p class="text-primary"><b class="text-body">Author:</b> {{ object.author }}</p>
                 <p class="text-primary"><b class="text-body">Publish Date:</b> {{ object.publish_date }}</p>
-                <p class="text-primary"><b class="text-body">Total Page:</b> {% if object.total_pages %}{{ object.total_pages }}{% else %}Unknown {% endif %}</p>
+                <p class="text-primary"><b class="text-body">Total Page:</b>
+                    {% if object.total_pages %}{{ object.total_pages }}{% else %}Unknown {% endif %}</p>
                 <p class="text-primary"><b class="text-body">Regular Price:</b> {{ object.regular_price }} BDT</p>
                 <p class="text-primary"><b class="text-body">Now Price:</b> {{ object.price }} BDT</p>
                 <p class="text-primary"><b class="text-body">Rent Status:</b> {% if object.is_rent_available %}
@@ -38,19 +39,12 @@
                 <p class="text-primary"><b class="text-body">Rent Charge:</b> {% if object.is_rent_available %}
                     {{ object.rent_charge }} {% else %} N/A {% endif %}</p></p>
                 <p class="text-primary"><b class="text-body">Book Type:</b> {{ object.category }}</p>
-                <p class="text-primary"><b class="text-body">Book Status:</b> {% if object.is_old %} Old {% else %} New {% endif %} Book</p>
+                <p class="text-primary"><b class="text-body">Book Status:</b> {% if object.is_old %} Old {% else %}
+                    New {% endif %} Book</p>
                 <p class="text-primary"><b class="text-body">Tags:</b> {% for tag in object.tag.all %}
                     {{ tag }}, {% endfor %}</p>
-                <button href='' type="button"
-                        class="btn-success">
-                    Order Now
 
-                </button>
-                <button href='' type="button"
-                        class="btn-success">
-                    Rent Request
-
-                </button>
+                {% include 'book/cart_update.html' with product=object cart=cart %}
 
             </div>
 

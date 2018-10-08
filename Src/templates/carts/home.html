@@ -1,4 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h3>Carts Home</h3>
+    {% block css %}
+        <style>
+            .logoimg {
+                padding: 5px 0 0 0;
+            }
+
+        </style>
+
+    {% endblock %}
+    {% include 'include_html/nav.html' %}
+    {% include 'carts/list.html' with cart=cart %}
 {% endblock %}

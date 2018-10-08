@@ -13,6 +13,7 @@
     {% endblock %}
     {% include 'include_html/nav.html' %}
     <div class="row ">
+    {% if object_list.exists %}
         <div class="col-sm table-responsive  ">
             <table class="table table-hover " style="cursor: pointer;">
                 <thead class="thead-light ">
@@ -44,19 +45,18 @@
                             <td>N/A</td>
                         {% endif %}
                     </tr>
-                {% empty %}
-                    <tr>
-                        <td>Book List is Empty</td>
-                    </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
+
         <div class="row">
         </div>
     </div>
     {% include 'include_html/pagination.html' %}
-
+    {% else %}
+        <p class="text-center">Book List is Empty </p>
+    {% endif %}
 {% endblock %}
 
 

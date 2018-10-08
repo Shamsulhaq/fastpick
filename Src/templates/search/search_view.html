@@ -20,8 +20,10 @@
 
     </div>
     <div class="row">
+    {% if object_list.exists %}
         <div class="col-sm-12 ">
             <p class="text-center bg-light">Search Result for "<b class="text-info">{{ query }}</b>"</p>
+
             <table class="table table-hover" style="cursor: pointer;">
                 <thead class="thead-light">
                 <tr>
@@ -53,11 +55,6 @@
                             <td>Not Available</td>
                         {% endif %}
                     </tr>
-                {% empty %}
-                    <tr>
-                        <td><p>Search <b class="text-warning text-capitalize">"{{ query }}" is Not Available </b></p></td>
-                    </tr>
-
                 {% endfor %}
                 </tbody>
             </table>
@@ -68,6 +65,12 @@
 
     </div>
 {% include 'include_html/pagination.html' %}
+    {% else %}
+        <div class="col-sm-12">
+            <p class="lead text-center">Search <b class="text-danger">"{{ query }}"</b> is Not Available</p>
+        </div>
+
+    {% endif %}
 {% endblock %}
 
 

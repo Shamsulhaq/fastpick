@@ -1,6 +1,7 @@
 {% load static %}
 {% url 'index' as serach_url %}
 {% url 'list' as list_url %}
+{% url 'cart_home' as cart_home %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light border">
   <a class="navbar-brand" href="{{ serach_url }}"><img width="80px" src="{% static 'img/logo.png' %}"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,22 +11,25 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item {% if request.path == list_url %}active{% endif %}">
-        <a class="nav-link" href="{{ list_url }}">বইয়ের লিস্ট</a>
+        <a class="nav-link" href="{{ list_url }}"><b>বইয়ের লিস্ট</b></a>
       </li>
       <li class="nav-item ">
-        <a class="nav-link " href="#">বইয়ের ধরন</a>
+        <a class="nav-link " href="#"><b>বইয়ের ধরন</b></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="#">লেখক</a>
+        <a class="nav-link " href="#"><b>লেখক</b></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="#">বই রিভিউ</a>
+        <a class="nav-link " href="#"><b>বই রিভিউ</b></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="#">আমাদের জানুন</a>
+        <a class="nav-link " href="#"><b>আমাদের জানুন</b></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="#">যোগাযোগ</a>
+        <a class="nav-link " href="#"><b>যোগাযোগ</b></a>
+      </li>
+      <li class="nav-item  {% if request.path == cart_home %}active{% endif %}">
+        <a class="nav-link " href="{{cart_home }}"><b>Cart</b></a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
