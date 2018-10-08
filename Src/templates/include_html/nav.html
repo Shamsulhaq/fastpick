@@ -1,28 +1,37 @@
-<div class="stl border">
-    <nav class="navbar-expand-sm ">
-        <ul class="nav justify-content-center navbar-nav ">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'index' %}">খুঁজুন</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'list' %}"> বইয়ের লিস্ট</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">বইয়ের ধরন</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">লেখক</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">বই রিভিউ</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="#">আমাদের জানুন</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="#">যোগাযোগ</a>
-            </li>
-        </ul>
-    </nav>
-</div>
+{% load static %}
+{% url 'index' as serach_url %}
+{% url 'list' as list_url %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light border">
+  <a class="navbar-brand" href="{{ serach_url }}"><img width="80px" src="{% static 'img/logo.png' %}"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item {% if request.path == list_url %}active{% endif %}">
+        <a class="nav-link" href="{{ list_url }}">বইয়ের লিস্ট</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link " href="#">বইয়ের ধরন</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="#">লেখক</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="#">বই রিভিউ</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="#">আমাদের জানুন</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="#">যোগাযোগ</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
+      <input class="form-control mr-sm-2" required type="search" name="q" placeholder="বই, লেখক, বইয়ের ধরন  লিখুন" aria-label="Search">
+      <button class="btn btn-fastpick my-2 my-sm-0" type="submit">খুঁজুন</button>
+    </form>
+  </div>
+</nav>
 <br>

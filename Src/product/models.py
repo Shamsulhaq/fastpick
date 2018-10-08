@@ -5,6 +5,7 @@ from django.core.files.storage import FileSystemStorage
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import pre_save
+from django.urls import reverse
 # from main app - fastpick
 from django.template.defaultfilters import slugify
 
@@ -113,7 +114,7 @@ class BookList(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     publication = models.ForeignKey(Publication, on_delete=models.CASCADE)
     publish_date = models.CharField(max_length=4, help_text='Year eg. 1998 , 2018')
-    total_pages = models.PositiveIntegerField(blank=True,null=True)
+    total_pages = models.PositiveIntegerField(blank=True, null=True)
     regular_price = models.DecimalField(max_digits=9, decimal_places=2, default=0, blank=True)
     price = models.DecimalField(max_digits=9, decimal_places=2, default=0)
     descriptions = models.TextField()
@@ -153,7 +154,8 @@ class BookList(models.Model):
         return str(discount) + '%'
 
     def get_absolute_url(self):
-        return "/book/detail/{slug}".format(slug = self.slug)
+        # return "/book/detail/{slug}".format(slug=self.slug)
+        return reverse('detail',kwargs={'slug':self.slug})
 
 
 def bl_pre_save_receiver(sender, instance, *args, **kwargs):

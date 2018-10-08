@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name='index'),
     path('search/', SearchView.as_view(), name='search'),
-    path('book/', include('product.urls'), ),
+    path('book/', include('product.urls')),
 ]
 
 if settings.DEBUG:

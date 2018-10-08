@@ -12,20 +12,14 @@
 
     {% endblock %}
     {% include 'include_html/nav.html' %}
-    <div class="container">
-
-
-    </div>
-    <div class="row">
-        <div class="col-sm table-responsive ">
-            <table class="table table-hover" style="cursor: pointer;">
-                <thead class="thead-light">
+    <div class="row ">
+        <div class="col-sm table-responsive  ">
+            <table class="table table-hover " style="cursor: pointer;">
+                <thead class="thead-light ">
                 <tr>
                     <th>ছবি</th>
                     <th>নাম</th>
                     <th>লেখক</th>
-                    <th>প্রকাশের সাল</th>
-                    <th>প্রকাশনী</th>
                     <th>বর্তমান দাম</th>
                     <th>ভাড়া খরচ</th>
                 </tr>
@@ -41,12 +35,8 @@
                             <td><img width="60px" height="60px"
                                      src="{% static 'img/book_placeholder.png' %}"></td>
                         {% endif %}
-
                         <td>{{ obj.name }}</td>
                         <td>{{ obj.author }}</td>
-                        <td>{{ obj.publish_date }}</td>
-
-                        <td>{{ obj.publication }}</td>
                         <td>{{ obj.price }} ৳</td>
                         {% if obj.is_rent_available %}
                             <td>{{ obj.rent_charge }} ৳</td>
@@ -58,17 +48,15 @@
                     <tr>
                         <td>Book List is Empty</td>
                     </tr>
-
                 {% endfor %}
                 </tbody>
             </table>
         </div>
         <div class="row">
         </div>
-
-
     </div>
-{% include 'include_html/pagination.html' %}
+    {% include 'include_html/pagination.html' %}
+
 {% endblock %}
 
 
