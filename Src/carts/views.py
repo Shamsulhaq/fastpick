@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Cart
 from product.models import BookList
 from orders.models import Order
-from accounts.forms import LoginForm,GuestRegisterForm
+from accounts.forms import LoginForm, GuestRegisterForm
 from billing.models import BillingProfile
 from accounts.models import GuestEmail
 
@@ -35,24 +35,31 @@ def checkout_home(request):
     order_obj = None
     if cart_created or cart_obj.books.count() == 0:
         return redirect('cart_home')
-    else:
-        order_obj, new_order_obj = Order.objects.get_or_create(cart=cart_obj)
+    # else:
+    #     order_obj, new_order_obj = Order.objects.get_or_create(cart=cart_obj)
     user = request.user
-    billing_profile = None
+    billing_profile_obj = None
     login_form = LoginForm()
     guest_register_form = GuestRegisterForm()
     guest_email_id = request.session.get('guest_email_id')
     if user.is_authenticated:
-        billing_profile, billing_profile_created = BillingProfile.objects.get_or_create(user=user, email=user.email)
+        # logged in user checkout ;
+        billing_profile_obj, billing_profile_created = BillingProfile.objects.get_or_create(user=user, email=user.email)
     elif guest_email_id is not None:
+        # guest user checkout;
         guest_email_obj = GuestEmail.objects.get(id=guest_email_id)
-        billing_profile, billing_profile_created = BillingProfile.objects.get_or_create( email=guest_email_obj.email)
+        billing_profile_obj, billing_profile_created = BillingProfile.objects.get_or_create(email=guest_email_obj.email)
     else:
         pass
+    if billing_profile_obj is not None:
+        order_obj, order_obj_created = Order.objects.new_or_get(billing_profile_obj, cart_obj)
+        # if order_obj_created:
+        #     del request.session['guest_email_id']
+
     context = {
         'object': order_obj,
         'login_form': login_form,
         'guest_register_form': guest_register_form,
-        'billing_profile': billing_profile
+        'billing_profile': billing_profile_obj
     }
     return render(request, 'carts/checkout.html', context)

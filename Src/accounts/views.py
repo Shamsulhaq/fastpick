@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.messages.views import messages
 from django.utils.http import is_safe_url
 
-from .forms import LoginForm, RegisterForm,GuestRegisterForm
+from .forms import LoginForm, RegisterForm, GuestRegisterForm
 from .models import GuestEmail
 
 User = get_user_model()
@@ -45,6 +45,11 @@ def login_page(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            try:
+                del request.session['guest_email_id']
+            except:
+                pass
+
             if is_safe_url(redirect_path, request.get_host()):
                 return redirect(redirect_path)
             else:
