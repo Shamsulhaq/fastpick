@@ -27,7 +27,7 @@ def login_page(request):
             if is_safe_url(redirect_path, request.get_host()):
                 return redirect(redirect_path)
             else:
-               return redirect('index')
+               return redirect('list')
         else:
             print("ERROR")
     return render(request, template_name, context)

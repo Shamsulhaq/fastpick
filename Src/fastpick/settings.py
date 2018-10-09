@@ -38,12 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 #installed apps
     'accounts',
-    'product',
-    'tag',
-    'category',
-    'publication',
+    'billing',
     'carts',
+    'category',
     'orders',
+    'product',
+    'publication',
+    'tag',
 
 
 
@@ -142,4 +143,4 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/account/login'

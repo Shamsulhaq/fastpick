@@ -10,9 +10,20 @@
 
     {% endblock %}
     {% include 'include_html/nav.html' %}
-    <h1>Checkout Home</h1>
-    <p>Order Id: {{ object.order_id }}</p>
-    <p>Cart Total: {{ object.cart.total }}</p>
-    <p>Shipping Total: {{ object.shipping_total }}</p>
-    <p>Oder Total: {{ object.total }}</p>
+    {% if not billing_profile %}
+        <div class="row text-center">
+            <div class="col-12 col-md-6">
+                {% include 'accounts/forms/login_form.html' with form=login_form next_url=request.build_absolute_uri %}
+            </div>
+            <div class="col-12 col-md-6">
+                As Guest
+            </div>
+        </div>
+    {% else %}
+        <h1>Checkout Home</h1>
+        <p>Order Id: {{ object.order_id }}</p>
+        <p>Cart Total: {{ object.cart.total }}</p>
+        <p>Shipping Total: {{ object.shipping_total }}</p>
+        <p>Oder Total: {{ object.total }}</p>
+    {% endif %}
 {% endblock %}
