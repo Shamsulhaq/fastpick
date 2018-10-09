@@ -48,7 +48,7 @@ class Cart(models.Model):
         return str(self.id)
 
     def get_vat(self):
-        vat = (self.sub_total * 2) / 100
+        vat = (self.sub_total * 5) / 100
         return vat
 
 
@@ -67,7 +67,7 @@ m2m_changed.connect(m2m_save_cart_receiver, sender=Cart.books.through)
 
 def pre_save_cart_receiver(sender, instance, *args, **kwargs):
     if instance.sub_total > 0:
-        vat = (instance.sub_total * 2) / 100
+        vat = (instance.sub_total * 5) / 100
         instance.total = format(fsum([instance.sub_total, vat]), '.2f')
     else:
         instance.total = 0.00
