@@ -1,3 +1,4 @@
+from math import fsum
 from django.db import models
 from django.conf import settings
 from django.db.models.signals import m2m_changed, pre_save
@@ -66,8 +67,8 @@ m2m_changed.connect(m2m_save_cart_receiver, sender=Cart.books.through)
 
 def pre_save_cart_receiver(sender, instance, *args, **kwargs):
     if instance.sub_total > 0:
-        vat = (instance.sub_total * 2)/100
-        instance.total = instance.sub_total + vat
+        vat = (instance.sub_total * 2) / 100
+        instance.total = format(fsum([instance.sub_total, vat]), '.2f')
     else:
         instance.total = 0.00
 
