@@ -2,6 +2,9 @@
 {% url 'index' as serach_url %}
 {% url 'list' as list_url %}
 {% url 'cart_home' as cart_home %}
+{% url 'get_login' as login_url %}
+{% url 'get_logout' as logout_url %}
+{% url 'get_register' as register_url %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light border">
   <a class="navbar-brand" href="{{ serach_url }}"><img width="80px" src="{% static 'img/logo.png' %}"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,6 +31,19 @@
       <li class="nav-item">
         <a class="nav-link " href="#"><b>যোগাযোগ</b></a>
       </li>
+    {% if request.user.is_authenticated %}
+      <li class="nav-item {% if request.path == logout_url %}active{% endif %}">
+        <a class="nav-link " href="{{ logout_url }}"><b>Logout</b></a>
+      </li>
+    {% else %}
+      <li class="nav-item {% if request.path == register_url %}active{% endif %}">
+        <a class="nav-link " href="{{ register_url }}"><b>Register</b></a>
+      </li>
+      <li class="nav-item {% if request.path == login_url %}active{% endif %}">
+        <a class="nav-link " href="{{ login_url }}"><b>Login</b></a>
+      </li>
+    {% endif %}
+
       <li class="nav-item  {% if request.path == cart_home %}active{% endif %}">
         <a class="nav-link " href="{{cart_home }}"><b class="text-info">{{ request.session.cart_items }}</b> <i class="fas fa-shopping-cart"></i></a>
       </li>
