@@ -13,47 +13,49 @@
     {% include 'include_html/nav.html' %}
     <div class="container">
 
-        <div class="row border">
-            <div class="col-sm border">
+        <div class="row border text-center">
+            <div class="col-sm-12 col-md-5 border">
                 <br>
                 {% if object.image %}
-                    <a href=""><img width="420px" height="480px" src="{{ object.image.url }}"></a>
-                {% else %}
-                    <a href=""><img width="420px" height="480px" src="{% static 'img/book_placeholder.png' %}"></a>
+                    <a href=""><img width="380px" height="480px" src="{{ object.image.url }}"></a>
 
+                {% else %}
+                    <a href=""><img width="380px" height="480px" src="{% static 'img/book_placeholder.png' %}"></a>
                 {% endif %}
                 <br>
             </div>
-            <div class="col-sm border">
+            <div class="col-sm-12 col-md-7 ">
                 <br>
                 <br>
-                <p class="text-primary"><b class="text-body"> Book Name: </b>{{ object.name }}</p>
-                <p class="text-primary"><b class="text-body">Author:</b> {{ object.author }}</p>
-                <p class="text-primary"><b class="text-body">Publish Date:</b> {{ object.publish_date }}</p>
-                <p class="text-primary"><b class="text-body">Total Page:</b>
-                    {% if object.total_pages %}{{ object.total_pages }}{% else %}Unknown {% endif %}</p>
-                <p class="text-primary"><b class="text-body">Regular Price:</b> {{ object.regular_price }} BDT</p>
-                <p class="text-primary"><b class="text-body">Now Price:</b> {{ object.price }} BDT</p>
-                <p class="text-primary"><b class="text-body">Rent Status:</b> {% if object.is_rent_available %}
-                    Available{% else %} N/A {% endif %}</p>
-                <p class="text-primary"><b class="text-body">Rent Charge:</b> {% if object.is_rent_available %}
-                    {{ object.rent_charge }} {% else %} N/A {% endif %}</p></p>
-                <p class="text-primary"><b class="text-body">Book Type:</b> {{ object.category }}</p>
-                <p class="text-primary"><b class="text-body">Book Status:</b> {% if object.is_old %} Old {% else %}
-                    New {% endif %} Book</p>
-                <p class="text-primary"><b class="text-body">Tags:</b> {% for tag in object.tag.all %}
-                    {{ tag }}, {% endfor %}</p>
+                <br>
+                <br>
 
-                {% include 'book/cart_update.html' with product=object cart=cart %}
+                <h3 class="text-primary px-5 py-2">{{ object.name }}</h3>
+                <h4 class="text-primary px-5 py-2"><a href="#">{{ object.author }}</a></h4>
+                <p class="text-info"><b class="h5">BDT {{ object.price }}</b>
+                    <del>BDT {{ object.regular_price }}</del>
+                    {{ object.get_discount }} Off
+                </p>
+                {% if object.is_rent_available %}
+                    <p class="text-primary"><b class="text-body">Rent Status:</b>
+                        Available</p>
+                    <p class="text-primary"><b class="text-body">Rent Charge:</b>
+                        {{ object.rent_charge }}</p></p>
+                {% endif %}
+                <p class="text-primary"><b class="text-body">Category:</b><a href="#">{{ object.category }}</a></p>
+                <div class="col-sm mx-3 my-4 ">
+                    {% include 'book/cart_update.html' with product=object cart=cart %}
+                </div>
 
+                <br>
             </div>
 
         </div>
         <br>
         <div class="row border ">
             <div class="col-sm-12 justify-content-center">
-                <h5 class="text-info">About Book:</h5>
-                <p>{{ object.descriptions }}</p>
+                <h4 class="text-info"> Specification:</h4>
+                {% include 'book/table/info_table.html' with object=object %}
             </div>
         </div>
     </div>

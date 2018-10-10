@@ -63,13 +63,8 @@
             </div>
         {% else %}
             <h1>Final Your Checkout</h1>
-            <p>Order Id: {{ object.order_id }}</p>
-            <p>Cart Total: {{ object.cart.total }}</p>
-            <p>Shipping Total: {{ object.shipping_total }}</p>
-            <p>Oder Total: {{ object.total }}</p>
-            <form class="form" method="POST" action="">{% csrf_token %}
-                <button class="btn-success" type="submit">Checkout</button>
-            </form>
+            {% include 'carts/final_checkout_table.html' with object=object %}
+
         {% endif %}
     {% endif %}
 {% endblock %}

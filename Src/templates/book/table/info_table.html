@@ -1,0 +1,46 @@
+<div class="col-sm-12 col-md-12 col-lg-12">
+    <table class="table table-striped">
+        <tbody>
+        <tr>
+            <td style="background-color:#aaa;"><b>Book Status:</b></td>
+            <td>{% if object.is_old %} Old {% else %}
+                    New {% endif %} Book</td>
+        </tr>
+        <tr>
+            <td style="background-color:#aaa;"><b>Total Page:</b></td>
+            <td>{% if object.total_pages %}{{ object.total_pages }}{% else %}Unknown {% endif %}</td>
+        </tr>
+        <tr>
+            <td style="background-color:#aaa;"><b>Author:</b></td>
+            <td><a href="#">{{ object.author }}</a></td>
+        </tr>
+        <tr>
+            <td style="background-color:#aaa;"><b>Publication:</b></td>
+            <td><a href="#">{{ object.publication }}</a></td>
+        </tr>
+        <tr>
+            <td style="background-color:#aaa;"><b>Edition:</b></td>
+            <td>{{ object.edition }}</td>
+        </tr>
+        <tr>
+            <td style="background-color:#aaa;"><b>ISBN:</b></td>
+            <td>{{ object.isbn }}</td>
+        </tr>
+        <tr>
+            <td style="background-color:#aaa;"><b>Country:</b></td>
+            <td>{{ object.get_country_display }}</td>
+        </tr>
+        <tr>
+            <td style="background-color:#aaa;"><b>Language:</b></td>
+            <td>{{ object.get_language_display }}</td>
+        </tr>
+        <tr>
+            <td style="background-color:#aaa;"><b>Tags:</b></td>
+            <td>{% for tag in object.tag.all %}
+                    <a href="#">{{ tag }}</a>, {% endfor %}</td>
+        </tr>
+
+        </tbody>
+
+    </table>
+</div>

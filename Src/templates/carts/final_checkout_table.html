@@ -1,0 +1,55 @@
+<div class="col-sm-12 col-md-12 col-lg-12">
+    <table class="table table-striped">
+        <tbody>
+        <tr>
+            <td style="background-color:#aaa;"><b>Order Id:</b></td>
+            <td>#{{ object.order_id }}</td>
+        </tr>
+        <tr>
+            <td style="background-color:#aaa;"><b>Cart Items:</b></td>
+            <td>{{ object.cart.books.count }}</td>
+        </tr>
+        {% for cart in object.cart.books.all %}
+            <tr>
+                <td colspan="1"></td>
+                <td><a href="{{ cart.get_absolute_url }}">({{ forloop.counter }}) {{ cart }}</a></td>
+            </tr>
+            {% if not forloop.last %}
+
+            {% endif %}
+        {% empty %}
+            <tr>
+                <td colspan="1"></td>
+                <td>Cart is Empty</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td style="background-color:#aaa;"><b>Shipping Address:</b></td>
+            <td>{{ object.shipping_address.get_address }}</td>
+        </tr>
+        <tr>
+            <td style="background-color:#aaa;"><b>Billing Address:</b></td>
+            <td>{{ object.billing_address.get_address }}</td>
+        </tr>
+        <tr>
+            <td style="background-color:#aaa;"><b>Cart Total::</b></td>
+            <td>{{ object.cart.total }}</td>
+        </tr>
+        <tr>
+            <td style="background-color:#aaa;"><b>Shipping Total:</b></td>
+            <td><a href="#">{{ object.shipping_total }}</a></td>
+        </tr>
+        <tr>
+            <td style="background-color:#aaa;"><b>Oder Total:</b></td>
+            <td><a href="#">{{ object.total }}</a></td>
+        </tr>
+        <tr>
+            <td ><a class="btn btn-success" href="{% url 'list' %}">Continue Shopping</a></td>
+            <td><form class="form" method="POST" action="">{% csrf_token %}
+                <button class=" btn btn-lg btn-success" type="submit">Checkout</button>
+            </form> </td>
+        </tr>
+        </tbody>
+
+    </table>
+</div>

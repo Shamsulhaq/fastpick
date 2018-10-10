@@ -64,7 +64,8 @@ def checkout_home(request):
             order_obj.mark_submit()
             request.session['cart_items'] = 0
             del request.session['cart_id']
-            del request.session['guest_email_id']
+            if not request.user.is_authenticated:
+                del request.session['guest_email_id']
             return redirect('cart_success')
     context = {
         'object': order_obj,
