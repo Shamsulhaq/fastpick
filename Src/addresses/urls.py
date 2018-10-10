@@ -14,11 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from .views import cart_home, cart_update, checkout_home, cart_success_view
-
+from .views import checkout_address_create_view,checkout_address_reuse_view
 urlpatterns = [
-    path('',cart_home,name ='cart_home'),
-    path('update/',cart_update,name ='cart_update'),
-    path('success/',cart_success_view,name ='cart_success'),
-    path('checkout/',checkout_home,name ='checkout_home'),
+    path('create/', checkout_address_create_view, name='checkout_address_create_url'),
+    path('reuse/', checkout_address_reuse_view, name='checkout_address_reuse_url'),
 ]

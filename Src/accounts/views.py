@@ -47,8 +47,10 @@ def login_page(request):
             login(request, user)
             try:
                 del request.session['guest_email_id']
+                print("del session guest email")
             except:
                 pass
+                print("Error del session guest email")
 
             if is_safe_url(redirect_path, request.get_host()):
                 return redirect(redirect_path)

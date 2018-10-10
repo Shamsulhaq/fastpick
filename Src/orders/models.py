@@ -1,13 +1,16 @@
 from math import fsum
 from django.db import models
 from django.db.models.signals import pre_save, post_save
+from addresses.models import Address
+from billing.models import BillingProfile
 from carts.models import Cart
 from fastpick.utils import unique_order_id_generator
-from billing.models import BillingProfile
+
 # Create your models here.
 
 ORDER_STATUS_CHOICES = (
     ('created', 'Created'),
+    ('submit', 'Submit'),
     ('paid', 'Paid'),
     ('shipped', 'Shipped'),
     ('refunded', 'Refunded')
@@ -20,7 +23,7 @@ class OrderManager(models.Manager):
         qs = self.get_queryset().filter(
             billing_profile=billing_profile,
             cart=cart_obj,
-            active=True)
+            active=True,status='created')
         if qs.count() == 1:
             obj = qs.first()
         else:
@@ -32,8 +35,10 @@ class OrderManager(models.Manager):
 
 
 class Order(models.Model):
-    billing_profile = models.ForeignKey(BillingProfile,on_delete=models.CASCADE,blank=True,null=True)
+    billing_profile = models.ForeignKey(BillingProfile, on_delete=models.CASCADE, blank=True, null=True)
     order_id = models.CharField(max_length=120, blank=True)
+    billing_address = models.ForeignKey(Address,related_name='billing_address', on_delete=models.CASCADE, blank=True, null=True)
+    shipping_address = models.ForeignKey(Address,related_name='shipping_address', on_delete=models.CASCADE, blank=True, null=True)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     status = models.CharField(max_length=120, default='created', choices=ORDER_STATUS_CHOICES)
     shipping_total = models.DecimalField(default=50.00, decimal_places=2, max_digits=9)
@@ -51,10 +56,25 @@ class Order(models.Model):
         cart_total = self.cart.total
         shipping_total = self.shipping_total
         new_total = fsum([cart_total, shipping_total])
-        format_total = format(new_total,'.2f')
+        format_total = format(new_total, '.2f')
         self.total = format_total
         self.save()
         return format_total
+
+    def check_done(self):
+        billing_profile = self.billing_profile
+        billing_address = self.billing_address
+        shipping_address = self.shipping_address
+        total  = self.total
+        if billing_address and billing_profile and shipping_address and total > 0:
+            return True
+        return False
+
+    def mark_submit(self):
+        if self.check_done():
+            self.status = 'submit'
+            self.save()
+        return self.status
 
 
 def pre_save_order_id_receiver(sender, instance, *args, **kwargs):
