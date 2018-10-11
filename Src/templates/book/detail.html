@@ -3,12 +3,6 @@
 {% block content %}
     {% block css %}
         <title>FastPick | {{ title }}</title>
-        <style>
-            .logoimg {
-                padding: 5px 0 0 0;
-            }
-        </style>
-
     {% endblock %}
     {% include 'include_html/nav.html' %}
     <div class="container">
@@ -32,9 +26,9 @@
 
                 <h3 class="text-primary px-5 py-2">{{ object.name }}</h3>
                 <h4 class="text-primary px-5 py-2"><a href="{% url 'author_details' slug=object.author.slug %}">{{ object.author }}</a></h4>
-                <p class="text-info"><b class="h5">BDT {{ object.price }}</b>
-                    <del>BDT {{ object.regular_price }}</del>
-                    {{ object.get_discount }} Off
+                <p class="text-info"><b class="h5">BDT {{ object.price }} </b> {% if object.regular_price == 0 %}
+                    {% else %}<del>BDT {{ object.regular_price }}</del> {% endif %}
+                    {% if object.get_discount is not None %}{{ object.get_discount }} Off{% endif %}
                 </p>
                 {% if object.is_rent_available %}
                     <p class="text-primary"><b class="text-body">Rent Charge:</b>

@@ -157,12 +157,12 @@ class BookList(models.Model):
 
     def get_discount(self):
         if self.regular_price == 0:
-            discount = 0
+            discount = None
+            return discount
         else:
             discount = (self.regular_price - self.price) / self.regular_price * 100
-
-        discount = int(discount)
-        return str(discount) + '%'
+            discount = int(discount)
+            return str(discount) + '%'
 
     def get_absolute_url(self):
         # return "/book/detail/{slug}".format(slug=self.slug)

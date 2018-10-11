@@ -35,10 +35,7 @@ def unique_slug_generator(instance, new_slug=None):
     if new_slug is not None:
         slug = new_slug
     else:
-        if isinstance(instance.title, unicode):
-            slug = "{randomstr}".format(randomstr=random_string_generator(size=9))
-        else:
-            slug = slugify(instance.title)
+        slug = slugify(instance.title, allow_unicode=True)
 
     Klass = instance.__class__
     qs_exists = Klass.objects.filter(slug=slug).exists()
