@@ -5,6 +5,8 @@
 {% url 'get_login' as login_url %}
 {% url 'get_logout' as logout_url %}
 {% url 'get_register' as register_url %}
+{% url 'contact_create' as contact_url %}
+{% url 'author_list' as author_list_url %}
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light border">
   <a class="navbar-brand" href="{{ serach_url }}"><img width="80px" src="{% static 'img/logo.png' %}"></a>
@@ -20,8 +22,8 @@
       <li class="nav-item ">
         <a class="nav-link " href="#"><b>বইয়ের ধরন</b></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link " href="#"><b>লেখক</b></a>
+      <li class="nav-item {% if request.path == author_list_url %}active{% endif %}">
+        <a class="nav-link " href="{{ author_list_url }}"><b>লেখক</b></a>
       </li>
       <li class="nav-item">
         <a class="nav-link " href="#"><b>বই রিভিউ</b></a>
@@ -29,8 +31,8 @@
       <li class="nav-item">
         <a class="nav-link " href="#"><b>আমাদের জানুন</b></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link " href="#"><b>যোগাযোগ</b></a>
+      <li class="nav-item {% if request.path == contact_url %}active{% endif %}">
+        <a class="nav-link " href="{{ contact_url }}"><b>যোগাযোগ</b></a>
       </li>
     {% if request.user.is_authenticated %}
       <li class="nav-item {% if request.path == logout_url %}active{% endif %}">

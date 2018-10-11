@@ -31,7 +31,7 @@
                 <br>
 
                 <h3 class="text-primary px-5 py-2">{{ object.name }}</h3>
-                <h4 class="text-primary px-5 py-2"><a href="#">{{ object.author }}</a></h4>
+                <h4 class="text-primary px-5 py-2"><a href="{% url 'author_details' slug=object.author.slug %}">{{ object.author }}</a></h4>
                 <p class="text-info"><b class="h5">BDT {{ object.price }}</b>
                     <del>BDT {{ object.regular_price }}</del>
                     {{ object.get_discount }} Off

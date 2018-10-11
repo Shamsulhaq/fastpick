@@ -12,7 +12,7 @@
         </tr>
         <tr>
             <td style="background-color:#aaa;"><b>Author:</b></td>
-            <td><a href="#">{{ object.author }}</a></td>
+            <td><a href="{% url 'author_details' slug=object.author.slug %}">{{ object.author }}</a></td>
         </tr>
         <tr>
             <td style="background-color:#aaa;"><b>Publication:</b></td>

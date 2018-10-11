@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% include 'include_html/nav.html' %}
+    <div class="row">
+        {% if object_list %}
+            {% for object in object_list %}
+                <div class="col-lg-2 col-sm-2 col-md-2 mb-2">
+                    <div class="card" style="max-height: 220px;">
+                        <!-- Image -->
+                        {% if object.image %}
+                        <a href="{% url 'author_details' slug=object.slug %}"><img class="card-img-top" src="{{ object.image.url }}" alt="{{ object.name }}"></a>
+                        <!-- Text Content -->
+                        {% else %}
+                        <a href="{% url 'author_details' slug=object.slug %}"><img class="card-img-top" src="{% static 'img/person.jpg' %}" alt="{{ object.name }}"></a>
+                        {% endif %}
+                        <!-- Text Content -->
+                        <div class="card-body">
+                            <a href="{% url 'author_details' slug=object.slug %}"><p>{{ object.name }}</p></a>
+                        </div>
+
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <hr>
+    {% if page_obj.exists %}
+    <div class="row">
+    <div class="col-sm-12">
+    {% include 'include_html/pagination.html' with page_obj=page_obj %}
+    </div>
+    </div>
+    {% endif %}
+
+{% endblock %}

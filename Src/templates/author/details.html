@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    {% include 'include_html/nav.html' %}
+    <div class="row border ">
+        <div class="col-lg-3 col-sm-6 col-md-6 text-center mt-4">
+            {% if object.image %}
+            <img src="{{ object.image.url }}"/>
+            {% else %}
+            <img src="{% static 'img/person.jpg' %}"/>
+            {% endif %}
+            <h4>{{ object.name }}</h4>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-9 px-3 mt-4">
+            <p class="justify-content-center">{{ object.bio }}</p>
+        </div>
+
+    </div>
+    <p class="lead">Book BY:{{ object.name }}</p>
+    <div class="row">
+
+        {% include 'book/book_list/list.html' with object_list=object_list %}
+    </div>
+
+{% endblock %}

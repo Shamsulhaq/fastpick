@@ -13,50 +13,11 @@
     {% endblock %}
     {% include 'include_html/nav.html' %}
     <div class="row ">
-    {% if object_list.exists %}
-        <div class="col-sm table-responsive  ">
-            <table class="table table-hover " style="cursor: pointer;">
-                <thead class="thead-light ">
-                <tr>
-                    <th>ছবি</th>
-                    <th>নাম</th>
-                    <th>লেখক</th>
-                    <th>বর্তমান দাম</th>
-                    <th>ভাড়া খরচ</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for obj in object_list %}
-
-                    <tr onclick="window.location.href='{{ obj.get_absolute_url }}'">
-                        {% if obj.image %}
-                            <td><img width="60px" height="60px"
-                                     src="{{ obj.image.url }}"></td>
-                        {% else %}
-                            <td><img width="60px" height="60px"
-                                     src="{% static 'img/book_placeholder.png' %}"></td>
-                        {% endif %}
-                        <td>{{ obj.name }}</td>
-                        <td>{{ obj.author }}</td>
-                        <td>{{ obj.price }} ৳</td>
-                        {% if obj.is_rent_available %}
-                            <td>{{ obj.rent_charge }} ৳</td>
-                        {% else %}
-                            <td>N/A</td>
-                        {% endif %}
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-
-        <div class="row">
-        </div>
-    </div>
-    {% include 'include_html/pagination.html' %}
-    {% else %}
-        <p class="text-center">Book List is Empty </p>
+    {% include 'book/book_list/list.html' with object_list=object_list page_obj=page_obj %}
+    {% if page_obj.exists %}
+    {% include 'include_html/pagination.html' with page_obj=page_obj %}
     {% endif %}
+
 {% endblock %}
 
 

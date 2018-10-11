@@ -1,5 +1,6 @@
 import os
 import random
+from django.core.files.storage import FileSystemStorage
 
 from django.db import models
 from django.db.models.signals import pre_save
@@ -8,7 +9,12 @@ from fastpick.utils import unique_slug_generator
 from django.template.defaultfilters import slugify
 
 
+fs = FileSystemStorage(location='media')
+
+
 # Create your models here.
+
+
 def get_filename_exist(file_path):
     base_name = os.path.basename(file_path)
     name, ext = os.path.splitext(base_name)
@@ -24,11 +30,18 @@ def upload_author_image_path(inistance, file_name):
     return f"Author/{author_name}/{final_filename}"
 
 
+class BookAuthorManager(models.Manager):
+    def get_authors(self):
+        return self.get_queryset().all()
+
+
 class BookAuthor(models.Model):
     name = models.CharField(max_length=255, help_text="Enter Author name")
     image = models.ImageField(upload_to=upload_author_image_path, blank=True)
     bio = models.TextField()
     slug = models.SlugField(blank=True, null=True)
+
+    objects = BookAuthorManager()
 
     def __str__(self):
         return self.name
