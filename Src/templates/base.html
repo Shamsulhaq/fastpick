@@ -5,16 +5,26 @@
     {% block css %}{% endblock %}
     {% include 'include_html/css.html' %}
     <title>FastPick.xyz || Online Buy & Rent Solution</title>
+
+    <style>
+        .logoimg {
+            padding: 5px 0 0 0;
+        }
+
+        tr:hover {
+            background-color: #ffff99;
+        }
+    </style>
 </head>
 <body>
 {#<br>#}
 {#<marquee behavior="alternate" ><b style="background-color:#ff9900 ">-----This Site is underdevelopment-----</b></marquee>#}
 {#<br>#}
 <div class="container border">
-{% include 'include_html/head.html' %}
-<div class="container">
-    {% block content %}{% endblock %}
-</div>
+    {% include 'include_html/head.html' %}
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
 </div>
 {% include 'include_html/js.html' %}
 {% block js %}{% endblock %}

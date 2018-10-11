@@ -20,7 +20,7 @@
                     <a href=""><img width="380px" height="480px" src="{{ object.image.url }}"></a>
 
                 {% else %}
-                    <a href=""><img width="380px" height="480px" src="{% static 'img/book_placeholder.png' %}"></a>
+                    <a href=""><img width="380px" height="480px" src="{% static 'img/book_image.png' %}"></a>
                 {% endif %}
                 <br>
             </div>
@@ -37,10 +37,8 @@
                     {{ object.get_discount }} Off
                 </p>
                 {% if object.is_rent_available %}
-                    <p class="text-primary"><b class="text-body">Rent Status:</b>
-                        Available</p>
                     <p class="text-primary"><b class="text-body">Rent Charge:</b>
-                        {{ object.rent_charge }}</p></p>
+                        BDT {{ object.rent_charge }}</p></p>
                 {% endif %}
                 <p class="text-primary"><b class="text-body">Category:</b><a href="{% url 'category_details' slug=object.category.slug %}">{{ object.category }}</a></p>
                 <div class="col-sm mx-3 my-4 ">

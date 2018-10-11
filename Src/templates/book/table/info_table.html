@@ -6,10 +6,12 @@
             <td>{% if object.is_old %} Old {% else %}
                     New {% endif %} Book</td>
         </tr>
+        {% if object.total_pages %}
         <tr>
             <td style="background-color:#aaa;"><b>Total Page:</b></td>
-            <td>{% if object.total_pages %}{{ object.total_pages }}{% else %}Unknown {% endif %}</td>
+            <td>{{ object.total_pages }}</td>
         </tr>
+        {% endif %}
         <tr>
             <td style="background-color:#aaa;"><b>Author:</b></td>
             <td><a href="{% url 'author_details' slug=object.author.slug %}">{{ object.author }}</a></td>
@@ -18,14 +20,18 @@
             <td style="background-color:#aaa;"><b>Publication:</b></td>
             <td><a href="#">{{ object.publication }}</a></td>
         </tr>
+        {% if object.edition %}
         <tr>
             <td style="background-color:#aaa;"><b>Edition:</b></td>
             <td>{{ object.edition }}</td>
         </tr>
+        {% endif %}
+        {% if object.isbn %}
         <tr>
             <td style="background-color:#aaa;"><b>ISBN:</b></td>
             <td>{{ object.isbn }}</td>
         </tr>
+        {% endif %}
         <tr>
             <td style="background-color:#aaa;"><b>Country:</b></td>
             <td>{{ object.get_country_display }}</td>
