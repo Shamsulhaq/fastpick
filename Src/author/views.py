@@ -26,11 +26,8 @@ class AuthorDetailsView(DetailView):
         return context
 
     def get_object(self, *args, **kwargs):
-        instance = None
         slug = self.kwargs.get('slug')
-        qs = BookAuthor.objects.filter(slug=slug)
-        if qs.count() == 1:
-            instance = qs.first()
+        instance = BookAuthor.objects.get_by_slug(slug)
         if instance is None:
             raise Http404("Page not found")
         return instance

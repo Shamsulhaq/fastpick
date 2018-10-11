@@ -2,23 +2,20 @@
 {% load static %}
 {% block content %}
     {% include 'include_html/nav.html' %}
-    <p class="lead">All Author's: </p>
+    <p class="lead">All Category's: </p>
     <hr>
     <div class="row">
         {% if object_list %}
             {% for object in object_list %}
                 <div class="col-lg-2 col-sm-2 col-md-2 mb-2">
-                    <div class="card" style="max-height: 220px;">
+                    <div class="card" style="max-height: 200px; height: 200px;">
                         <!-- Image -->
-                        {% if object.image %}
-                        <a href="{% url 'author_details' slug=object.slug %}"><img class="card-img-top" src="{{ object.image.url }}" alt="{{ object.name }}"></a>
-                        <!-- Text Content -->
-                        {% else %}
-                        <a href="{% url 'author_details' slug=object.slug %}"><img class="card-img-top" src="{% static 'img/person.jpg' %}" alt="{{ object.name }}"></a>
-                        {% endif %}
+
+                        <a href="{% url 'category_details' slug=object.slug %}"><img width="80px" height="120px" class="card-img-top" src="{% static 'img/book.webp' %}" alt="{{ object.name }}"></a>
+
                         <!-- Text Content -->
                         <div class="card-body">
-                            <a href="{% url 'author_details' slug=object.slug %}"><p>{{ object.name }}</p></a>
+                            <a href="{% url 'category_details' slug=object.slug %}"><p>{{ object.keyword }}</p></a>
                         </div>
 
                     </div>

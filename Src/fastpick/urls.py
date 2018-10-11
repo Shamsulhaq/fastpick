@@ -27,6 +27,7 @@ urlpatterns = [
     path('author/', include('author.urls')),
     path('book/', include('product.urls')),
     path('cart/', include('carts.urls')),
+    path('category/', include('category.urls')),
     path('contact/', include('contact.urls')),
     path('checkout/address/', include('addresses.urls')),
     path('search/', SearchView.as_view(), name='search'),

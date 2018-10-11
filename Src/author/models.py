@@ -34,6 +34,12 @@ class BookAuthorManager(models.Manager):
     def get_authors(self):
         return self.get_queryset().all()
 
+    def get_by_slug(self,slug):
+        qs = self.get_queryset().filter(slug=slug)
+        if qs.count() == 1:
+            instance = qs.first()
+        return instance
+
 
 class BookAuthor(models.Model):
     name = models.CharField(max_length=255, help_text="Enter Author name")

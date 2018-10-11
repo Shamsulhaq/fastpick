@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    {% include 'include_html/nav.html' %}
+
+    <p class="lead">Book BY: {{ object.keyword }}</p>
+    <div class="row">
+        {% include 'book/book_list/list.html' with object_list=object_list %}
+    </div>
+
+{% endblock %}

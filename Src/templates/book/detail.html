@@ -42,7 +42,7 @@
                     <p class="text-primary"><b class="text-body">Rent Charge:</b>
                         {{ object.rent_charge }}</p></p>
                 {% endif %}
-                <p class="text-primary"><b class="text-body">Category:</b><a href="#">{{ object.category }}</a></p>
+                <p class="text-primary"><b class="text-body">Category:</b><a href="{% url 'category_details' slug=object.category.slug %}">{{ object.category }}</a></p>
                 <div class="col-sm mx-3 my-4 ">
                     {% include 'book/cart_update.html' with product=object cart=cart %}
                 </div>

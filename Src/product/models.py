@@ -89,6 +89,10 @@ class BookManager(models.Manager):
         qs = self.get_queryset().filter(author=author)
         return qs
 
+    def get_by_category(self, category):
+        qs = self.get_queryset().filter(category=category)
+        return qs
+
 
 COUNTRY_CHOOSE = (
     ('bangladesh', 'Bangladesh'),
