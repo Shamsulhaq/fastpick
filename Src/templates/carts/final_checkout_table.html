@@ -33,7 +33,7 @@
         </tr>
         <tr>
             <td style="background-color:#aaa;"><b>Cart Total:(include VAT)</b></td>
-            <td>{{ object.cart.total }}</td>
+            <td>{{ object.cart.total }} Tk</td>
         </tr>
         <tr>
             <td style="background-color:#aaa;"><b>Shipping Method:</b></td>
@@ -41,11 +41,11 @@
         </tr>
         <tr>
             <td style="background-color:#aaa;"><b>Shipping Total:</b></td>
-            <td>{{ object.shipping_total }}</td>
+            <td>{{ object.shipping_total }} Tk</td>
         </tr>
         <tr>
             <td style="background-color:#aaa;"><b>Oder Total:</b></td>
-            <td>{{ object.total }}</td>
+            <td style="background-color:#aaa;">{{ object.total }} Tk</td>
         </tr>
         <tr>
             <td ><a class="btn btn-success" href="{% url 'list' %}">Continue Shopping</a></td>

@@ -1,16 +1,118 @@
 {% extends 'base.html' %}
 {% block content %}
     {% include 'include_html/nav.html' %}
+    <hr>
     <div class="row ">
-        <div class="col-lg-4 col-md-4 col-sm-12">
-            <ul>
-                <li>list</li>
-                <li>list</li>
-                <li>list</li>
+        <div class="col-lg-3 col-md-3 col-sm-12">
+            <ul class="nav flex-column bg-white">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard_done' %}">All Completed Order</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard_pending' %}">All Pending Order</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard_process' %}">All on Process Order</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard_all' %}">All Order</a>
+                </li>
             </ul>
         </div>
-        <div class="col-lg-8 col-md-8 col-sm-12">
-                <p>this this the best service in word</p>
+        <div class="col-lg-8 col-md-8 col-sm-12 bg-light">
+            {% if object %}
+                <h4>{{ title }}:</h4>
+                <table class="table table-striped">
+                    <thead>
+                    <th>Order ID</th>
+                    <th>Shipping Method</th>
+                    <th>Payment amount</th>
+                    <th>Status</th>
+                    </thead>
+                    <tbody>
+                    {% for order in object.all %}
+                        <tr>
+                            <td><a href="{% url 'order_info_url' id=order.id %}">{{ order.order_id }}</a></td>
+                            <td>{{ order.shipping_method.get_method_display }}</td>
+                            <td>{{ order.total }} Tk</td>
+                            <td>{{ order.status }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% elif obj %}
+                <p class="lead">Order Details</p>
+                <table class="table table-striped">
+                    <tbody>
+                    {% if obj.status == 'submit' or obj.status == 'paid' %}
+                        <tr>
+                            <td colspan="1"></td>
+                            <td>{% if obj.status == 'submit' %}
+                                <b class="text-danger">Pleas Make a Payment for this order confirm [<a class="golink"
+                                                                                                       href="#">Make
+                                    Payment</a>]</b>
+                                {#                            {% include 'carts/success.html' with object=obj %}#}
+                            {% elif obj.status == 'paid' %}
+                                <b class="text-info">Please Wait a little bit time to receive Books</b>
+                            {% endif %}
+
+                            </td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <td style="background-color:#aaa;"><b>Order Id:</b></td>
+                        <td>#{{ obj.order_id }}</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:#aaa;"><b>Cart Items:</b></td>
+                        <td>{{ obj.cart.books.count }}</td>
+                    </tr>
+                    {% for cart in obj.cart.books.all %}
+                        <tr>
+                            <td colspan="1"></td>
+                            <td><a href="{{ cart.get_absolute_url }}">({{ forloop.counter }}) {{ cart }}</a></td>
+                        </tr>
+                        {% if not forloop.last %}
+
+                        {% endif %}
+                    {% empty %}
+                        <tr>
+                            <td colspan="1"></td>
+                            <td>Cart is Empty</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td style="background-color:#aaa;"><b>Shipping Address:</b></td>
+                        <td>{{ obj.shipping_address.get_address }}</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:#aaa;"><b>Billing Address:</b></td>
+                        <td>{{ obj.billing_address.get_address }}</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:#aaa;"><b>Cart Total:(include VAT)</b></td>
+                        <td>{{ obj.cart.total }} Tk</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:#aaa;"><b>Shipping Method:</b></td>
+                        <td>{{ obj.shipping_method.get_method_display }}</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:#aaa;"><b>Shipping Total:</b></td>
+                        <td>{{ obj.shipping_total }} Tk</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-success" ><b>Oder Total:</b></td>
+                        <td class="bg-success">{{ obj.total }} Tk</td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            {% else %}
+                NO Order Found!
+            {% endif %}
+
+
         </div>
     </div>
 

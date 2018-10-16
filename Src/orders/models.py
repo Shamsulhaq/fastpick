@@ -45,6 +45,22 @@ class OrderManager(models.Manager):
             created = True
         return obj, created
 
+    def get_order_paid(self, billing_profile):
+        qs = self.get_queryset().filter(billing_profile__user=billing_profile, status='paid')
+        return qs
+
+    def get_all_order(self, billing_profile):
+        qs = self.get_queryset().filter(billing_profile__user=billing_profile).exclude(status='created')
+        return qs
+
+    def get_all_pending(self, billing_profile):
+        qs = self.get_queryset().filter(billing_profile__user=billing_profile, status='submit')
+        return qs
+
+    def get_all_done(self, billing_profile):
+        qs = self.get_queryset().filter(billing_profile__user=billing_profile, status='shipped')
+        return qs
+
 
 class Order(models.Model):
     billing_profile = models.ForeignKey(BillingProfile, on_delete=models.CASCADE, blank=True, null=True)
@@ -57,7 +73,7 @@ class Order(models.Model):
     shipping_method = models.ForeignKey(ShippingMethod, on_delete=models.CASCADE, blank=True, null=True)
     status = models.CharField(max_length=120, default='created', choices=ORDER_STATUS_CHOICES)
     shipping_total = models.DecimalField(default=0.00, decimal_places=2, max_digits=9)
-    total = models.DecimalField(default=0.00, decimal_places=2, max_digits=9)
+    total = models.DecimalField(default=0.00, decimal_places=0, max_digits=9)
     timestamp = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)

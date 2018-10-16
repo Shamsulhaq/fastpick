@@ -1,9 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
     {% include 'include_html/nav.html' %}
-    <div class="col-6 mx-auto">
-    <p>Your Oder Id # {{ object.id }}</p>
-    <p>Your Shipping Address: {{ object.shipping_address }}</p>
-        <h1 class="display-1">Thank You For Your Shopping </h1>
+    <div class="col-6 mx-auto border bg-success">
+        <p>Your Payable Amount: {{ object.total }} Tk.</p>
+        <p>Your Choosing Shipping Method: {{ object.shipping_method.get_method_display }}</p>
+        {% if object.shipping_method.method == 'home delivery' %}
+            <p>Your Shipping Address: {{ object.shipping_address }}</p>
+        {% endif %}
+
+        <p class="lead-1">How to Pay </p>
+        <p class="lead-1">Rocket Payment</p>
+        <hr>
+        <ul>
+            <li>Dial *322# </li>
+            <li>Select Payment option 1</li>
+            <li>Select Bill pay option 1</li>
+            <li>Write Biller ID "78659"</li>
+            <li>Write Order ID in Bill Number Box "{{ object.order_id }}"</li>
+            <li>Write Your Amount "{{ object.total}}"</li>
+            <li>Write your Secret PIN (XXXX)</li>
+            <li>You will get a confirmation SMS</li>
+        </ul>
+
     </div>
 {% endblock %}
