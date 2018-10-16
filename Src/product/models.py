@@ -52,6 +52,7 @@ class BookQuerySet(models.query.QuerySet):
                 Q(category__keyword__icontains=keyword) |
                 Q(publication__name__icontains=keyword) |
                 Q(author__name__icontains=keyword) |
+                Q(translator__icontains=keyword) |
                 Q(author__bio__icontains=keyword) |
                 Q(tag__keyword__icontains=keyword))
 
@@ -121,23 +122,25 @@ class BookList(models.Model):
     author = models.ForeignKey(BookAuthor, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     publication = models.ForeignKey(Publication, on_delete=models.CASCADE)
+    translator = models.CharField(max_length=250, blank=True, null=True)
     edition = models.CharField(max_length=20, help_text='Year eg. 1st Edition, 2018', blank=True, null=True)
     isbn = models.CharField(max_length=20, help_text='eg. 9847034301595', blank=True, null=True)
     country = models.CharField(max_length=20, choices=COUNTRY_CHOOSE, default='bangladesh')
     language = models.CharField(max_length=20, choices=LANGUAGE_CHOOSE, default='bengali')
     total_pages = models.PositiveIntegerField(blank=True, null=True)
-    regular_price = models.DecimalField(max_digits=9, decimal_places=2, default=0, blank=True)
+    regular_price = models.DecimalField(max_digits=9, decimal_places=2, default=0, blank=True, null=True)
     price = models.DecimalField(max_digits=9, decimal_places=2, default=0)
-    descriptions = models.TextField()
+    descriptions = models.TextField(blank=True, null=True)
     rent_charge = models.DecimalField(max_digits=9, decimal_places=2, default=0)
     image = models.ImageField(upload_to=upload_book_image_path, blank=True)
+    order = models.DecimalField(max_digits=9, decimal_places=0, default=0)
     tag = models.ManyToManyField(Tag)
-    is_old = models.BooleanField(default=True)
+    is_old = models.BooleanField(default=False)
     is_stock = models.BooleanField(default=True)
     active = models.BooleanField(default=True)
     is_rent_available = models.BooleanField(default=True)
     timeStamp = models.DateTimeField(auto_now_add=True)
-    slug = models.SlugField(blank=True, null=True, unique=True)
+    slug = models.SlugField(blank=True, null=True, unique=True, allow_unicode=True)
 
     objects = BookManager()
 

@@ -1,16 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-    {% block css %}
-        <style>
-            .logoimg {
-                padding: 5px 0 0 0;
-            }
-
-        </style>
-
-    {% endblock %}
     {% include 'include_html/nav.html' %}
-    <div class="col-6 py-5 mx-auto">
+    <div class="col-6 mx-auto">
+    <p>Your Oder Id # {{ object.id }}</p>
+    <p>Your Shipping Address: {{ object.shipping_address }}</p>
         <h1 class="display-1">Thank You For Your Shopping </h1>
     </div>
 {% endblock %}

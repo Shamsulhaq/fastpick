@@ -42,15 +42,18 @@ class BookAuthorManager(models.Manager):
 
 
 class BookAuthor(models.Model):
-    name = models.CharField(max_length=255, help_text="Enter Author name")
+    name = models.CharField(max_length=255, help_text="Enter Author name",unique=True)
     image = models.ImageField(upload_to=upload_author_image_path, blank=True)
-    bio = models.TextField()
-    slug = models.SlugField(blank=True, null=True)
+    bio = models.TextField(blank=True,null=True)
+    slug = models.SlugField(blank=True, null=True,allow_unicode=True)
 
     objects = BookAuthorManager()
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['name']
 
     @property
     def title(self):

@@ -10,7 +10,7 @@ from product.models import BookList
 
 class AuthorListView(ListView):
     template_name = 'author/list.html'
-    paginate_by = 20
+    paginate_by = 18
 
     def get_queryset(self, *args, **kwargs):
         return BookAuthor.objects.get_authors()

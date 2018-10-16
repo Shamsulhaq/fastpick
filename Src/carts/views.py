@@ -1,4 +1,6 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
+
 from .models import Cart
 
 from accounts.forms import LoginForm, GuestRegisterForm
@@ -6,7 +8,8 @@ from addresses.forms import AddressForm
 from addresses.models import Address
 from billing.models import BillingProfile
 from product.models import BookList
-from orders.models import Order
+from orders.models import Order ,ShippingMethod
+from orders.forms import ShippingMethodForm
 
 
 # Create your views here.
@@ -26,10 +29,14 @@ def cart_update(request):
         cart_obj, new_obj = Cart.objects.new_or_get(request)
         if book_obj in cart_obj.books.all():
             cart_obj.books.remove(book_obj)
+            request.session['cart_items'] = cart_obj.books.count()  # to count cart items
+            messages.warning(request, "Your are Card item Removed!")
+            return redirect('cart_home')  # to redirect cart home page
         else:
             cart_obj.books.add(book_obj)
         request.session['cart_items'] = cart_obj.books.count()
-    return redirect('cart_home')
+        messages.success(request, "Your are Card item Added!")
+    return redirect(book_obj.get_absolute_url())
 
 
 def checkout_home(request):
@@ -37,27 +44,41 @@ def checkout_home(request):
     order_obj = None
     if cart_created or cart_obj.books.count() == 0:
         return redirect('cart_home')
+
     login_form = LoginForm()
     guest_register_form = GuestRegisterForm()
+    shipping_method_form = ShippingMethodForm()
     address_form = AddressForm()
+
     billing_address_id = request.session.get("billing_address_id", None)
     shipping_address_id = request.session.get("shipping_address_id", None)
+    shipping_method_id = request.session.get("shipping_method_id", None)
 
     billing_profile, created = BillingProfile.objects.new_or_get(request)
     address_qs = None
     if billing_profile is not None:
         if request.user.is_authenticated:
             address_qs = Address.objects.filter(billing_profile=billing_profile)
+
         order_obj, order_obj_created = Order.objects.new_or_get(billing_profile, cart_obj)
+
+        if shipping_method_id:
+            order_obj.shipping_method = ShippingMethod.objects.get(id=shipping_method_id)
+            del request.session["shipping_method_id"]
 
         if shipping_address_id:
             order_obj.shipping_address = Address.objects.get(id=shipping_address_id)
             del request.session["shipping_address_id"]
+
         if billing_address_id:
             order_obj.billing_address = Address.objects.get(id=billing_address_id)
             del request.session["billing_address_id"]
-        if billing_address_id or shipping_address_id:
+            if shipping_address_id:
+                del request.session["shipping_address_id"]
+
+        if shipping_method_id or billing_address_id or shipping_address_id:
             order_obj.save()
+
     if request.method == 'POST':
         is_done = order_obj.check_done()
         if is_done:
@@ -66,18 +87,19 @@ def checkout_home(request):
             del request.session['cart_id']
             if not request.user.is_authenticated:
                 del request.session['guest_email_id']
-            return redirect('cart_success')
+            return render(request, 'carts/success.html',{'object':order_obj})
     context = {
         'object': order_obj,
         'login_form': login_form,
         'guest_register_form': guest_register_form,
         'billing_profile': billing_profile,
         'address_form': address_form,
-        'address_qs':address_qs,
+        'address_qs': address_qs,
+        'shipping_method_form': shipping_method_form,
 
     }
     return render(request, 'carts/checkout.html', context)
 
 
-def cart_success_view(request):
-    return render(request,'carts/success.html')
+# def cart_success_view(request):
+#     return render(request, 'carts/success.html')

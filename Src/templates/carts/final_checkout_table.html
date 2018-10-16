@@ -32,16 +32,20 @@
             <td>{{ object.billing_address.get_address }}</td>
         </tr>
         <tr>
-            <td style="background-color:#aaa;"><b>Cart Total::</b></td>
+            <td style="background-color:#aaa;"><b>Cart Total:(include VAT)</b></td>
             <td>{{ object.cart.total }}</td>
         </tr>
         <tr>
+            <td style="background-color:#aaa;"><b>Shipping Method:</b></td>
+            <td>{{ object.shipping_method.get_method_display }}</td>
+        </tr>
+        <tr>
             <td style="background-color:#aaa;"><b>Shipping Total:</b></td>
-            <td><a href="#">{{ object.shipping_total }}</a></td>
+            <td>{{ object.shipping_total }}</td>
         </tr>
         <tr>
             <td style="background-color:#aaa;"><b>Oder Total:</b></td>
-            <td><a href="#">{{ object.total }}</a></td>
+            <td>{{ object.total }}</td>
         </tr>
         <tr>
             <td ><a class="btn btn-success" href="{% url 'list' %}">Continue Shopping</a></td>

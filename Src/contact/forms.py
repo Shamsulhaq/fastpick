@@ -15,10 +15,10 @@ class ContactForm(forms.Form):
                                                            "id": "contact_message",
                                                            "placeholder": "your message"}))
 
-    def clean_phone(self):
-        phone = self.cleaned_data.get("phone")
-        if not phone.length < 16 and phone.length >= 11:
-            raise forms.ValidationError("Wrong format phone number!")
-        elif not "8801" in phone:
-            raise forms.ValidationError("Wrong formatphone number!")
-        return phone
+    # def clean_phone(self):
+    #     phone = self.cleaned_data.get("phone")
+    #     if not phone.length < 16 and phone.length >= 11:
+    #         raise forms.ValidationError("Wrong format phone number!")
+    #     elif not "8801" in phone:
+    #         raise forms.ValidationError("Wrong formatphone number!")
+    #     return phone

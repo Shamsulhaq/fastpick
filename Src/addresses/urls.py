@@ -14,8 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from .views import checkout_address_create_view,checkout_address_reuse_view
+from .views import checkout_address_create_view,checkout_address_reuse_view,shipping_method
 urlpatterns = [
     path('create/', checkout_address_create_view, name='checkout_address_create_url'),
     path('reuse/', checkout_address_reuse_view, name='checkout_address_reuse_url'),
+    path('shipping/method/',shipping_method,name ='shipping_method'),
 ]

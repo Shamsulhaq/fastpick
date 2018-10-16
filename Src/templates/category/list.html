@@ -11,7 +11,7 @@
     <div class="row">
         {% if object_list %}
             {% for object in object_list %}
-                <div class="col-lg-2 col-sm-2 col-md-2 mb-3">
+                <div class="col-lg-2 col-sm-6 col-md-4 mb-3">
                     <div class="card" style="max-height: 200px; height: 200px;">
                         <!-- Image -->
 
@@ -30,7 +30,7 @@
         {% endif %}
     </div>
     <hr>
-    {% if page_obj.exists %}
+    {% if is_paginated %}
     <div class="row">
     <div class="col-sm-12">
     {% include 'include_html/pagination.html' with page_obj=page_obj %}

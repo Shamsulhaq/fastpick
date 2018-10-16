@@ -10,7 +10,7 @@ from product.models import BookList
 
 class CategoryListView(ListView):
     template_name = 'category/list.html'
-    paginate_by = 20
+    paginate_by = 18
 
     def get_queryset(self, *args, **kwargs):
         return Category.objects.get_category()

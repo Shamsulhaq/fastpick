@@ -1,4 +1,5 @@
 from math import fsum
+from decimal import Decimal
 from django.db import models
 from django.conf import settings
 from django.db.models.signals import m2m_changed, pre_save
@@ -48,7 +49,7 @@ class Cart(models.Model):
         return str(self.id)
 
     def get_vat(self):
-        vat = (self.sub_total * 5) / 100
+        vat = format(Decimal(self.sub_total) * Decimal(1.10) - Decimal(self.sub_total), '.2f')
         return vat
 
 
@@ -60,6 +61,13 @@ def m2m_save_cart_receiver(sender, instance, action, *args, **kwargs):
             subtotal += x.price
         instance.sub_total = subtotal
         instance.save()
+        for book in products:
+            book_id = book.id
+            print(book_id)
+            book = BookList.objects.get_by_id(book_id)
+            print(book.order)
+            book.order += 1
+            book.save()
 
 
 m2m_changed.connect(m2m_save_cart_receiver, sender=Cart.books.through)
@@ -67,8 +75,7 @@ m2m_changed.connect(m2m_save_cart_receiver, sender=Cart.books.through)
 
 def pre_save_cart_receiver(sender, instance, *args, **kwargs):
     if instance.sub_total > 0:
-        vat = (instance.sub_total * 5) / 100
-        instance.total = format(fsum([instance.sub_total, vat]), '.2f')
+        instance.total = Decimal(instance.sub_total) * Decimal(1.10)
     else:
         instance.total = 0.00
 

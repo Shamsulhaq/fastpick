@@ -30,6 +30,7 @@ urlpatterns = [
     path('category/', include('category.urls')),
     path('contact/', include('contact.urls')),
     path('checkout/address/', include('addresses.urls')),
+    path('dashboard/', include('dashboard.urls')),
     path('search/', SearchView.as_view(), name='search'),
 ]
 

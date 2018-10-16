@@ -2,20 +2,11 @@
 {% load static %}
 
 {% block content %}
-    {% block css %}
-        <style>
-            .logoimg {
-                padding: 5px 0 0 0;
-            }
-
-        </style>
-
-    {% endblock %}
     {% include 'include_html/nav.html' %}
     <div class="row ">
     {% include 'book/book_list/list.html' with object_list=object_list page_obj=page_obj %}
-    {% if page_obj.exists %}
-    {% include 'include_html/pagination.html' with page_obj=page_obj %}
+    {% if is_paginated %}
+        {% include 'include_html/pagination.html' with page_obj=page_obj %}
     {% endif %}
 
 {% endblock %}

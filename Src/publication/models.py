@@ -7,10 +7,9 @@ from fastpick.utils import unique_slug_generator
 
 # Create your models here.
 class Publication(models.Model):
-    name = models.CharField(max_length=150)
-    info = models.TextField()
+    name = models.CharField(max_length=150,unique=True)
     active = models.BooleanField(default=True)
-    slug = models.SlugField(unique=True, blank=True, null=True)
+    slug = models.SlugField(unique=True, blank=True, null=True,allow_unicode=True)
 
     def __str__(self):
         return self.name

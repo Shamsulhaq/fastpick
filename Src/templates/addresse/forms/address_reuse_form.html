@@ -9,7 +9,7 @@
         {% for address in address_qs %}
             <label class="border" for='address-{{ address.id }}'>
                 <input id="address-{{ address.id }}" type="radio" name="shopping_address" value="{{ address.id }}"/>
-                {{ address.address_line_1 }}</label><br>
+                {{ address.address_line_1 }},{{ address.city }},{{ address.country }}</label><br>
         {% endfor %}
         <button type="submit" class="btn btn-success">Use Address</button>
     </form>

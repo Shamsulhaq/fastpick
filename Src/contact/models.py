@@ -27,19 +27,18 @@ def complain_image_upload_path(inistance, file_name):
 class Contact(models.Model):
     name = models.CharField(max_length=120)
     email = models.EmailField(blank=True, null=True)
+    subject = models.CharField(max_length=120, blank=True, null=True)
     phone = models.CharField(max_length=15)
-    massage = models.TextField()
+    message = models.TextField()
 
     def __str__(self):
-        self.name
+        return self.name
 
 
 COMPLAIN_CHOOSE = (
-    ('sd', 'Slow delivery'),
-    ('pcs', 'Poor client service'),
-    ('rs', 'Rude staff'),
-    ('as', 'About service'),
-    ('o', 'Others'),
+    ('about service', 'About Service'),
+    ('about book', 'About Book'),
+    ('others', 'Others'),
 )
 
 
@@ -47,9 +46,9 @@ class Complain(models.Model):
     name = models.CharField(max_length=120)
     email = models.EmailField(blank=True, null=True)
     phone = models.CharField(max_length=15)
-    complain_type = models.CharField(max_length=5, choices=COMPLAIN_CHOOSE)
+    complain_type = models.CharField(max_length=20, choices=COMPLAIN_CHOOSE)
     massage = models.TextField()
-    screenshots = models.ImageField(upload_to=complain_image_upload_path,blank=True,null=True)
+    screenshots = models.ImageField(upload_to=complain_image_upload_path, blank=True,null=True)
 
     def __str__(self):
         return self.name

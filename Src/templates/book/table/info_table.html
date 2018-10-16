@@ -1,6 +1,12 @@
 <div class="col-sm-12 col-md-12 col-lg-12">
     <table class="table table-striped">
         <tbody>
+        {% if object.translator %}
+        <tr>
+            <td style="background-color:#aaa;"><b>Translator:</b></td>
+            <td>{{ object.translator }}</td>
+        </tr>
+        {% endif %}
         <tr>
             <td style="background-color:#aaa;"><b>Book Status:</b></td>
             <td>{% if object.is_old %} Old {% else %}
