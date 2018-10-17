@@ -1,11 +1,12 @@
 from django.urls import path
-from .views import dashboard_home,dashboard_all,order_info_view,dashboard_done,dashboard_pending,dashboard_process
+from .views import dashboard, on_process_order, all_order, order_info_view, done_order, pending_order, address_book
 
 urlpatterns = [
-    path('home/', dashboard_home, name='dashboard_home'),
-    path('all/', dashboard_all, name='dashboard_all'),
-    path('pending/', dashboard_pending, name='dashboard_pending'),
-    path('paid/', dashboard_process, name='dashboard_process'),
-    path('done/', dashboard_done, name='dashboard_done'),
-    path('order_info/<id>', order_info_view, name='order_info_url'),
+    path('dashboard/', dashboard, name='dashboard_home'),
+    path('dashboard/address/', address_book, name='address_book_url'),
+    path('dashboard/on_process/order/', on_process_order, name='on_process_order'),
+    path('dashboard/all/order/', all_order, name='dashboard_all_order'),
+    path('dashboard/pending/order/', pending_order, name='dashboard_pending'),
+    path('dashboard/done/order/', done_order, name='dashboard_done'),
+    path('dashboard/order_info/<id>', order_info_view, name='order_info_url'),
 ]

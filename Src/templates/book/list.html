@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block content %}
-    {% include 'include_html/nav.html' %}
     <div class="row ">
     {% include 'book/book_list/list.html' with object_list=object_list page_obj=page_obj %}
     {% if is_paginated %}

@@ -21,8 +21,10 @@ def guest_register_view(request):
     redirect_path = next_ or next_post or None
     if form.is_valid():
         email = form.cleaned_data.get("email")
+        phone = form.cleaned_data.get("phone")
         new_guest_email = GuestEmail.objects.create(email=email)
         request.session['guest_email_id'] = new_guest_email.id
+        request.session['guest_phone'] = phone
         if is_safe_url(redirect_path, request.get_host()):
             return redirect(redirect_path)
         else:

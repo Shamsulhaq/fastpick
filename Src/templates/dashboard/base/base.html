@@ -1,0 +1,58 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!doctype html>
+<html lang="en">
+<head>
+
+    {% include 'include_html/css.html' %}
+    <title>FastPick | Dash-Board</title>
+</head>
+<body>
+<div class="container">
+    <section>
+        <nav class="navbar navbar-light bg-light justify-content-between mt-1">
+            <a href="{% url 'dashboard_home' %}" class="navbar-brand"><img width="80px"
+                                                                           src="{% static 'img/logo.png' %}"/></a>
+            <a class=" btn btn-success" href="{% url 'list' %}">Brows FastPick</a>
+            {% if request.user.is_authenticated %}
+                <section class="form-inline my-2 my-lg-0">
+                    <b class="lead">{{ request.user }} </b>
+                    <a href="{% url 'get_logout' %}" class="cancel-link">Logout?</a>
+                </section>
+            {% endif %}
+        </nav>
+    </section>
+    <hr>
+
+    {% url 'get_logout' as logout_url %}
+    {% url 'password_change' as password_change %}
+    {% url 'dashboard_all_order' as all_order_url %}
+    {% url 'address_book_url' as address_url %}
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-12 ">
+            <div class="card m-2">
+                <div class="card-header">
+                    MY ACCOUNT
+                </div>
+                <ul class="list-group list-group-flush border">
+                    <li class="list-group-item"><a href="{{ logout_url }}">Logout</a></li>
+                    <li class="list-group-item"><a href="#">Account Information</a></li>
+                    <li class="list-group-item {% if request.path == address_url %}bg-light{% endif %}"><a href="{{ address_url }}">Address Book</a></li>
+                    <li class="list-group-item {% if request.path == all_order_url %}bg-light{% endif %}"><a href="{{ all_order_url }}">My Orders</a></li>
+                    <li class="list-group-item {% if request.path == password_change %}bg-light{% endif %}"><a
+                            href="{{ password_change }}">Password Change</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-8 col-md-6 col-sm-12">
+
+            {% block content %}
+            {% endblock %}
+
+        </div>
+
+    </div>
+{% include 'include_html/js_file.html' %}
+</body>
+
+</html>

@@ -18,8 +18,8 @@ from django.contrib.auth.views import LogoutView
 from .views import login_page,register_page,guest_register_view
 
 urlpatterns = [
-    path('login', login_page, name='get_login'),
-    path('guest', guest_register_view, name='guest_access'),
-    path('logout', LogoutView.as_view(), name='get_logout'),
-    path('register', register_page, name='get_register'),
+    path('account/login/', login_page, name='get_login'),
+    path('account/guest/', guest_register_view, name='guest_access'),
+    path('account/logout/', LogoutView.as_view(), name='get_logout'),
+    path('account/register/', register_page, name='get_register'),
 ]

@@ -1,7 +1,32 @@
-{% extends 'base.html' %}
-{% block content %}
-{% include 'include_html/head.html' %}
-    <div class="row center">
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    {% block css %}{% endblock %}
+    {% include 'include_html/css.html' %}
+    <title>FastPick.xyz || Online Buy & Rent Solution</title>
+    <style>
+        .logoimg {
+            padding: 5px 0 0 0;
+        }
+    </style>
+</head>
+<body>
+{#<br>#}
+{#<marquee behavior="alternate" ><b style="background-color:#ff9900 ">-----This Site is underdevelopment-----</b></marquee>#}
+{#<br>#}
+
+<div class="container border">
+    <div class="container">
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% include 'include_html/head.html' %}
+       <div class="row center">
 
         <div class="col-sm-2"></div>
         <div class="col-sm-8 py-4 ">
@@ -19,8 +44,9 @@
         </div>
         <div class="col-sm-2"></div>
     </div>
-{% endblock %}
-{% block js %}
+    </div>
+</div>
+{% include 'include_html/js.html' %}
     <script>
         superplaceholder({
             el: search,
@@ -50,5 +76,14 @@
             }
         })
     </script>
-
-{% endblock %}
+<script>
+    window.setTimeout(function () {
+        $(".alert").fadeTo(500, 0).slideUp(500, function () {
+            $(this).remove();
+            console.log("De")
+        });
+    }, 3000);
+</script>
+{% block js %}{% endblock %}
+</body>
+</html>

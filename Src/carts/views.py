@@ -58,7 +58,7 @@ def checkout_home(request):
     address_qs = None
     if billing_profile is not None:
         if request.user.is_authenticated:
-            address_qs = Address.objects.filter(billing_profile=billing_profile)
+            address_qs = Address.objects.filter(billing_profile=billing_profile, active=True)
 
         order_obj, order_obj_created = Order.objects.new_or_get(billing_profile, cart_obj)
 

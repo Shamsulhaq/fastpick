@@ -1,4 +1,5 @@
 {% load static %}
+{% load crispy_forms_tags %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -18,6 +19,7 @@
 
 <div class="container border">
     <div class="container">
+
 
         {#        {% if messages %}#}
         {#            <ul class="alert alert-success ">#}
@@ -64,7 +66,7 @@
         {#                </div>#}
         {#            </div>#}
         {#        {% endif %}#}
-
+        {% include 'include_html/nav.html' %}
         {% block content %}{% endblock %}
     </div>
 </div>

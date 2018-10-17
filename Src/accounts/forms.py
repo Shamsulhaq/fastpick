@@ -6,6 +6,7 @@ User = get_user_model()
 
 class GuestRegisterForm(forms.Form):
     email = forms.EmailField(widget=forms.EmailInput(attrs={"class": "form-control"}))
+    phone = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
 
 
 class LoginForm(forms.Form):

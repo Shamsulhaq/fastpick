@@ -1,45 +1,54 @@
 {% if cart.books.exists %}
     <h2>Cart List</h2>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Book Name</th>
-            <th>Price</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for book in cart.books.all %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td><a href="{{ book.get_absolute_url }}">{{ book.name }} </a></td>
-                <td>{{ book.price }} TK</td>
-                <td>{% include 'carts/add_or_remove.html' with product=book cart=cart %}</td>
-            </tr>
-        {% endfor %}
-        <tr>
-            <td colspan="1"></td>
-            <td><b>Subtotal:</b></td>
-            <td>{{ cart.sub_total }} TK</td>
-        </tr>
-        <tr>
-            <td colspan="1"></td>
-            <td ><b>Total Vat fee:</b></td>
-            <td>{{ cart.get_vat }}</td>
-        </tr>
+    <div class="row">
+        <div class="col-sm-12 col-md-8 col-lg-8">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Book Name</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for book in cart.books.all %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><img width="40px" src="{{ book.image.url }}"> <a
+                                href="{{ book.get_absolute_url }}">{{ book.name }} </a></td>
+                        <td>{{ book.price }} TK</td>
+                        <td>{% include 'carts/add_or_remove.html' with product=book cart=cart %}</td>
+                    </tr>
+                {% endfor %}
 
-        <tr>
-            <td colspan="1"></td>
-            <td><b>Total:</b></td>
-            <td>{{ cart.total }} TK</td>
-        </tr>
-        <tr>
-            <td colspan="2"></td>
-            <td><a href="{% url 'checkout_home' %}" class="btn btn-sm btn-success">Checkout</a></td>
-        </tr>
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4 ">
+            <p class="lead">Checkout Summary</p>
+            <hr>
+            <p>Payment Details</p>
+            <div class="row ">
+                <div class="mr-auto col"><b>Subtotal: </b></div>
+                <div class="ml-auto col"><p> {{ cart.sub_total }} TK</p></div>
+            </div>
+
+            <div class="row border-bottom ">
+                <div class="mr-auto col"><b>Total Vat fee: </b></div>
+                <div class="ml-auto col"><p> {{ cart.get_vat }} Tk</p></div>
+            </div>
+            <div class="row ">
+                <div class="mr-auto col"><b>Total: </b></div>
+                <div class="ml-auto col"><p> {{ cart.total }} Tk</p></div>
+            </div>
+            <div class="row ">
+            <div class="mr-auto col"></div>
+            <div class="ml-auto col"><a href="{% url 'checkout_home' %}" class="btn btn-success">Checkout</a></div>
+        </div>
+        </div>
+    </div>
+
 {% else %}
     <p>Cart is Empty </p>
 {% endif %}

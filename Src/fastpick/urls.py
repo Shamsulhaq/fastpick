@@ -23,14 +23,15 @@ from .viwes import IndexView,SearchView
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     path('admin/', admin.site.urls, name ='admin'),
-    path('account/', include('accounts.urls')),
+    path('', include('accounts.urls')),
+    path('accounts/', include('accounts.password.urls')),
     path('author/', include('author.urls')),
     path('book/', include('product.urls')),
     path('cart/', include('carts.urls')),
     path('category/', include('category.urls')),
     path('contact/', include('contact.urls')),
     path('checkout/address/', include('addresses.urls')),
-    path('dashboard/', include('dashboard.urls')),
+    path('', include('dashboard.urls')),
     path('search/', SearchView.as_view(), name='search'),
 ]
 

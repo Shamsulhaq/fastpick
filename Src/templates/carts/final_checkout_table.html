@@ -11,7 +11,7 @@
         </tr>
         {% for cart in object.cart.books.all %}
             <tr>
-                <td colspan="1"></td>
+                <td ><img width="30px" src="{{ cart.image.url }}"/></td>
                 <td><a href="{{ cart.get_absolute_url }}">({{ forloop.counter }}) {{ cart }}</a></td>
             </tr>
             {% if not forloop.last %}

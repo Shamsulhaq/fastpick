@@ -17,6 +17,7 @@ class Address(models.Model):
     country = models.CharField(max_length=120, default='Bangladesh')
     state = models.CharField(max_length=120, default='Bangladesh',null=True,blank='get_address')
     postal_code = models.CharField(max_length=120)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.address_line_1

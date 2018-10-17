@@ -51,6 +51,8 @@ class OrderManager(models.Manager):
 
     def get_all_order(self, billing_profile):
         qs = self.get_queryset().filter(billing_profile__user=billing_profile).exclude(status='created')
+        if qs.count() ==1:
+            return qs
         return qs
 
     def get_all_pending(self, billing_profile):
@@ -74,8 +76,8 @@ class Order(models.Model):
     status = models.CharField(max_length=120, default='created', choices=ORDER_STATUS_CHOICES)
     shipping_total = models.DecimalField(default=0.00, decimal_places=2, max_digits=9)
     total = models.DecimalField(default=0.00, decimal_places=0, max_digits=9)
-    timestamp = models.DateTimeField(auto_now_add=True)
-    update = models.DateTimeField(auto_now=True)
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+    update = models.DateTimeField(auto_now=True, auto_now_add=False)
     active = models.BooleanField(default=True)
 
     objects = OrderManager()

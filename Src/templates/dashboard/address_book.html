@@ -1,0 +1,34 @@
+{% extends 'dashboard/base/base.html' %}
+{% block content %}
+    <div class="col bg-light mt-2">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link {% if request.path == billing_address %}active{% endif %}"
+                   href="{{ billing_address }}">Billing Address</a></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.path == shipping_address %}active{% endif %}"
+                   href="{{ shipping_address }}">Shipping Address</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col bg-light >
+    {% if address_obj %}
+        <div class="col bg-light">
+            <table class="table table-striped">
+                <tbody>
+                {% for obj in address_obj.all %}
+                    <tr>
+                        <td>{{ obj.get_address }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            NO Order Found!
+
+
+        </div>
+    {% endif %}
+    </div>
+{% endblock %}

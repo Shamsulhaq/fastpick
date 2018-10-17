@@ -12,6 +12,15 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 from django.contrib.messages import constants as messages
+from .mail_info import *
+# Email config
+EMAIL_USE_TLS = EMAIL_USE_TLS
+EMAIL_HOST = EMAIL_HOST
+EMAIL_HOST_USER = EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
+EMAIL_PORT = EMAIL_PORT
+DEFAULT_FROM_EMAIL = 'FastPick <fastpick.xyz@gmail.com>'
+BASE_URL = '127.0.0.1:8000'
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -50,13 +59,17 @@ INSTALLED_APPS = [
     'product',
     'publication',
     'tag',
-
+#     bootstrap form
+    'crispy_forms',
 
 
 
 
 
 ]
+LOGIN_URL = '/account/login'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/account/login/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -157,4 +170,3 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-LOGOUT_REDIRECT_URL = '/account/login'
