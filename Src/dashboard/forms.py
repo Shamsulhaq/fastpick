@@ -7,5 +7,5 @@ class BillingProfileForm(forms.ModelForm):
         model = BillingProfile
 
         fields = (
-             'full_name', 'email', 'phone', 'nid'
+             'full_name', 'phone', 'nid'
         )

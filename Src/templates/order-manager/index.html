@@ -1,0 +1,31 @@
+{% extends 'order-manager/base/base.html' %}
+{% block content %}
+    {% if object.exists %}
+        <table class="table table-hover " style="cursor: pointer;">
+            <thead class="thead-light ">
+            <tr>
+                <th>Order #</th>
+                <th>Date</th>
+                <th>How Long</th>
+                <th>Last View</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in object.all %}
+
+                <tr onclick="window.location.href='{% url 'order_admin_single_order_url' id=order.id %}'">
+                    <td>{{ order.order_id }}</td>
+                    <td>{{ order.timestamp|date }}</td>
+                    <td>{{ order.timestamp|timesince }}</td>
+                    <td>{{ order.update|timesince }}</td>
+                    <td>{{ order.get_status_display }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+        <p class="text-center">Book List is Empty </p>
+    {% endif %}
+{% endblock %}

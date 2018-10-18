@@ -1,0 +1,10 @@
+from django.urls import path
+from .views import index,single_order,done_order,on_process_order,pending_order
+
+urlpatterns = [
+    path('order/admin/', index, name='order_admin_index_url'),
+    path('order/admin/done/', done_order, name='done_order_url'),
+    path('order/admin/on-process/', on_process_order, name='admin_process_order_url'),
+    path('order/admin/pending/', pending_order, name='pending_order_url'),
+    path('order/admin/order_info/<id>', single_order, name='order_admin_single_order_url'),
+    ]

@@ -18,6 +18,7 @@ def unique_order_id_generator(instance):
         This is for a Django project with order_id field.
     """
     order_new_id = random_string_generator().upper()
+    # order_new_id = random. for _ in range(10)
 
     Klass = instance.__class__
     qs_exists = Klass.objects.filter(order_id=order_new_id).exists()

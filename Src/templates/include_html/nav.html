@@ -9,6 +9,7 @@
 {% url 'author_list' as author_list_url %}
 {% url 'category_list' as category_list_url %}
 {% url 'dashboard_home' as dashbord_url %}
+{% url 'order_admin_index_url' as admin_url %}
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light border mt-4 ">
     <a class="navbar-brand" href="{{ serach_url }}"><img width="80px" src="{% static 'img/logo.png' %}"></a>
@@ -35,9 +36,9 @@
                     <a class="dropdown-item" href="">By Publication</a>
                 </div>
             </li>
-{#            <li class="nav-item {% if request.path == author_list_url %}active{% endif %}">#}
-{#                <a class="nav-link " href="{{ author_list_url }}"><b>লেখক</b></a>#}
-{#            </li>#}
+            {#            <li class="nav-item {% if request.path == author_list_url %}active{% endif %}">#}
+            {#                <a class="nav-link " href="{{ author_list_url }}"><b>লেখক</b></a>#}
+            {#            </li>#}
             <li class="nav-item">
                 <a class="nav-link " href="#"><b>বই রিভিউ</b></a>
             </li>
@@ -47,13 +48,17 @@
             <li class="nav-item {% if request.path == contact_url %}active{% endif %}">
                 <a class="nav-link " href="{{ contact_url }}"><b>যোগাযোগ</b></a>
             </li>
-            <li class="nav-item dropdown {% if request.path == logout_url or request.path == register_url or request.path == login_url %}active{% endif %}">
+            <li class="nav-item dropdown {% if request.path == logout_url or request.path == admin_url or request.path == register_url or request.path == login_url %}active{% endif %}">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     <b>My Account</b>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     {% if request.user.is_authenticated %}
+                        {% if request.user.is_staff %}
+                            <a class="dropdown-item" href="{{ admin_url }}">Order Manager</a>
+                            <div class="dropdown-divider"></div>
+                        {% endif %}
                         <a class="dropdown-item" href="{{ dashbord_url }}">Dashboard</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ logout_url }}">Logout</a>

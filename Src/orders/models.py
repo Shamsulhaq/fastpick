@@ -45,6 +45,7 @@ class OrderManager(models.Manager):
             created = True
         return obj, created
 
+    # for User DashBoard
     def get_order_paid(self, billing_profile):
         qs = self.get_queryset().filter(billing_profile__user=billing_profile, status='paid')
         return qs
@@ -81,6 +82,9 @@ class Order(models.Model):
     active = models.BooleanField(default=True)
 
     objects = OrderManager()
+
+    class Meta:
+        ordering = ['-timestamp']
 
     def __str__(self):
         return self.order_id

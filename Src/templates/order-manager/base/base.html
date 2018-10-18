@@ -1,0 +1,74 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!doctype html>
+<html lang="en">
+<head>
+
+    {% include 'include_html/css.html' %}
+    <title>Order Admin</title>
+</head>
+<body>
+<div class="container">
+    {% for message in messages %}
+        {#            <div class="alert alert-{{ message.tags }}">{{ message }}</div>#}
+        {#            <script> setTimeout(function() { alert('{{ message.tags }} \n {{ message }}')}, 5000);</script>#}
+        <div class="alert {{ message.tags }}" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span>
+            </button>
+            {{ message }}
+        </div>
+
+    {% endfor %}
+    <section>
+        <nav class="navbar navbar-light bg-light justify-content-between mt-1">
+            <a href="{% url 'dashboard_home' %}" class="navbar-brand"><img width="80px"
+                                                                           src="{% static 'img/logo.png' %}"/></a>
+            <a class=" btn btn-success" href="{% url 'list' %}">Brows FastPick</a>
+            {% if request.user.is_authenticated %}
+                <section class="form-inline my-2 my-lg-0">
+                    <b class="lead">{{ request.user }} </b>
+                    <a href="{% url 'get_logout' %}" class="cancel-link">Logout?</a>
+                </section>
+            {% endif %}
+        </nav>
+    </section>
+    <hr>
+
+
+    {% url 'done_order_url' as done_order_url %}
+    {% url 'pending_order_url' as pending_order_url %}
+    {% url 'admin_process_order_url' as admin_process_order_url %}
+    {% url 'order_admin_index_url' as order_admin_index_url %}
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == done_order_url %}active{% endif %}"
+                       href="{{ done_order_url }}">Completed Order</a></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == pending_order_url %}active{% endif %}"
+                       href="{{ pending_order_url }}">Pending Order</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == admin_process_order_url %}active{% endif %}"
+                       href="{{ admin_process_order_url }}">on Process Order</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == order_admin_index_url %}active{% endif %}"
+                       href="{{ order_admin_index_url }}">All Order</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 mt-2">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+    </div>
+</div>
+{% include 'include_html/js_file.html' %}
+</body>
+
+</html>
