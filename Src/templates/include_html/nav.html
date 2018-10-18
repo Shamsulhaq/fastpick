@@ -50,7 +50,7 @@
             <li class="nav-item dropdown {% if request.path == logout_url or request.path == register_url or request.path == login_url %}active{% endif %}">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
-                    <b>Account</b>
+                    <b>My Account</b>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     {% if request.user.is_authenticated %}

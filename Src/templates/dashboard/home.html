@@ -1,9 +1,36 @@
 {% extends 'dashboard/base/base.html' %}
 {% load static %}
 {% block content %}
-<img width="120px" class="rounded-circle" src="{% static 'img/book_image.png' %}">
-            {{ billing_obj.user.get_full_name }}
-            <p>Email: {{ billing_obj.email }}</p>
+    <div class="row mt-2">
+        <div class="col-lg-5 col-sm-12 col-md-12">
+            <div class="card" style="width: 18rem;">
+                <div class="card-header {% if billing_obj.verify %} bg-success {% else %} bg-warning {% endif %}">
+                    Account Info
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Full Name: {{ billing_obj.full_name }}</li>
+                    <li class="list-group-item">Email: {{ billing_obj.email }}</li>
+                    <li class="list-group-item">Phone: {{ billing_obj.phone }}</li>
+                    <li class="list-group-item">NID: {{ billing_obj.nid }}</li>
+                    <li class="list-group-item">Verify: {% if billing_obj.verify %} <i class="fas fa-check-circle"></i>
+                    {% else %}<i class="fas fa-ban"></i>{% endif %}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12 col-md-12">
+            <div class="card" style="width: 18rem;">
+                <div class="card-header ">
+                    Order Info
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">On Process order: {{ on_process_order.count }}</li>
+                    <li class="list-group-item">Pending order: {{ pending_order_obj.count }}</li>
+                    <li class="list-group-item">Done order: {{ done_order_obj.count }}</li>
+                    <li class="list-group-item">Total Order: {{ order_obj.count }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 

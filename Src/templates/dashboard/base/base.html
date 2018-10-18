@@ -9,6 +9,17 @@
 </head>
 <body>
 <div class="container">
+    {% for message in messages %}
+        {#            <div class="alert alert-{{ message.tags }}">{{ message }}</div>#}
+        {#            <script> setTimeout(function() { alert('{{ message.tags }} \n {{ message }}')}, 5000);</script>#}
+        <div class="alert {{ message.tags }}" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span>
+            </button>
+            {{ message }}
+        </div>
+
+    {% endfor %}
     <section>
         <nav class="navbar navbar-light bg-light justify-content-between mt-1">
             <a href="{% url 'dashboard_home' %}" class="navbar-brand"><img width="80px"
@@ -28,6 +39,8 @@
     {% url 'password_change' as password_change %}
     {% url 'dashboard_all_order' as all_order_url %}
     {% url 'address_book_url' as address_url %}
+    {% url 'dashboard_account' as account_url %}
+    {% url 'dashboard_home' as dashboard_home %}
     <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-12 ">
             <div class="card m-2">
@@ -36,9 +49,14 @@
                 </div>
                 <ul class="list-group list-group-flush border">
                     <li class="list-group-item"><a href="{{ logout_url }}">Logout</a></li>
-                    <li class="list-group-item"><a href="#">Account Information</a></li>
-                    <li class="list-group-item {% if request.path == address_url %}bg-light{% endif %}"><a href="{{ address_url }}">Address Book</a></li>
-                    <li class="list-group-item {% if request.path == all_order_url %}bg-light{% endif %}"><a href="{{ all_order_url }}">My Orders</a></li>
+                    <li class="list-group-item {% if request.path == dashboard_home %}bg-light{% endif %}"><a
+                            href="{{ dashboard_home }}">Account DashBoard</a></li>
+                    <li class="list-group-item {% if request.path == account_url %}bg-light{% endif %}"><a
+                            href="{{ account_url }}">Account Information</a></li>
+                    <li class="list-group-item {% if request.path == address_url %}bg-light{% endif %}"><a
+                            href="{{ address_url }}">Address Book</a></li>
+                    <li class="list-group-item {% if request.path == all_order_url %}bg-light{% endif %}"><a
+                            href="{{ all_order_url }}">My Orders</a></li>
                     <li class="list-group-item {% if request.path == password_change %}bg-light{% endif %}"><a
                             href="{{ password_change }}">Password Change</a></li>
                 </ul>
@@ -52,7 +70,7 @@
         </div>
 
     </div>
-{% include 'include_html/js_file.html' %}
+    {% include 'include_html/js_file.html' %}
 </body>
 
 </html>

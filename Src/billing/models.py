@@ -34,6 +34,7 @@ class BillingProfileManager(models.Manager):
 
 class BillingProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    full_name = models.CharField(max_length=250, blank=True, null=True)
     email = models.EmailField()
     nid = models.CharField(max_length=17, blank=True, null=True)
     phone = models.CharField(max_length=15, blank=True, null=True)

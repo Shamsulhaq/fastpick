@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import dashboard, on_process_order, all_order, order_info_view, done_order, pending_order, address_book
+from .views import dashboard, account_info, on_process_order, all_order, order_info_view, done_order, pending_order, address_book
 
 urlpatterns = [
     path('dashboard/', dashboard, name='dashboard_home'),
+    path('dashboard/account/', account_info, name='dashboard_account'),
     path('dashboard/address/', address_book, name='address_book_url'),
     path('dashboard/on_process/order/', on_process_order, name='on_process_order'),
     path('dashboard/all/order/', all_order, name='dashboard_all_order'),

@@ -70,12 +70,10 @@ def register_page(request):
         "form": form
     }
     if form.is_valid():
-        print(form.cleaned_data)
         username = form.cleaned_data.get("username")
         email = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
         new_user = User.objects.create_user(username, email, password)
-        print(new_user)
         messages.success(request, "Your are registered!")
         return redirect('get_login')
     return render(request, template_name, context)
