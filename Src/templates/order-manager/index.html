@@ -1,6 +1,6 @@
 {% extends 'order-manager/base/base.html' %}
 {% block content %}
-    {% if object.exists %}
+    {% if object %}
         <table class="table table-hover " style="cursor: pointer;">
             <thead class="thead-light ">
             <tr>
@@ -28,4 +28,8 @@
     {% else %}
         <p class="text-center">Book List is Empty </p>
     {% endif %}
+{#    {% if page_obj.exists %}#}
+{#        {% include 'include_html/pagination.html' %}#}
+{#    {% endif %}#}
+
 {% endblock %}

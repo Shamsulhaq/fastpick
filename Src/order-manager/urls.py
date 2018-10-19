@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import index,single_order,done_order,on_process_order,pending_order
+from .views import index, single_order,done_order,on_process_order,pending_order,search_order
 
 urlpatterns = [
-    path('order/admin/', index, name='order_admin_index_url'),
+    path('order/admin/',index, name='order_admin_index_url'),
+    path('order/admin/search/', search_order, name='search_order'),
     path('order/admin/done/', done_order, name='done_order_url'),
     path('order/admin/on-process/', on_process_order, name='admin_process_order_url'),
     path('order/admin/pending/', pending_order, name='pending_order_url'),

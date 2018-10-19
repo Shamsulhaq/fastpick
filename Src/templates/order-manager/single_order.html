@@ -8,7 +8,18 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Order# : {{ obj.order_id }}</li>
                 <li class="list-group-item">Shipping Method : {{ obj.shipping_method.get_method_display }}</li>
-                <li class="list-group-item">Shipping Status : {{ obj.get_status_display }}</li>
+                <li class="list-group-item">Shipping Status : {{ obj.get_status_display }}
+                <a class="mr-auto" data-toggle="collapse" data-target="#collapseExample"
+                        aria-expanded="false" aria-controls="collapseExample">
+                    <i class="fas fa-edit"></i>
+                </a>
+                </li>
+                <div class="collapse" id="collapseExample">
+                    <li class="list-group-item"><form action="" method="POST">{% csrf_token %}
+                    {{ form }}
+                    <button type="submit"><i class="fas fa-check-circle"></i></button>
+                </form></li>
+                </div>
                 <li class="list-group-item">Shipping Charge : {{ obj.shipping_total }} Tk</li>
                 <li class="list-group-item">Total Amount : {{ obj.total }} Tk</li>
                 <li class="list-group-item">Create At : {{ obj.timestamp|date }}</li>

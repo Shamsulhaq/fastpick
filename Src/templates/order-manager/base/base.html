@@ -22,7 +22,7 @@
     {% endfor %}
     <section>
         <nav class="navbar navbar-light bg-light justify-content-between mt-1">
-            <a href="{% url 'dashboard_home' %}" class="navbar-brand"><img width="80px"
+            <a href="{% url 'order_admin_index_url' %}" class="navbar-brand"><img width="80px"
                                                                            src="{% static 'img/logo.png' %}"/></a>
             <a class=" btn btn-success" href="{% url 'list' %}">Brows FastPick</a>
             {% if request.user.is_authenticated %}
@@ -59,9 +59,20 @@
                     <a class="nav-link {% if request.path == order_admin_index_url %}active{% endif %}"
                        href="{{ order_admin_index_url }}">All Order</a>
                 </li>
+                <li class="nav-item ml-auto">
+                    <div class="fh5co-box">
+                    <form action="{% url 'search_order' %}" method="get">
+                        <div class="form-group">
+                            <input type="text" value="{{ search }}" class="form-control" name="q" placeholder="Search">
+                        </div>
+                    </form>
+                </div>
+{#                    <form method="get"> <input type="text" name="q" placeholder="Enter Order ID"> </form>#}
+                </li>
             </ul>
         </div>
         <div class="col-sm-12 col-md-12 col-lg-12 mt-2">
+
             {% block content %}
             {% endblock %}
         </div>
