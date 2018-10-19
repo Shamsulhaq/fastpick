@@ -30,11 +30,11 @@ def checkout_address_create_view(request):
             print(address_type + "_address_id")
         else:
             print('ERROR!')
-            return redirect('checkout_home')
+            return redirect('checkout-home-url')
 
         if is_safe_url(redirect_path, request.get_host()):
             return redirect(redirect_path)
-    return redirect('checkout_home')
+    return redirect('checkout-home-url')
 
 
 def shipping_method(request):
@@ -74,7 +74,7 @@ def checkout_address_reuse_view(request):
                     request.session[address_type + "_address_id"] = shopping_address
                 if is_safe_url(redirect_path, request.get_host()):
                     return redirect(redirect_path)
-    return redirect('checkout_home')
+    return redirect('checkout-home-url')
 
 
 

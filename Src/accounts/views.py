@@ -28,8 +28,8 @@ def guest_register_view(request):
         if is_safe_url(redirect_path, request.get_host()):
             return redirect(redirect_path)
         else:
-            return redirect('get_register')
-    return redirect('get_register')
+            return redirect('register-url')
+    return redirect('register-url')
 
 
 def login_page(request):
@@ -57,7 +57,7 @@ def login_page(request):
             if is_safe_url(redirect_path, request.get_host()):
                 return redirect(redirect_path)
             else:
-                return redirect('list')
+                return redirect('book-list-view-url')
         else:
             print("ERROR")
     return render(request, template_name, context)
@@ -75,5 +75,5 @@ def register_page(request):
         password = form.cleaned_data.get("password")
         new_user = User.objects.create_user(username, email, password)
         messages.success(request, "Your are registered!")
-        return redirect('get_login')
+        return redirect('login-url')
     return render(request, template_name, context)

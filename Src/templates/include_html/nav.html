@@ -1,17 +1,18 @@
 {% load static %}
 {% url 'index' as serach_url %}
-{% url 'list' as list_url %}
-{% url 'cart_home' as cart_home %}
-{% url 'get_login' as login_url %}
+{% url 'book-list-view-url' as list_url %}
+{% url 'cart-home-url' as cart_home %}
+{% url 'login-url' as login_url %}
 {% url 'get_logout' as logout_url %}
-{% url 'get_register' as register_url %}
-{% url 'contact_create' as contact_url %}
-{% url 'author_list' as author_list_url %}
-{% url 'category_list' as category_list_url %}
+{% url 'register-url' as register_url %}
+{% url 'contact-create-url' as contact_url %}
+{% url 'author-list-url' as author_list_url %}
+{% url 'category-list-view-url' as category_list_url %}
+{% url 'publication_list_view_url' as publication_list_url %}
 {% url 'dashboard_home' as dashbord_url %}
 {% url 'order_admin_index_url' as admin_url %}
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light border mt-4 ">
+<nav class="navbar navbar-expand-lg navbar-light bg-light border m-2 ">
     <a class="navbar-brand" href="{{ serach_url }}"><img width="80px" src="{% static 'img/logo.png' %}"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,7 +24,7 @@
             <li class="nav-item {% if request.path == list_url %}active{% endif %}">
                 <a class="nav-link" href="{{ list_url }}"><b>বইয়ের লিস্ট</b></a>
             </li>
-            <li class="nav-item dropdown {% if request.path == category_list_url or request.path == author_list_url or request.path == login_url %}active{% endif %}">
+            <li class="nav-item dropdown {% if request.path == category_list_url or request.path == publication_list_url or request.path == author_list_url or request.path == login_url %}active{% endif %}">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     <b> বইয়ের ধরন</b>
@@ -33,7 +34,7 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ author_list_url }}">By Author</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="">By Publication</a>
+                    <a class="dropdown-item" href="{{ publication_list_url }}">By Publication</a>
                 </div>
             </li>
             {#            <li class="nav-item {% if request.path == author_list_url %}active{% endif %}">#}

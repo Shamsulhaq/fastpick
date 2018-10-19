@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+    <p class="lead">Book BY: {{ object.name }}</p>
+    <div class="row">
+        {% include 'book/book_list/list.html' with object_list=object_list %}
+    </div>
+
+{% endblock %}

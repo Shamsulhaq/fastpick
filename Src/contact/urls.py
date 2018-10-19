@@ -18,5 +18,5 @@ from django.urls import path
 from .views import contact_page
 
 urlpatterns = [
-    path('create/', contact_page, name='contact_create'),
+    path('create/', contact_page, name='contact-create-url'),
 ]

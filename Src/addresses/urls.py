@@ -16,7 +16,7 @@ Including another URLconf
 from django.urls import path
 from .views import checkout_address_create_view,checkout_address_reuse_view,shipping_method
 urlpatterns = [
-    path('create/', checkout_address_create_view, name='checkout_address_create_url'),
-    path('reuse/', checkout_address_reuse_view, name='checkout_address_reuse_url'),
-    path('shipping/method/',shipping_method,name ='shipping_method'),
+    path('address/create/', checkout_address_create_view, name='address-create-url'),
+    path('address/reuse/', checkout_address_reuse_view, name='address-reuse-url'),
+    path('shipping/method/', shipping_method, name ='shipping-method-url'),
 ]

@@ -77,7 +77,7 @@ def order_info_view(request, id):
     }
     if user.is_authenticated:
         return render(request, 'dashboard/order.html', context)
-    return redirect('get_login')
+    return redirect('login-url')
 
 
 @login_required

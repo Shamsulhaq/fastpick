@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
     {% include 'carts/list.html' with cart=cart %}
-   <center><button onclick="window.location.href='{% url 'list' %}'"  class="btn-success text-center" ><i class="fas fa-luggage-cart"></i>Continue Shopping </button></center>
+   <center><button onclick="window.location.href='{% url 'book-list-view-url' %}'" class="btn-success text-center" ><i class="fas fa-luggage-cart"></i>Continue Shopping </button></center>
 {% endblock %}

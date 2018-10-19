@@ -25,14 +25,16 @@ urlpatterns = [
     path('admin/', admin.site.urls, name ='admin'),
     path('', include('accounts.urls')),
     path('', include('order-manager.urls')),
+    path('', include('dashboard.urls')),
+    path('', include('addresses.urls')),
+    path('', include('review.urls')),
     path('accounts/', include('accounts.password.urls')),
     path('author/', include('author.urls')),
     path('book/', include('product.urls')),
     path('cart/', include('carts.urls')),
     path('category/', include('category.urls')),
     path('contact/', include('contact.urls')),
-    path('checkout/address/', include('addresses.urls')),
-    path('', include('dashboard.urls')),
+    path('publication/', include('publication.urls')),
     path('search/', SearchView.as_view(), name='search'),
 ]
 

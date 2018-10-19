@@ -13,72 +13,43 @@
     </style>
 </head>
 <body>
-{#<br>#}
-{#<marquee behavior="alternate" ><b style="background-color:#ff9900 ">-----This Site is underdevelopment-----</b></marquee>#}
-{#<br>#}
+<div class="container-fluid ">
+    <div class="container border">
+        <div class="container">
 
-<div class="container border">
-    <div class="container">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                    {{ message }}
+                </div>
 
-
-        {#        {% if messages %}#}
-        {#            <ul class="alert alert-success ">#}
-        {#                {% for message in messages %}#}
-        {#                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}><b>{{ message }}</b></li>#}
-        {#                    <script>#}
-        {#                    alert({{ message }})#}
-        {#                    </script>#}
-        {#                {% endfor %}#}
-        {#            </ul>#}
-        {##}
-        {#        {% endif %}#}
-        {% for message in messages %}
-            {#            <div class="alert alert-{{ message.tags }}">{{ message }}</div>#}
-            {#            <script> setTimeout(function() { alert('{{ message.tags }} \n {{ message }}')}, 5000);</script>#}
-            <div class="alert {{ message.tags }}" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
-                {{ message }}
-            </div>
-
-        {% endfor %}
-        {#        {% if messages %}#}
-        {#            <div id="myModal" class="modal fade">#}
-        {#                <div class="modal-dialog modal-confirm">#}
-        {#                    {% for message in messages %}#}
-        {#                        <div class="modal-content">#}
-        {#                            {% if message.tags %}#}
-        {#                                <div class="modal-header">#}
-        {#                                    <div class="icon-box">#}
-        {#                                        <i class="material-icons">&#xE876;</i>#}
-        {#                                    </div>#}
-        {#                                    <h4 class="modal-title">{{ message.tags }}</h4>#}
-        {#                                </div>#}
-        {#                            {% endif %}#}
-        {#                            <div class="modal-body">#}
-        {#                                <p class="text-center">{{ message }}</p>#}
-        {#                            </div>#}
-        {#                            <div class="modal-footer">#}
-        {#                                <button class="btn btn-success btn-block" data-dismiss="modal">OK</button>#}
-        {#                            </div>#}
-        {#                        </div>#}
-        {#                    {% endfor %}#}
-        {#                </div>#}
-        {#            </div>#}
-        {#        {% endif %}#}
-        {% include 'include_html/nav.html' %}
-        {% block content %}{% endblock %}
+            {% endfor %}
+            {% include 'include_html/nav.html' %}
+            {% block content %}{% endblock %}
+        </div>
     </div>
+    <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+    {% include 'include_html/js.html' %}
+    <script>
+        window.setTimeout(function () {
+            $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+                console.log("De")
+            });
+        }, 3000);
+    </script>
+    {% block js %}{% endblock %}
 </div>
-{% include 'include_html/js.html' %}
-<script>
-    window.setTimeout(function () {
-        $(".alert").fadeTo(500, 0).slideUp(500, function () {
-            $(this).remove();
-            console.log("De")
-        });
-    }, 3000);
-</script>
-{% block js %}{% endblock %}
 </body>
 </html>

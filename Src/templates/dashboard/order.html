@@ -4,10 +4,10 @@
     <title>FastPick|Dashboard</title>
 {% endblock %}
 {% block content %}
-    {% url 'dashboard_done' as order_done_url %}
-    {% url 'dashboard_pending' as order_pending_url %}
-    {% url 'on_process_order' as order_on_process_url %}
-    {% url 'dashboard_all_order' as all_order_url %}
+    {% url 'done-order-view-url' as order_done_url %}
+    {% url 'pending-order-view-url' as order_pending_url %}
+    {% url 'on-process-order-view-url' as order_on_process_url %}
+    {% url 'all-order-view-url' as all_order_url %}
 
     <div class="col bg-light mt-2">
         <ul class="nav nav-tabs">
@@ -43,7 +43,7 @@
                 <tbody>
                 {% for order in object.all %}
                     <tr>
-                        <td><a href="{% url 'order_info_url' id=order.id %}">{{ order.order_id }}</a></td>
+                        <td><a href="{% url 'order-info-view-url' id=order.id %}">{{ order.order_id }}</a></td>
                         <td>{{ order.timestamp|date }}</td>
                         <td>{{ order.billing_profile.user.get_full_name }}</td>
                         <td>{{ order.total }} Tk</td>

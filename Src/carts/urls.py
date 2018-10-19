@@ -18,8 +18,8 @@ from .views import cart_home, cart_update, checkout_home \
     # ,shipping_method
 
 urlpatterns = [
-    path('',cart_home,name ='cart_home'),
-    path('update/',cart_update,name ='cart_update'),
-    path('checkout/',checkout_home,name ='checkout_home'),
+    path('', cart_home, name ='cart-home-url'),
+    path('update/', cart_update, name ='cart-update-url'),
+    path('checkout/', checkout_home, name ='checkout-home-url'),
 
 ]

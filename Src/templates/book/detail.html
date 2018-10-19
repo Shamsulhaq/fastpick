@@ -24,18 +24,23 @@
                 <br>
 
                 <h3 class="text-primary px-5 py-2">{{ object.name }}</h3>
-                <h4 class="text-primary px-5 py-2"><a href="{% url 'author_details' slug=object.author.slug %}">{{ object.author }}</a></h4>
+                <h4 class="text-primary px-5 py-2"><a
+                        href="{% url 'author-details-url' slug=object.author.slug %}">{{ object.author }}</a></h4>
                 <p class="text-info"><b class="h5">BDT {{ object.price }} </b> {% if object.regular_price == 0 %}
-                    {% else %}<del>BDT {{ object.regular_price }}</del> {% endif %}
+                {% else %}
+                    <del>BDT {{ object.regular_price }}</del> {% endif %}
                     {% if object.get_discount is not None %}{{ object.get_discount }} Off{% endif %}
                 </p>
                 {% if object.is_rent_available %}
                     <p class="text-primary"><b class="text-body">Rent Charge:</b>
                         BDT {{ object.rent_charge }}</p></p>
                 {% endif %}
-                <p class="text-primary"><b class="text-body">Category:</b><a href="{% url 'category_details' slug=object.category.slug %}">{{ object.category }}</a></p>
+                <p class="text-primary"><b class="text-body">Category:</b><a
+                        href="{% url 'category-details-view-url' slug=object.category.slug %}">{{ object.category }}</a>
+                </p>
                 <div class="col-sm mx-3 my-4 ">
-                   Total Order: ({{ object.order }}) times {% include 'book/cart_update.html' with product=object cart=cart %}
+                    Total Order: ({{ object.order }})
+                    times {% include 'book/cart_update.html' with product=object cart=cart %}
                 </div>
 
                 <br>
@@ -43,12 +48,17 @@
 
         </div>
         <br>
-        <div class="row border ">
-            <div class="col-sm-12 justify-content-center">
+        <div class="row border justify-content-center">
+            <div class="col-sm-12">
                 <h4 class="text-info"> Specification:</h4>
                 {% include 'book/table/info_table.html' with object=object %}
             </div>
+            <div class="col-sm-12 text-center bg-light ">
+                <hr>
+                <p><div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard"
+                 data-action="like" data-size="small" data-show-faces="true" data-share="true"></div></p>
+                <p><div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div></p>
+            </div>
         </div>
     </div>
-    <br>
 {% endblock %}

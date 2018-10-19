@@ -48,7 +48,7 @@
             <td style="background-color:#aaa;">{{ object.total }} Tk</td>
         </tr>
         <tr>
-            <td ><a class="btn btn-success" href="{% url 'list' %}">Continue Shopping</a></td>
+            <td ><a class="btn btn-success" href="{% url 'book-list-view-url' %}">Continue Shopping</a></td>
             <td><form class="form" method="POST" action="">{% csrf_token %}
                 <button class=" btn btn-lg btn-success" type="submit">Checkout</button>
             </form> </td>

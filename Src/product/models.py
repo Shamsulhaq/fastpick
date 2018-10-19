@@ -15,6 +15,7 @@ from author.models import BookAuthor
 from tag.models import Tag
 from category.models import Category
 from publication.models import Publication
+from review.models import Review
 
 fs = FileSystemStorage(location='media')
 
@@ -94,6 +95,10 @@ class BookManager(models.Manager):
         qs = self.get_queryset().filter(category=category)
         return qs
 
+    def get_by_publication(self, publication):
+        qs = self.get_queryset().filter(publication=publication)
+        return qs
+
 
 COUNTRY_CHOOSE = (
     ('bangladesh', 'Bangladesh'),
@@ -139,13 +144,13 @@ class BookList(models.Model):
     is_stock = models.BooleanField(default=True)
     active = models.BooleanField(default=True)
     is_rent_available = models.BooleanField(default=True)
-    timeStamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(blank=True, null=True, unique=True, allow_unicode=True)
 
     objects = BookManager()
 
     class Meta:
-        ordering = ['-timeStamp']
+        ordering = ['-timestamp']
 
     def __str__(self):
         return self.name
@@ -169,7 +174,7 @@ class BookList(models.Model):
 
     def get_absolute_url(self):
         # return "/book/detail/{slug}".format(slug=self.slug)
-        return reverse('detail', kwargs={'slug': self.slug})
+        return reverse('book-details-view-url', kwargs={'slug': self.slug})
 
 
 def bl_pre_save_receiver(sender, instance, *args, **kwargs):

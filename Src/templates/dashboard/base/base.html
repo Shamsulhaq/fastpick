@@ -24,7 +24,7 @@
         <nav class="navbar navbar-light bg-light justify-content-between mt-1">
             <a href="{% url 'dashboard_home' %}" class="navbar-brand"><img width="80px"
                                                                            src="{% static 'img/logo.png' %}"/></a>
-            <a class=" btn btn-success" href="{% url 'list' %}">Brows FastPick</a>
+            <a class=" btn btn-success" href="{% url 'book-list-view-url' %}">Brows FastPick</a>
             {% if request.user.is_authenticated %}
                 <section class="form-inline my-2 my-lg-0">
                     <b class="lead">{{ request.user }} </b>
@@ -37,9 +37,9 @@
 
     {% url 'get_logout' as logout_url %}
     {% url 'password_change' as password_change %}
-    {% url 'dashboard_all_order' as all_order_url %}
-    {% url 'address_book_url' as address_url %}
-    {% url 'dashboard_account' as account_url %}
+    {% url 'all-order-view-url' as all_order_url %}
+    {% url 'db-address-book-url' as address_url %}
+    {% url 'db-account-url' as account_url %}
     {% url 'dashboard_home' as dashboard_home %}
     <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-12 ">

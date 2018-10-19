@@ -10,14 +10,14 @@
                     <div class="card" style="max-height: 220px;">
                         <!-- Image -->
                         {% if object.image %}
-                        <a href="{% url 'author_details' slug=object.slug %}"><img class="card-img-top" src="{{ object.image.url }}" alt="{{ object.name }}"></a>
+                        <a href="{% url 'author-details-url' slug=object.slug %}"><img class="card-img-top" src="{{ object.image.url }}" alt="{{ object.name }}"></a>
                         <!-- Text Content -->
                         {% else %}
-                        <a href="{% url 'author_details' slug=object.slug %}"><img class="card-img-top" src="{% static 'img/book_image.png' %}" alt="{{ object.name }}"></a>
+                        <a href="{% url 'author-details-url' slug=object.slug %}"><img class="card-img-top" src="{% static 'img/book_image.png' %}" alt="{{ object.name }}"></a>
                         {% endif %}
                         <!-- Text Content -->
                         <div class="card-body">
-                            <a href="{% url 'author_details' slug=object.slug %}"><p>{{ object.name }}</p></a>
+                            <a href="{% url 'author-details-url' slug=object.slug %}"><p>{{ object.name }}</p></a>
                         </div>
 
                     </div>

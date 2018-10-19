@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'orders',
     'product',
     'publication',
+    'review',
     'tag',
 #     bootstrap form
     'crispy_forms',

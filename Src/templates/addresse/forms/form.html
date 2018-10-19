@@ -1,6 +1,6 @@
 {% load crispy_forms_tags %}
 <form method="POST"
-      action="{% if action_url %}{{ action_url }}{% else %}{% url 'get_login' %}{% endif %}">{% csrf_token %}
+      action="{% if action_url %}{{ action_url }}{% else %}{% url 'login-url' %}{% endif %}">{% csrf_token %}
     {% if next_url %}
         <input type="hidden" name="next" value="{{ next_url }}"/>
     {% endif %}

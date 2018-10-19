@@ -25,13 +25,13 @@ def cart_update(request):
         try:
             book_obj = BookList.objects.get_by_id(id=product_id)
         except BookList.DoesNotExist:
-            return redirect('cart_home')
+            return redirect('cart-home-url')
         cart_obj, new_obj = Cart.objects.new_or_get(request)
         if book_obj in cart_obj.books.all():
             cart_obj.books.remove(book_obj)
             request.session['cart_items'] = cart_obj.books.count()  # to count cart items
             messages.warning(request, "Your are Card item Removed!")
-            return redirect('cart_home')  # to redirect cart home page
+            return redirect('cart-home-url')  # to redirect cart home page
         else:
             cart_obj.books.add(book_obj)
         request.session['cart_items'] = cart_obj.books.count()
@@ -43,7 +43,7 @@ def checkout_home(request):
     cart_obj, cart_created = Cart.objects.new_or_get(request)
     order_obj = None
     if cart_created or cart_obj.books.count() == 0:
-        return redirect('cart_home')
+        return redirect('cart-home-url')
 
     login_form = LoginForm()
     guest_register_form = GuestRegisterForm()
