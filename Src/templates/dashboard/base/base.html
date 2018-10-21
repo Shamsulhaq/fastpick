@@ -24,7 +24,6 @@
         <nav class="navbar navbar-light bg-light justify-content-between mt-1">
             <a href="{% url 'dashboard_home' %}" class="navbar-brand"><img width="80px"
                                                                            src="{% static 'img/logo.png' %}"/></a>
-            <a class=" btn btn-success" href="{% url 'book-list-view-url' %}">Brows FastPick</a>
             {% if request.user.is_authenticated %}
                 <section class="form-inline my-2 my-lg-0">
                     <b class="lead">{{ request.user }} </b>
@@ -59,6 +58,9 @@
                             href="{{ all_order_url }}">My Orders</a></li>
                     <li class="list-group-item {% if request.path == password_change %}bg-light{% endif %}"><a
                             href="{{ password_change }}">Password Change</a></li>
+                    <li class="list-group-item "><a
+                            href="{% url 'book-list-view-url' %}">Shopping Continue</a></li>
+
                 </ul>
             </div>
         </div>

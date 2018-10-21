@@ -1,12 +1,18 @@
 from math import fsum
+
+from django.core.mail import EmailMessage
 from django.db import models
 from django.db.models.signals import pre_save, post_save
+from django.template.loader import get_template
+
 from addresses.models import Address
 from billing.models import BillingProfile
 from carts.models import Cart
+from fastpick import settings
 from fastpick.utils import unique_order_id_generator
 
 # Create your models here.
+from product.models import BookList
 
 ORDER_STATUS_CHOICES = (
     ('created', 'Created'),
@@ -52,7 +58,7 @@ class OrderManager(models.Manager):
 
     def get_all_order(self, billing_profile):
         qs = self.get_queryset().filter(billing_profile__user=billing_profile).exclude(status='created')
-        if qs.count() ==1:
+        if qs.count() == 1:
             return qs
         return qs
 
@@ -122,6 +128,14 @@ class Order(models.Model):
         if self.check_done():
             self.status = 'submit'
             self.save()
+            products = self.cart.books.all()
+            for book in products:
+                book_id = book.id
+                print(book_id)
+                book = BookList.objects.get_by_id(book_id)
+                print(book.order)
+                book.order += 1
+                book.save()
         return self.status
 
 
@@ -134,6 +148,25 @@ def pre_save_order_id_receiver(sender, instance, *args, **kwargs):
         instance.update_shopping_cost()
     if instance.shipping_address and instance.billing_address:
         instance.update_total()
+
+    # if instance.status == 'submit':
+    #     pk = instance.id
+    #     object = Order.objects.filter(id=pk)
+    #     text = {
+    #         'object': object,
+    #     }
+    #     print(object)
+    #     print(text)
+    #     mail_subject = 'Payment Successful'
+    #     message = get_template('carts/success.html').render(text)
+    #     to_email = instance.billing_profile.email
+    #     email_from = settings.EMAIL_HOST_USER
+    #     email = EmailMessage(
+    #         mail_subject, message, email_from, to=[to_email]
+    #     )
+    #     email.content_subtype = 'html'
+    #     print(to_email)
+    #     email.send()
 
 
 def post_save_cart_total(sender, instance, created, *args, **kwargs):

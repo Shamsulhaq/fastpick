@@ -46,11 +46,13 @@
             <td style="background-color:#aaa;"><b>Language:</b></td>
             <td>{{ object.get_language_display }}</td>
         </tr>
+        {% if object.review %}
         <tr>
-            <td style="background-color:#aaa;"><b>Tags:</b></td>
-            <td>{% for tag in object.tag.all %}
-                    <a href="#">{{ tag }}</a>, {% endfor %}</td>
+            <td style="background-color:#aaa;"><b>Review:</b></td>
+            <td>
+                    <a href="{{ object.review.get_absolute_url }}">Read Review</a></td>
         </tr>
+        {% endif %}
 
         </tbody>
 

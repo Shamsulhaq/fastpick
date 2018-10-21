@@ -9,6 +9,7 @@
 {% url 'author-list-url' as author_list_url %}
 {% url 'category-list-view-url' as category_list_url %}
 {% url 'publication_list_view_url' as publication_list_url %}
+{% url 'review-list-view-url' as review_list_url %}
 {% url 'dashboard_home' as dashbord_url %}
 {% url 'order_admin_index_url' as admin_url %}
 
@@ -40,10 +41,10 @@
             {#            <li class="nav-item {% if request.path == author_list_url %}active{% endif %}">#}
             {#                <a class="nav-link " href="{{ author_list_url }}"><b>লেখক</b></a>#}
             {#            </li>#}
-            <li class="nav-item">
-                <a class="nav-link " href="#"><b>বই রিভিউ</b></a>
+            <li class="nav-item {% if request.path == review_list_url %}active{% endif %}">
+                <a class="nav-link " href="{{ review_list_url }}"><b>বই রিভিউ</b></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if request.path == '' %}active{% endif %}">
                 <a class="nav-link " href="#"><b>আমাদের জানুন</b></a>
             </li>
             <li class="nav-item {% if request.path == contact_url %}active{% endif %}">

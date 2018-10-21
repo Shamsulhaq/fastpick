@@ -8,6 +8,7 @@ from django.db import models
 # Create your models here.
 from django.db.models.signals import pre_save
 from django.template.defaultfilters import slugify
+from django.urls import reverse
 
 from fastpick.utils import unique_slug_generator
 fs = FileSystemStorage(location='media')
@@ -29,6 +30,17 @@ def upload_review_image_path(inistance, file_name):
     return f"Review/{book_name}/{final_filename}"
 
 
+class ReviewManager(models.Manager):
+    def all(self):
+        return self.get_queryset().filter(active=True)
+
+    def get_by_slug(self,slug):
+        qs= self.get_queryset().filter(slug= slug)
+        if qs.count()==1:
+            return qs.first()
+        return qs
+
+
 class Review(models.Model):
     book = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
@@ -39,6 +51,8 @@ class Review(models.Model):
     active = models.BooleanField(default=True)
     slug = models.SlugField(unique=True, blank=True, null=True, allow_unicode=True)
 
+    objects = ReviewManager()
+
     class Meta:
         ordering = ['-timestamp']
 
@@ -48,6 +62,9 @@ class Review(models.Model):
     @property
     def title(self):
         return self.book
+
+    def get_absolute_url(self):
+        return reverse('review-detail-view-url', kwargs={'slug': self.slug})
 
 
 def review_pre_save_receiver(sender, instance, *args, **kwargs):

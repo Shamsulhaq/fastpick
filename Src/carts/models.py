@@ -61,13 +61,13 @@ def m2m_save_cart_receiver(sender, instance, action, *args, **kwargs):
             subtotal += x.price
         instance.sub_total = subtotal
         instance.save()
-        for book in products:
-            book_id = book.id
-            print(book_id)
-            book = BookList.objects.get_by_id(book_id)
-            print(book.order)
-            book.order += 1
-            book.save()
+        # for book in products:
+        #     book_id = book.id
+        #     print(book_id)
+        #     book = BookList.objects.get_by_id(book_id)
+        #     print(book.order)
+        #     book.order += 1
+        #     book.save()
 
 
 m2m_changed.connect(m2m_save_cart_receiver, sender=Cart.books.through)
