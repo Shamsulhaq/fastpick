@@ -3,7 +3,7 @@ import random
 
 from django.core.files.storage import FileSystemStorage
 from django.db import models
-
+from tinymce.models import HTMLField
 
 # Create your models here.
 from django.db.models.signals import pre_save
@@ -45,7 +45,7 @@ class Review(models.Model):
     book = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
     image = models.ImageField(upload_to=upload_review_image_path, blank=True)
-    text = models.TextField()
+    text = HTMLField()
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
     update = models.DateTimeField(auto_now_add=False, auto_now=True)
     active = models.BooleanField(default=True)

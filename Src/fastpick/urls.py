@@ -36,6 +36,7 @@ urlpatterns = [
     path('contact/', include('contact.urls')),
     path('publication/', include('publication.urls')),
     path('search/', SearchView.as_view(), name='search'),
+    path('tinymce/',include('tinymce.urls')),
 ]
 
 if settings.DEBUG:

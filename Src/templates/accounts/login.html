@@ -10,10 +10,10 @@
                 {{ form.as_p }}
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"></label>
-                    <div class="col-sm-10">
-                        <button type="submit" class="btn  btn-block btn-info">Login</button>
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-block btn-info">Login</button>
                     </div>
-                   <a href="{% url 'password_reset' %}">Forgotten account?</a>
+                   <a class="center" href="{% url 'password_reset' %}">Forgotten account?</a>
                 </div>
             </form>
         </div>

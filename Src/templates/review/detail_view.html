@@ -15,18 +15,19 @@
             <h3>{{ object.book }}</h3>
             <p class="lead">Author: {{ object.author }}</p>
             <p>{{ object.timestamp }}</p>
-            <p class="justify-content-center">{{ object.text }} </p>
+            <div class="justify-content-center">{{ object.text|safe }} </div>
         </div>
-        <div class="col-sm-12 text-center bg-light ">
-            <hr>
-            <p>
-            <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard"
-                 data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
-            </p>
-            <p>
-            <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
-            </p>
-        </div>
+{#        <div class="col-sm-12 text-center bg-light ">#}
+{#            <hr>#}
+{#            <p>#}
+{#            <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard"#}
+{#                 data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>#}
+{#            </p>#}
+{#            <hr>#}
+{#            <p>#}
+{#            <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>#}
+{#            </p>#}
+{#        </div>#}
     </div>
 {% endblock %}
 {% block js %}

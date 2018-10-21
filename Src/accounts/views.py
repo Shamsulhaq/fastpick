@@ -42,9 +42,9 @@ def login_page(request):
     next_post = request.POST.get('next')
     redirect_path = next_ or next_post or None
     if form.is_valid():
-        username = form.cleaned_data.get("username")
+        eamil = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, username=eamil, password=password)
         if user is not None:
             login(request, user)
             try:
@@ -57,7 +57,7 @@ def login_page(request):
             if is_safe_url(redirect_path, request.get_host()):
                 return redirect(redirect_path)
             else:
-                return redirect('book-list-view-url')
+                return redirect('dashboard_home')
         else:
             print("ERROR")
     return render(request, template_name, context)
@@ -70,10 +70,10 @@ def register_page(request):
         "form": form
     }
     if form.is_valid():
-        username = form.cleaned_data.get("username")
+        full_name = form.cleaned_data.get("full_name")
         email = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
-        new_user = User.objects.create_user(username, email, password)
+        new_user = User.objects.create_user(email, full_name, password)
         messages.success(request, "Your are registered!")
         return redirect('login-url')
     return render(request, template_name, context)

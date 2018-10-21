@@ -26,8 +26,8 @@
                                                                            src="{% static 'img/logo.png' %}"/></a>
             {% if request.user.is_authenticated %}
                 <section class="form-inline my-2 my-lg-0">
-                    <b class="lead">{{ request.user }} </b>
-                    <a href="{% url 'get_logout' %}" class="cancel-link">Logout?</a>
+                    <b class="lead">{{ request.user.full_name }}  </b>
+                    <a href="{% url 'get_logout' %}" class="cancel-link">  Logout?</a>
                 </section>
             {% endif %}
         </nav>
