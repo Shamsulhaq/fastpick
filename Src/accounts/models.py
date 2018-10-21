@@ -65,6 +65,11 @@ class User(AbstractBaseUser):
         return self.email
 
     def get_short_name(self):
+        if self.full_name:
+            name = self.full_name
+            name_obj = name.split(' ')
+            sort_name = name_obj[0]
+            return sort_name
         return self.email
 
     def has_perm(self, perm, obj=None):
