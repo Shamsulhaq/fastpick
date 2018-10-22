@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.messages.views import messages
@@ -58,8 +59,11 @@ def login_page(request):
                 return redirect(redirect_path)
             else:
                 return redirect('dashboard_home')
+        # elif not user or not user.is_active:
+        #     raise ValidationError("Sorry, that login was invalid. Please try again.")
         else:
-            print("ERROR")
+            if is_safe_url(redirect_path, request.get_host()):
+                return redirect(redirect_path)
     return render(request, template_name, context)
 
 

@@ -40,7 +40,7 @@
                 </p>
                 <div class="col-sm mx-3 my-4 ">
                     Total Order: ({{ object.order }})
-                    times {% include 'book/cart_update.html' with product=object cart=cart %}
+                    times {% include 'book/cart_update.html' with product=object cart=cart next_url=request.build_absolute_uri %}
                 </div>
 
                 <br>

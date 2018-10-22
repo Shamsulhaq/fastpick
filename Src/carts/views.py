@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
-
+from django.utils.http import is_safe_url
 from .models import Cart
 
 from accounts.forms import LoginForm, GuestRegisterForm
@@ -8,7 +8,7 @@ from addresses.forms import AddressForm
 from addresses.models import Address
 from billing.models import BillingProfile
 from product.models import BookList
-from orders.models import Order ,ShippingMethod
+from orders.models import Order, ShippingMethod
 from orders.forms import ShippingMethodForm
 
 
@@ -20,6 +20,10 @@ def cart_home(request):
 
 
 def cart_update(request):
+    next_ = request.GET.get('next')
+    next_post = request.POST.get('next')
+    redirect_path = next_ or next_post or None
+    print(redirect_path)
     product_id = request.POST.get('product_id')
     if product_id is not None:
         try:
@@ -31,12 +35,18 @@ def cart_update(request):
             cart_obj.books.remove(book_obj)
             request.session['cart_items'] = cart_obj.books.count()  # to count cart items
             messages.warning(request, "Your are Card item Removed!")
-            return redirect('cart-home-url')  # to redirect cart home page
+            if is_safe_url(redirect_path, request.get_host()):
+                return redirect(redirect_path)
+            else:
+                return redirect('cart-home-url')
         else:
             cart_obj.books.add(book_obj)
         request.session['cart_items'] = cart_obj.books.count()
         messages.success(request, "Your are Card item Added!")
-    return redirect(book_obj.get_absolute_url())
+    if is_safe_url(redirect_path, request.get_host()):
+        return redirect(redirect_path)
+    else:
+        return redirect(book_obj.get_absolute_url())
 
 
 def checkout_home(request):
@@ -87,7 +97,7 @@ def checkout_home(request):
             del request.session['cart_id']
             if not request.user.is_authenticated:
                 del request.session['guest_email_id']
-            return render(request, 'carts/success.html',{'object':order_obj})
+            return render(request, 'carts/success.html', {'object': order_obj})
     context = {
         'object': order_obj,
         'login_form': login_form,
@@ -99,7 +109,6 @@ def checkout_home(request):
 
     }
     return render(request, 'carts/checkout.html', context)
-
 
 # def cart_success_view(request):
 #     return render(request, 'carts/success.html')

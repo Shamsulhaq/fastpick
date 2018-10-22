@@ -16,6 +16,11 @@ class UserAdminCreationForm(forms.ModelForm):
         model = User
         fields = ('full_name', 'email',)
 
+    def clean_full_name(self):
+        full_name = self.cleaned_data.get('full_name')
+        if not full_name:
+            raise forms.ValidationError("Please enter your name")
+
     def clean_password2(self):
         # Check that the two password entries match
         password1 = self.cleaned_data.get("password1")
@@ -59,6 +64,20 @@ class GuestRegisterForm(forms.Form):
 class LoginForm(forms.Form):
     email = forms.EmailField(widget=forms.EmailInput(attrs={"class": "form-control"}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-control"}))
+
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        password = self.cleaned_data.get('password')
+        user = authenticate(username=email, password=password)
+        if not user or not user.is_active:
+            raise forms.ValidationError("Sorry, that login was invalid. Please try again.")
+        return self.cleaned_data
+    #
+    # def login(self, request):
+    #     email = self.cleaned_data.get('email')
+    #     password = self.cleaned_data.get('password')
+    #     user = authenticate(username=email, password=password)
+    #     return user
 
 
 class RegisterForm(forms.Form):
