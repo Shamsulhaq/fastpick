@@ -32,7 +32,7 @@
 
     <div class="col bg-light">
         {% if object %}
-            <table class="table table-striped">
+            <table class="table table-hover " style="cursor: pointer;">
                 <thead>
                 <th>Order #</th>
                 <th>Date</th>
@@ -41,9 +41,9 @@
                 <th>Status</th>
                 </thead>
                 <tbody>
-                {% for order in object.all %}
-                    <tr>
-                        <td><a href="{% url 'order-info-view-url' id=order.id %}">{{ order.order_id }}</a></td>
+                {% for order in object %}
+                    <tr onclick="window.location.href='{% url 'order-info-view-url' id=order.id %}'">
+                        <td>{{ order.order_id }}</td>
                         <td>{{ order.timestamp|date }}</td>
                         <td>{{ order.billing_profile.user.get_full_name }}</td>
                         <td>{{ order.total }} Tk</td>
@@ -79,12 +79,22 @@
                 </tr>
                 <tr>
                     <td style="background-color:#aaa;"><b>Cart Items:</b></td>
-                    <td>{{ obj.cart.books.count }}</td>
+                    <td>{{ cart_obj.count }}</td>
                 </tr>
-                {% for cart in obj.cart.books.all %}
+                {% for cart in cart_obj %}
                     <tr>
-                        <td colspan="1"></td>
-                        <td><a href="{{ cart.get_absolute_url }}">({{ forloop.counter }}) {{ cart }}</a></td>
+                        {% if cart.product.image %}
+                            <td><img width="95px" src="{{ cart.product.image.url }}"/></td>
+                        {% else %}
+                            <td colspan="1"></td>
+                        {% endif %}
+                        <td>
+                            <a href="{{ cart.product.get_absolute_url }}">({{ forloop.counter }}) {{ cart.product.name }}</a>
+                            <hr>
+                            {{ cart.price }} * {{ cart.quantity }}
+                            <hr>
+                            = {{ cart.item_total }} BDT
+                        </td>
                     </tr>
                     {% if not forloop.last %}
 
@@ -104,8 +114,8 @@
                     <td>{{ obj.billing_address.get_address }}</td>
                 </tr>
                 <tr>
-                    <td style="background-color:#aaa;"><b>Cart Total:(include VAT)</b></td>
-                    <td>{{ obj.cart.total }} Tk</td>
+                    <td style="background-color:#aaa;"><b>Cart Total:</b></td>
+                    <td>{{ obj.cart_total }} Tk</td>
                 </tr>
                 <tr>
                     <td style="background-color:#aaa;"><b>Shipping Method:</b></td>
@@ -119,8 +129,8 @@
                     <td colspan="2"></td>
                 </tr>
                 <tr>
-                    <td ><b>Oder Total:</b></td>
-                    <td >{{ obj.total }} Tk</td>
+                    <td><b>Oder Total:</b></td>
+                    <td>{{ obj.total }} Tk</td>
                 </tr>
                 </tbody>
 
@@ -131,13 +141,32 @@
 
 
     </div>
+    {% if object.has_other_pages %}
+        <div class="pagination justify-content-center bg-info">
+    <span class="step-links">
+        {% if object.has_previous %}
+            <a href="?page={{ object.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ object.number }} of {{ object.paginator.num_pages }}.
+        </span>
+
+        {% if object.has_next %}
+            <a href="?page={{ object.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+        </div>
+    {% endif %}
 
     <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
          aria-hidden="true">
         <div class="modal-dialog font-weight-normal" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle"><img width="80px" src="{% static 'img/logo.png' %}"/>Payment Method</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle"><img width="80px"
+                                                                            src="{% static 'img/logo.png' %}"/>Payment
+                        Method</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

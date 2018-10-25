@@ -13,23 +13,25 @@
     </style>
 </head>
 <body>
-<div class="container-fluid ">
-    <div class="container border">
-        <div class="container">
-
-            {% for message in messages %}
-                <div class="alert {{ message.tags }}" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                            aria-hidden="true">&times;</span>
-                    </button>
-                    {{ message }}
-                </div>
-
-            {% endfor %}
-            {% include 'include_html/nav.html' %}
-            {% block content %}{% endblock %}
-        </div>
+<section class="bg-light">
+    <div class="container">
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                        aria-hidden="true">&times;</span>
+                </button>
+                {{ message }}
+            </div>
+        {% endfor %}
     </div>
+    {% with totail_items=cart|length %}
+        {% include 'include_html/nav.html' %}
+    {% endwith %}
+    <div class="container bg-white">
+        {% block content %}{% endblock %}
+    </div>
+
+    {% include 'include_html/js.html' %}
     <div id="fb-root"></div>
     <script>(function (d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
@@ -40,7 +42,7 @@
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));</script>
 
-    {% include 'include_html/js.html' %}
+
     <script>
         window.setTimeout(function () {
             $(".alert").fadeTo(500, 0).slideUp(500, function () {
@@ -50,6 +52,9 @@
         }, 3000);
     </script>
     {% block js %}{% endblock %}
-</div>
+</section>
 </body>
 </html>
+
+
+

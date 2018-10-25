@@ -1,45 +1,81 @@
 {% load static %}
 {% if object_list.exists %}
-    <div class="col-sm table-responsive  ">
-        <table class="table table-hover " style="cursor: pointer;">
-            <thead class="thead-light ">
-            <tr>
-                <th>ছবি</th>
-                <th>নাম</th>
-                <th>লেখক</th>
-                <th>বর্তমান দাম</th>
-                <th>ভাড়া খরচ</th>
-            </tr>
-            </thead>
-            <tbody>
+    {#    <div class="col-sm table-responsive  ">#}
+    {#        <table class="table table-hover " style="cursor: pointer;">#}
+    {#            <thead class="thead-light ">#}
+    {#            <tr>#}
+    {#                <th>ছবি</th>#}
+    {#                <th>নাম</th>#}
+    {#                <th>লেখক</th>#}
+    {#                <th>বর্তমান দাম</th>#}
+    {#                <th>ভাড়া খরচ</th>#}
+    {#            </tr>#}
+    {#            </thead>#}
+    {#            <tbody>#}
+    {#            {% for obj in object_list %}#}
+    {##}
+    {#                <tr onclick="window.location.href='{{ obj.get_absolute_url }}'">#}
+    {#                    {% if obj.image %}#}
+    {#                        <td><img width="60px" height="60px"#}
+    {#                                 src="{{ obj.image.url }}"></td>#}
+    {#                    {% else %}#}
+    {#                        <td><img width="60px" height="60px"#}
+    {#                                 src="{% static 'img/book_image.png' %}"></td>#}
+    {#                    {% endif %}#}
+    {#                    <td>{{ obj.name }}</td>#}
+    {#                    <td>{{ obj.author }}</td>#}
+    {#                    <td>{{ obj.price }} ৳</td>#}
+    {#                    {% if obj.is_rent_available %}#}
+    {#                        <td>{{ obj.rent_charge }} ৳</td>#}
+    {#                    {% else %}#}
+    {#                        <td>N/A</td>#}
+    {#                    {% endif %}#}
+    {#                </tr>#}
+    {#            {% endfor %}#}
+    {#            </tbody>#}
+    {#        </table>#}
+    {#    </div>#}
+    {#    <hr>#}
+    {#    <div class="row">#}
+    {#    </div>#}
+    {##}
+    {#    </div>#}
+
+    <div class="container">
+        <div class="row">
             {% for obj in object_list %}
-
-                <tr onclick="window.location.href='{{ obj.get_absolute_url }}'">
-                    {% if obj.image %}
-                        <td><img width="60px" height="60px"
-                                 src="{{ obj.image.url }}"></td>
-                    {% else %}
-                        <td><img width="60px" height="60px"
-                                 src="{% static 'img/book_image.png' %}"></td>
-                    {% endif %}
-                    <td>{{ obj.name }}</td>
-                    <td>{{ obj.author }}</td>
-                    <td>{{ obj.price }} ৳</td>
-                    {% if obj.is_rent_available %}
-                        <td>{{ obj.rent_charge }} ৳</td>
-                    {% else %}
-                        <td>N/A</td>
-                    {% endif %}
-                </tr>
+                <div class="col-md-3 col-sm-6">
+                    <div class="product-grid4">
+                        <div class="product-image4">
+                            <a href="{{ obj.get_absolute_url }}">
+                                {% if obj.image %}
+                                    <img class="pic-1" src="{{ obj.image.url }}">
+                                {% else %}
+                                    <img class="pic-1" src="{% static 'img/book_image.png' %}">
+                                {% endif %}
+                            </a>
+                            <span class="product-new-label">{% if obj.is_old %} Old {% else %}
+                                New {% endif %}</span>
+                            {% if obj.get_discount %}
+                                <span class="product-discount-label">-{{ obj.get_discount }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="product-content">
+                            <h3 class="title"><a href="{{ obj.get_absolute_url }}">{{ obj.name }}</a></h3>
+                            <div class="price">
+                                {{ obj.price }} ৳
+                                {% if obj.get_discount %}
+                                    <span>{{ obj.regular_price }}৳</span>
+                                {% endif %}
+                            </div>
+                            {% include 'book/cart_update.html' with object=obj next_url=request.build_absolute_uri %}
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <hr>
-    <div class="row">
+        </div>
     </div>
 
-    </div>
 
 {% else %}
     <p class="text-center">Book List is Empty </p>

@@ -16,7 +16,7 @@
 {#<marquee behavior="alternate" ><b style="background-color:#ff9900 ">-----This Site is underdevelopment-----</b></marquee>#}
 {#<br>#}
 
-<div class="container border">
+<div class="container-fluid bg-light">
     <div class="container">
         {% for message in messages %}
             <div class="alert {{ message.tags }}" role="alert">
@@ -45,8 +45,9 @@
         <div class="col-sm-2"></div>
     </div>
     </div>
-</div>
 {% include 'include_html/js.html' %}
+</div>
+
     <script>
         superplaceholder({
             el: search,

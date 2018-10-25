@@ -10,10 +10,10 @@
             <div class="col-sm-12 col-md-5 border">
                 <br>
                 {% if object.image %}
-                    <a href=""><img width="380px" height="480px" src="{{ object.image.url }}"></a>
+                    <a href=""><img width="360px" height="480px" src="{{ object.image.url }}"></a>
 
                 {% else %}
-                    <a href=""><img width="380px" height="480px" src="{% static 'img/book_image.png' %}"></a>
+                    <a href=""><img width="360px" height="480px" src="{% static 'img/book_image.png' %}"></a>
                 {% endif %}
                 <br>
             </div>
@@ -40,7 +40,10 @@
                 </p>
                 <div class="col-sm mx-3 my-4 ">
                     Total Order: ({{ object.order }})
-                    times {% include 'book/cart_update.html' with product=object cart=cart next_url=request.build_absolute_uri %}
+                    times
+
+                    {% include 'book/cart_update.html' with object=object next_url=request.build_absolute_uri %}
+
                 </div>
 
                 <br>
@@ -53,12 +56,12 @@
                 <h4 class="text-info"> Specification:</h4>
                 {% include 'book/table/info_table.html' with object=object %}
             </div>
-{#            <div class="col-sm-12 text-center bg-light ">#}
-{#                <hr>#}
-{#                <p><div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard"#}
-{#                 data-action="like" data-size="small" data-show-faces="true" data-share="true"></div></p>#}
-{#                <p><div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div></p>#}
-{#            </div>#}
+            {#            <div class="col-sm-12 text-center bg-light ">#}
+            {#                <hr>#}
+            {#                <p><div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard"#}
+            {#                 data-action="like" data-size="small" data-show-faces="true" data-share="true"></div></p>#}
+            {#                <p><div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div></p>#}
+            {#            </div>#}
         </div>
     </div>
 {% endblock %}

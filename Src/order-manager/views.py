@@ -1,10 +1,10 @@
 from django.contrib.messages.views import messages
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.views.generic import ListView
 from django.shortcuts import render, redirect, get_object_or_404
-from orders.models import Order
+from orders.models import Order,OrderItem
 from .forms import OrderStatusForm
 
 
@@ -12,9 +12,18 @@ from .forms import OrderStatusForm
 def index(request):
     if request.user.is_staff:
         order_obj = Order.objects.all()
+        page = request.GET.get('page', 1)
+
+        paginator = Paginator(order_obj, 20)
+        try:
+            order = paginator.page(page)
+        except PageNotAnInteger:
+            order = paginator.page(1)
+        except EmptyPage:
+            order = paginator.page(paginator.num_pages)
 
         context = {
-            'object': order_obj
+            'object': order
         }
         return render(request, 'order-manager/index.html', context)
     return redirect('dashboard_home')
@@ -24,8 +33,17 @@ def index(request):
 def done_order(request):
     if request.user.is_staff:
         order_obj = Order.objects.filter(status='shipped')
+        page = request.GET.get('page', 1)
+
+        paginator = Paginator(order_obj, 20)
+        try:
+            order = paginator.page(page)
+        except PageNotAnInteger:
+            order = paginator.page(1)
+        except EmptyPage:
+            order = paginator.page(paginator.num_pages)
         context = {
-            'object': order_obj
+            'object': order
         }
         return render(request, 'order-manager/index.html', context)
     return redirect('dashboard_home')
@@ -35,8 +53,17 @@ def done_order(request):
 def on_process_order(request):
     if request.user.is_staff:
         order_obj = Order.objects.filter(status='paid')
+        page = request.GET.get('page', 1)
+
+        paginator = Paginator(order_obj, 20)
+        try:
+            order = paginator.page(page)
+        except PageNotAnInteger:
+            order = paginator.page(1)
+        except EmptyPage:
+            order = paginator.page(paginator.num_pages)
         context = {
-            'object': order_obj
+            'object': order
         }
         return render(request, 'order-manager/index.html', context)
     return redirect('dashboard_home')
@@ -46,8 +73,17 @@ def on_process_order(request):
 def pending_order(request):
     if request.user.is_staff:
         order_obj = Order.objects.filter(status='submit')
+        page = request.GET.get('page', 1)
+
+        paginator = Paginator(order_obj, 20)
+        try:
+            order = paginator.page(page)
+        except PageNotAnInteger:
+            order = paginator.page(1)
+        except EmptyPage:
+            order = paginator.page(paginator.num_pages)
         context = {
-            'object': order_obj
+            'object': order
         }
         return render(request, 'order-manager/index.html', context)
     return redirect('dashboard_home')
@@ -61,8 +97,17 @@ def search_order(request):
         if search:
             order_obj = Order.objects.filter(
                 Q(order_id__icontains=search))
+        page = request.GET.get('page', 1)
+
+        paginator = Paginator(order_obj, 20)
+        try:
+            order = paginator.page(page)
+        except PageNotAnInteger:
+            order = paginator.page(1)
+        except EmptyPage:
+            order = paginator.page(paginator.num_pages)
         context = {
-            'object': order_obj
+            'object': order
         }
         return render(request, 'order-manager/index.html', context)
     return redirect('dashboard_home')
@@ -72,6 +117,7 @@ def search_order(request):
 def single_order(request, id):
     if request.user.is_staff:
         object = Order.objects.get(id=id)
+        cart_obj = OrderItem.objects.filter(order=object)
         form = OrderStatusForm(request.POST or None, request.FILES or None, instance=object)
         if form.is_valid():
             instance = form.save()
@@ -80,7 +126,8 @@ def single_order(request, id):
 
         context = {
             'obj': object,
-            'form':form
+            'form':form,
+            'cart_obj':cart_obj
         }
         return render(request,'order-manager/single_order.html',context)
     return redirect('dashboard_home')

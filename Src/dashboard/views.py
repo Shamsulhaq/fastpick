@@ -1,9 +1,9 @@
 from django.contrib.messages.views import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect,get_object_or_404
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from dashboard.forms import BillingProfileForm
-from orders.models import Order
+from orders.models import Order,OrderItem
 from billing.models import BillingProfile
 from addresses.models import Address
 
@@ -31,9 +31,18 @@ def dashboard(request):
 def on_process_order(request):
     user = request.user
     order_obj = Order.objects.get_order_paid(user)
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(order_obj, 15)
+    try:
+        order = paginator.page(page)
+    except PageNotAnInteger:
+        order = paginator.page(1)
+    except EmptyPage:
+        order = paginator.page(paginator.num_pages)
     context = {
 
-        'object': order_obj,
+        'object': order,
     }
     return render(request, 'dashboard/order.html', context)
 
@@ -42,8 +51,17 @@ def on_process_order(request):
 def all_order(request):
     user = request.user
     order_obj = Order.objects.get_all_order(user)
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(order_obj, 15)
+    try:
+        order = paginator.page(page)
+    except PageNotAnInteger:
+        order = paginator.page(1)
+    except EmptyPage:
+        order = paginator.page(paginator.num_pages)
     context = {
-        'object': order_obj,
+        'object': order,
     }
     return render(request, 'dashboard/order.html', context)
 
@@ -52,8 +70,17 @@ def all_order(request):
 def done_order(request):
     user = request.user
     order_obj = Order.objects.get_all_done(user)
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(order_obj, 15)
+    try:
+        order = paginator.page(page)
+    except PageNotAnInteger:
+        order = paginator.page(1)
+    except EmptyPage:
+        order = paginator.page(paginator.num_pages)
     context = {
-        'object': order_obj,
+        'object': order,
     }
     return render(request, 'dashboard/order.html', context)
 
@@ -62,8 +89,17 @@ def done_order(request):
 def pending_order(request):
     user = request.user
     order_obj = Order.objects.get_all_pending(user)
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(order_obj, 15)
+    try:
+        order = paginator.page(page)
+    except PageNotAnInteger:
+        order = paginator.page(1)
+    except EmptyPage:
+        order = paginator.page(paginator.num_pages)
     context = {
-        'object': order_obj,
+        'object': order,
     }
     return render(request, 'dashboard/order.html', context)
 
@@ -72,8 +108,10 @@ def pending_order(request):
 def order_info_view(request, id):
     user = request.user
     object = Order.objects.get(id=id)
+    cart_obj = OrderItem.objects.filter(order=object)
     context = {
-        'obj': object
+        'obj': object,
+        'cart_obj': cart_obj
     }
     if user.is_authenticated:
         return render(request, 'dashboard/order.html', context)

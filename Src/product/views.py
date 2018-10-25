@@ -1,13 +1,18 @@
 from django.http import Http404
 
 from django.views.generic import ListView, DetailView
-from carts.models import Cart
 from .models import BookList
+from carts.forms import CartAddProductForm
 
 
 class BookListView(ListView):
     template_name = 'book/list.html'
-    paginate_by = 25
+    paginate_by = 20
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(BookListView, self).get_context_data(*args, **kwargs)
+        context['cart_product_form'] = CartAddProductForm()
+        return context
 
     def get_queryset(self, *args, **kwargs):
         return BookList.objects.all()
@@ -20,8 +25,8 @@ class BookDetailView(DetailView):
 
         context = super(BookDetailView, self).get_context_data(*args, **kwargs)
         context['title'] = '{}'.format(self.get_object().title)
-        cart_obj, new_obj = Cart.objects.new_or_get(self.request)
-        context['cart'] = cart_obj
+        # cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+        context['cart_product_form'] = CartAddProductForm()
         return context
 
     def get_object(self, *args, **kwargs):

@@ -7,7 +7,6 @@ from django.template.loader import get_template
 
 from addresses.models import Address
 from billing.models import BillingProfile
-from carts.models import Cart
 from fastpick import settings
 from fastpick.utils import unique_order_id_generator
 
@@ -36,18 +35,17 @@ class ShippingMethod(models.Model):
 
 
 class OrderManager(models.Manager):
-    def new_or_get(self, billing_profile, cart_obj):
+    def new_or_get(self, billing_profile):
         created = False
         qs = self.get_queryset().filter(
             billing_profile=billing_profile,
-            cart=cart_obj,
             active=True, status='created')
         if qs.count() == 1:
             obj = qs.first()
         else:
             obj = self.model.objects.create(
                 billing_profile=billing_profile,
-                cart=cart_obj)
+            )
             created = True
         return obj, created
 
@@ -78,7 +76,8 @@ class Order(models.Model):
                                         null=True)
     shipping_address = models.ForeignKey(Address, related_name='shipping_address', on_delete=models.CASCADE, blank=True,
                                          null=True)
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    # cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    cart_total = models.DecimalField(default=0.00, decimal_places=0, max_digits=9)
     shipping_method = models.ForeignKey(ShippingMethod, on_delete=models.CASCADE, blank=True, null=True)
     status = models.CharField(max_length=120, default='created', choices=ORDER_STATUS_CHOICES)
     shipping_total = models.DecimalField(default=0.00, decimal_places=2, max_digits=9)
@@ -109,9 +108,12 @@ class Order(models.Model):
         return cost
 
     def update_total(self):
-        cart_total = self.cart.total
         shipping_total = self.shipping_total
-        new_total = format(fsum([cart_total, shipping_total]), '.2f')
+        order_items = OrderItem.objects.filter(order=self.id)
+        total = 0
+        for item in order_items:
+            total += item.item_total
+        new_total = format(fsum([total, shipping_total]), '.2f')
         self.total = new_total
         # self.save()
         return new_total
@@ -128,21 +130,66 @@ class Order(models.Model):
         if self.check_done():
             self.status = 'submit'
             self.save()
-            products = self.cart.books.all()
-            for book in products:
-                book_id = book.id
-                print(book_id)
-                book = BookList.objects.get_by_id(book_id)
-                print(book.order)
-                book.order += 1
-                book.save()
+            self.book_order_count()
+
         return self.status
 
+    def book_order_count(self):
+        products = OrderItem.objects.filter(order=self.id)
+        # print(products.all())
+        for product in products.all():
+            book_id = product.product.id
+            # print(product.product.id)
+            # print(product.quantity)
+            book = BookList.objects.get_by_id(book_id)
+            # print(book.order)
+            book.order += product.quantity
+            # print(book.order)
+            book.save()
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(BookList, related_name='order_items', on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    quantity = models.PositiveIntegerField(default=1)
+    item_total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+
+    def __str__(self):
+        return '{}'.format(self.id)
+
+    def get_cost(self):
+        total = self.price * self.quantity
+        self.item_total = total
+        # self.save()
+
+
+def pre_save_order_item_receiver(sender, instance, *args, **kwargs):
+    instance.get_cost()
+
+
+pre_save.connect(pre_save_order_item_receiver, sender=OrderItem)
+
+
+# def post_save_order_item_receiver(sender,created, instance, *args, **kwargs):
+#     if created:
+#         instance.book_order_count()
+#
+#
+# post_save.connect(post_save_order_item_receiver, sender=OrderItem)
+#
 
 def pre_save_order_id_receiver(sender, instance, *args, **kwargs):
     # instance.shipping_total = shipping_cost_genaretor(instance)
     if not instance.order_id:
         instance.order_id = unique_order_id_generator(instance)
+    if instance.cart_total == 0:
+        order_items = OrderItem.objects.filter(order=instance.id)
+        total = 0
+        for item in order_items:
+            total += item.item_total
+        instance.cart_total = total
+        instance.update_total()
 
     if instance.shipping_address:
         instance.update_shopping_cost()
@@ -169,16 +216,20 @@ def pre_save_order_id_receiver(sender, instance, *args, **kwargs):
     #     email.send()
 
 
-def post_save_cart_total(sender, instance, created, *args, **kwargs):
-    if not created:
-        cart_obj = instance
-        cart_total = cart_obj.total
-        cart_id = cart_obj.id
-        qs = Order.objects.filter(cart__id=cart_id)
-        if qs.count() == 1:
-            order_obj = qs.first()
-            order_obj.update_total()
-            order_obj.save()
+pre_save.connect(pre_save_order_id_receiver, sender=Order)
+
+
+#
+# def post_save_cart_total(sender, instance, created, *args, **kwargs):
+#     if not created:
+#         cart_obj = instance
+#         cart_total = cart_obj.total
+#         cart_id = cart_obj.id
+#         qs = Order.objects.filter(cart__id=cart_id)
+#         if qs.count() == 1:
+#             order_obj = qs.first()
+#             order_obj.update_total()
+#             order_obj.save()
 
 
 def post_save_order(sender, instance, created, *args, **kwargs):
@@ -191,6 +242,7 @@ def post_save_order(sender, instance, created, *args, **kwargs):
     #     qs.update(active=False)
 
 
-pre_save.connect(pre_save_order_id_receiver, sender=Order)
-post_save.connect(post_save_cart_total, sender=Cart)
+#
+# pre_save.connect(pre_save_order_id_receiver, sender=Order)
+# post_save.connect(post_save_cart_total, sender=Cart)
 post_save.connect(post_save_order, sender=Order)

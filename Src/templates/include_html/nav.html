@@ -12,82 +12,97 @@
 {% url 'review-list-view-url' as review_list_url %}
 {% url 'dashboard_home' as dashbord_url %}
 {% url 'order_admin_index_url' as admin_url %}
+<section>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(65,100,65,0.16)">
+        <div class="container">
+            <a class="navbar-brand" href="{{ serach_url }}"><img width="80px" src="{% static 'img/logo.png' %}"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light border m-2 ">
-    <a class="navbar-brand" href="{{ serach_url }}"><img width="80px" src="{% static 'img/logo.png' %}"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item {% if request.path == list_url %}active{% endif %}">
-                <a class="nav-link" href="{{ list_url }}"><b>বইয়ের লিস্ট</b></a>
-            </li>
-            <li class="nav-item dropdown {% if request.path == category_list_url or request.path == publication_list_url or request.path == author_list_url or request.path == login_url %}active{% endif %}">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    <b> বইয়ের ধরন</b>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ category_list_url }}">By Category</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ author_list_url }}">By Author</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ publication_list_url }}">By Publication</a>
-                </div>
-            </li>
-            {#            <li class="nav-item {% if request.path == author_list_url %}active{% endif %}">#}
-            {#                <a class="nav-link " href="{{ author_list_url }}"><b>লেখক</b></a>#}
-            {#            </li>#}
-            <li class="nav-item {% if request.path == review_list_url %}active{% endif %}">
-                <a class="nav-link " href="{{ review_list_url }}"><b>বই রিভিউ</b></a>
-            </li>
-            <li class="nav-item {% if request.path == '' %}active{% endif %}">
-                <a class="nav-link " href="#"><b>আমাদের জানুন</b></a>
-            </li>
-            <li class="nav-item {% if request.path == contact_url %}active{% endif %}">
-                <a class="nav-link " href="{{ contact_url }}"><b>যোগাযোগ</b></a>
-            </li>
-            <li class="nav-item dropdown {% if request.path == logout_url or request.path == admin_url or request.path == register_url or request.path == login_url %}active{% endif %}">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    <b>My Account</b>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    {% if request.user.is_authenticated %}
-                        {% if request.user.is_staff %}
-                            <a class="dropdown-item" href="{{ admin_url }}">Order Manager</a>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item {% if request.path == list_url %}active{% endif %}">
+                        <a class="nav-link" href="{{ list_url }}"><b>বইয়ের লিস্ট</b></a>
+                    </li>
+                    <li class="nav-item dropdown {% if request.path == category_list_url or request.path == publication_list_url or request.path == author_list_url or request.path == login_url %}active{% endif %}">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            <b> বইয়ের ধরন</b>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ category_list_url }}">By Category</a>
                             <div class="dropdown-divider"></div>
-                        {% endif %}
-                        <a class="dropdown-item" href="{{ dashbord_url }}">Dashboard</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ logout_url }}">Logout</a>
-                    {% else %}
-                        <a class="dropdown-item" href="{{ register_url }}">Register</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ login_url }}">Login</a>
-                    {% endif %}
-                </div>
-            </li>
+                            <a class="dropdown-item" href="{{ author_list_url }}">By Author</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ publication_list_url }}">By Publication</a>
+                        </div>
+                    </li>
+                    {#            <li class="nav-item {% if request.path == author_list_url %}active{% endif %}">#}
+                    {#                <a class="nav-link " href="{{ author_list_url }}"><b>লেখক</b></a>#}
+                    {#            </li>#}
+                    <li class="nav-item {% if request.path == review_list_url %}active{% endif %}">
+                        <a class="nav-link " href="{{ review_list_url }}"><b>বই রিভিউ</b></a>
+                    </li>
+                    <li class="nav-item {% if request.path == '' %}active{% endif %}">
+                        <a class="nav-link " href="#"><b>আমাদের জানুন</b></a>
+                    </li>
+                    <li class="nav-item {% if request.path == contact_url %}active{% endif %}">
+                        <a class="nav-link " href="{{ contact_url }}"><b>যোগাযোগ</b></a>
+                    </li>
+                    <li class="nav-item dropdown {% if request.path == logout_url or request.path == admin_url or request.path == register_url or request.path == login_url %}active{% endif %}">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            <b>My Account</b>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% if request.user.is_authenticated %}
+                                {% if request.user.is_staff %}
+                                    <a class="dropdown-item" href="{{ admin_url }}">Order Manager</a>
+                                    <div class="dropdown-divider"></div>
+                                {% endif %}
+                                <a class="dropdown-item" href="{{ dashbord_url }}">Dashboard</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ logout_url }}">Logout</a>
+                            {% else %}
+                                <a class="dropdown-item" href="{{ register_url }}">Register</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ login_url }}">Login</a>
+                            {% endif %}
+                        </div>
+                    </li>
 
-            <li class="nav-item  {% if request.path == cart_home %}active{% endif %}">
-                <a class="nav-link " href="{{ cart_home }}"><b class="text-info">{{ request.session.cart_items }}</b> <i
-                        class="fas fa-shopping-cart"></i></a>
-            </li>
+                    <li class="nav-item  {% if request.path == cart_home %}active{% endif %}">
+                        <a class="nav-link " href="{{ cart_home }}"><b class="text-info">{{ totail_items }}</b> <i
+                                class="fas fa-shopping-cart"></i></a>
+                    </li>
+
+                    {#        old Cart home #}
+                    {#            <li class="nav-item  {% if request.path == cart_home %}active{% endif %}">#}
+                    {#                <a class="nav-link " href="{{ cart_home }}"><b class="text-info">{{ request.session.cart_items }}</b> <i#}
+                    {#                        class="fas fa-shopping-cart"></i></a>#}
+                    {#            </li>#}
+                </ul>
+                <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
+                    <input class="form-control mr-sm-2" required type="search" name="q"
+                           placeholder="বই, লেখক, বইয়ের ধরন  লিখুন"
+                           aria-label="Search">
+                    <button class="btn btn-fastpick my-2 my-sm-0" type="submit">খুঁজুন</button>
+                </form>
+            </div>
+        </div>
+
+    </nav>
+    <div class="container">
+        <ul>
+            <li><a>Home</a></li>
+            <li><a>List</a></li>
         </ul>
-        <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
-            <input class="form-control mr-sm-2" required type="search" name="q" placeholder="বই, লেখক, বইয়ের ধরন  লিখুন"
-                   aria-label="Search">
-            <button class="btn btn-fastpick my-2 my-sm-0" type="submit">খুঁজুন</button>
-        </form>
+        <hr>
     </div>
 
-</nav>
-<br>
-
-{##}
-{#<li class="nav-item {% if request.path == category_list_url %}active{% endif %}">#}
-{#    <a class="nav-link " href="{{ category_list_url }}"><b>বইয়ের ধরন</b></a>#}
-{#</li>#}
+</section>

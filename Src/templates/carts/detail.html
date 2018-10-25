@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Your Shopping Cart
+{% endblock %}
+{% block content %}
+    {% if cart %}
+        <h2>Cart List</h2>
+        <div class="row">
+            <div class="col-sm-12 col-md-8 col-lg-8">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Book Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in cart %}
+                        {% with product=item.product %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><img width="40px"
+                                         src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'img/book_image.png' %} {% endif %}">
+                                    <a href="{{ product.get_absolute_url }}">{{ product.name }} </a></td>
+
+                                <td>
+                                    <form action="{% url "cart-add-url" product.id %}" method="post">
+                                        {% csrf_token %}
+                                        {{ item.update_quantity_form.quantity }}
+                                        {{ item.update_quantity_form.update }}
+                                        <input type="submit" value="Update" class="btn-sm btn-info">
+{#                                        <button type="submit" class="btn btn-sm"><i class="fas fa-sync-alt"></i></button>#}
+                                    </form>
+                                </td>
+                                <td>{{ item.price }} TK</td>
+                                <td><a href="{% url "cart-remove-url" product.id %}"><i class="far fa-trash-alt"></i></a></td>
+                            </tr>
+                        {% endwith %}
+                    {% endfor %}
+
+
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>
+                            <button onclick="window.location.href='{% url 'book-list-view-url' %}'"
+                                    class="btn-success text-center"><i class="fas fa-luggage-cart"></i>Continue Shopping
+                            </button>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-12 col-md-4 col-lg-4 ">
+                <p class="lead">Checkout Summary</p>
+                <hr>
+                <p>Payment Details</p>
+                <div class="row ">
+                    <div class="mr-auto col"><b>Total: </b></div>
+                    <div class="ml-auto col"><p> {{ cart.get_total_price }} Tk</p></div>
+                </div>
+                <div class="row ">
+                    <div class="mr-auto col"></div>
+                    <div class="ml-auto col"><a href="{% url 'checkout-home-url' %}"
+                                                class="btn btn-success">Checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+        <p class="center">Cart is Empty </p>
+    {% endif %}
+
+{% endblock %}
+

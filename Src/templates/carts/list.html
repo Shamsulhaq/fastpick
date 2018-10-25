@@ -22,6 +22,15 @@
                     </tr>
                 {% endfor %}
 
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>
+                            <button onclick="window.location.href='{% url 'book-list-view-url' %}'"
+                            class="btn-success text-center"><i class="fas fa-luggage-cart"></i>Continue Shopping
+                    </button>
+                        </td>
+                    </tr>
+
                 </tbody>
             </table>
         </div>
@@ -43,9 +52,10 @@
                 <div class="ml-auto col"><p> {{ cart.total }} Tk</p></div>
             </div>
             <div class="row ">
-            <div class="mr-auto col"></div>
-            <div class="ml-auto col"><a href="{% url 'checkout-home-url' %}" class="btn btn-success">Checkout</a></div>
-        </div>
+                <div class="mr-auto col"></div>
+                <div class="ml-auto col"><a href="{% url 'checkout-home-url' %}" class="btn btn-success">Checkout</a>
+                </div>
+            </div>
         </div>
     </div>
 

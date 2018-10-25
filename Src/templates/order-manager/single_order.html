@@ -83,15 +83,17 @@
                     Cart Info
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Cart Items : {{ obj.cart.books.count }}</li>
-                    {% for book in obj.cart.books.all %}
-                        <li class="list-group-item"><img width="40px" src="{{ book.image.url }}">
-                            <p> {{ book.name }}</p>
-                            <p>{{ book.price }} Tk</p></li>
+                    <li class="list-group-item">Cart Items : {{ cart_obj.count }}</li>
+                    {% for book in cart_obj %}
+                        <li class="list-group-item"><img width="40px" src="{{ book.product.image.url }}">
+                             {{ book.product.name }}
+                            Price: {{ book.price }} Tk
+                            <hr>
+                            Quantity: {{ book.quantity }}pics
+                            <hr>
+                            Total: {{ book.item_total }}TK</li>
                     {% endfor %}
-                    <li class="list-group-item">Sub Total: {{ obj.cart.sub_total }} Tk</li>
-                    <li class="list-group-item">VAT: {{ obj.cart.get_vat }} Tk</li>
-                    <li class="list-group-item">Total : {{ obj.cart.total }} Tk</li>
+                    <li class="list-group-item">Total : {{ obj.cart_total }} Tk</li>
                 </ul>
             </div>
         {% endif %}
