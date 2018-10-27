@@ -1,0 +1,16 @@
+<form method="POST" action="{% url 'rent_cart_update_url' %}" class="form">
+    {% csrf_token %}
+    <input type="hidden" name="product_id" value="{{ object.id }}">
+
+    {% if object in rent_cart.books.all %}
+        <button type="submit"
+                class="btn btn-danger">
+            Remove From Rent Cart <i class="far fa-trash-alt"></i>
+        </button>
+    {% else %}
+        <button type="submit"
+                class="btn">
+            Add To Rent Cart<i class="fas fa-cart-plus"></i>
+        </button>
+    {% endif %}
+</form>

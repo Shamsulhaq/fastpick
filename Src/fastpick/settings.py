@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 from django.contrib.messages import constants as messages
 from .mail_info import *
+
 # Email config
 EMAIL_USE_TLS = EMAIL_USE_TLS
 EMAIL_HOST = EMAIL_HOST
@@ -35,7 +36,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    #installed apps
+    # installed apps
 
     'accounts',
     'author',
@@ -59,19 +59,16 @@ INSTALLED_APPS = [
     'product',
     'publication',
     'review',
+    'rent',
     'tag',
-#     bootstrap form
+    #     bootstrap form
     'crispy_forms',
-#     text editor
+    #     text editor
     'tinymce',
-
-
-
-
 
 ]
 
-AUTH_USER_MODEL = 'accounts.User' #changes the built-in user model to ours
+AUTH_USER_MODEL = 'accounts.User'  # changes the built-in user model to ours
 LOGIN_URL = '/account/login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/account/login/'
@@ -91,7 +88,7 @@ ROOT_URLCONF = 'fastpick.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'),'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -105,9 +102,7 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = 'fastpick.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
@@ -119,7 +114,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
@@ -128,8 +122,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator','OPTIONS':{'min_length': 6,
-                                                                                            }
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', 'OPTIONS': {'min_length': 6,
+                                                                                              }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -139,7 +133,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -154,13 +147,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-#Message Tag
+# Message Tag
 MESSAGE_TAGS = {
-    messages.ERROR : 'alert alert-danger',
+    messages.ERROR: 'alert alert-danger',
     messages.SUCCESS: 'alert alert-success',
     messages.WARNING: 'alert alert-warning',
     messages.INFO: 'alert alert-info',
-    messages.DEBUG:'alert alert-info',
+    messages.DEBUG: 'alert alert-info',
 }
 
 # Static files (CSS, JavaScript, Images)
@@ -172,7 +165,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
 STATIC_ROOT = "/static/"
-
 
 MEDIA_URL = '/media/'
 

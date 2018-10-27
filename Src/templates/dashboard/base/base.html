@@ -40,6 +40,7 @@
     {% url 'db-address-book-url' as address_url %}
     {% url 'db-account-url' as account_url %}
     {% url 'dashboard_home' as dashboard_home %}
+    {% url 'all-rent-view-url' as all_rentr_url %}
     <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-12 ">
             <div class="card m-2">
@@ -56,6 +57,8 @@
                             href="{{ address_url }}">Address Book</a></li>
                     <li class="list-group-item {% if request.path == all_order_url %}bg-light{% endif %}"><a
                             href="{{ all_order_url }}">My Orders</a></li>
+                    <li class="list-group-item {% if request.path == all_rentr_url %}bg-light{% endif %}"><a
+                            href="{{ all_rentr_url }}">My Rents</a></li>
                     <li class="list-group-item {% if request.path == password_change %}bg-light{% endif %}"><a
                             href="{{ password_change }}">Password Change</a></li>
                     <li class="list-group-item "><a

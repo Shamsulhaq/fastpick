@@ -27,10 +27,10 @@ def cart_add(request, id):
         cd = form.cleaned_data
         cart.add(product=product, quantity=cd['quantity'], update_quantity=cd['update'])
         messages.success(request, "Your Cart item Added")
-        # if is_safe_url(redirect_path, request.get_host()):
-        #     return redirect(redirect_path)
-        # else:
-        #     return redirect('cart-home-url')
+        if is_safe_url(redirect_path, request.get_host()):
+            return redirect(redirect_path)
+        else:
+            return redirect('cart-home-url')
 
     return redirect('book-list-view-url')
 

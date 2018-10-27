@@ -7,7 +7,7 @@ from django.db.models.signals import pre_save
 
 from fastpick.utils import unique_slug_generator
 from django.template.defaultfilters import slugify
-
+from tag.models import Tag
 
 fs = FileSystemStorage(location='media')
 
@@ -61,6 +61,7 @@ class BookAuthor(models.Model):
 
 
 def ba_pre_save_receiver(sender, instance, *args, **kwargs):
+    Tag.objects.create(keyword = instance.name)
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
 

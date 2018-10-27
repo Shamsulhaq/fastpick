@@ -12,6 +12,7 @@
 {% url 'review-list-view-url' as review_list_url %}
 {% url 'dashboard_home' as dashbord_url %}
 {% url 'order_admin_index_url' as admin_url %}
+{% url 'rent_cart_home_url' as rent_home %}
 <section>
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(65,100,65,0.16)">
         <div class="container">
@@ -75,17 +76,20 @@
                             {% endif %}
                         </div>
                     </li>
-
-                    <li class="nav-item  {% if request.path == cart_home %}active{% endif %}">
-                        <a class="nav-link " href="{{ cart_home }}"><b class="text-info">{{ totail_items }}</b> <i
-                                class="fas fa-shopping-cart"></i></a>
-                    </li>
-
+                    {% if totail_items > 0 %}
+                        <li class="nav-item  {% if request.path == cart_home %}active{% endif %}">
+                            <a class="nav-link " href="{{ cart_home }}"><b class="text-info">{{ totail_items }}</b> <i
+                                    class="fas fa-shopping-cart"></i></a>
+                        </li>
+                    {% endif %}
                     {#        old Cart home #}
-                    {#            <li class="nav-item  {% if request.path == cart_home %}active{% endif %}">#}
-                    {#                <a class="nav-link " href="{{ cart_home }}"><b class="text-info">{{ request.session.cart_items }}</b> <i#}
-                    {#                        class="fas fa-shopping-cart"></i></a>#}
-                    {#            </li>#}
+                    {% if request.session.rent_cart_items > 0 %}
+                        <li class="nav-item  {% if request.path == rent_home %}active{% endif %}">
+                            <a class="nav-link " href="{{ rent_home }}"><b
+                                    class="text-info">{{ request.session.rent_cart_items }}</b> Rent<i
+                                    class="fas fa-shopping-cart"></i></a>
+                        </li>
+                    {% endif %}
                 </ul>
                 <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
                     <input class="form-control mr-sm-2" required type="search" name="q"
@@ -98,10 +102,6 @@
 
     </nav>
     <div class="container">
-        <ul>
-            <li><a>Home</a></li>
-            <li><a>List</a></li>
-        </ul>
         <hr>
     </div>
 

@@ -180,10 +180,10 @@ h3.h3 {
 
 .product-grid4 .title {
     font-size: 18px;
-    font-weight: 400;
+    font-weight: 300;
     text-transform: capitalize;
-    margin: 0 0 3px;
-    transition: all .3s ease 0s
+    margin: 0 0 1px;
+    transition: all .2s ease 0s
 }
 
 .product-grid4 .title a {
@@ -191,7 +191,7 @@ h3.h3 {
 }
 
 .product-grid4 .title a:hover {
-    color: #ffcb1d
+    color: #ffc86d
 }
 
 .product-grid4 .price {

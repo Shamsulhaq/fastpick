@@ -124,9 +124,9 @@ LANGUAGE_CHOOSE = (
 
 class BookList(models.Model):
     name = models.CharField(max_length=255, help_text="Enter Book Name")
-    author = models.ForeignKey(BookAuthor, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    publication = models.ForeignKey(Publication, on_delete=models.CASCADE)
+    author = models.ManyToManyField(BookAuthor)
+    category = models.ManyToManyField(Category)
+    publication = models.ManyToManyField(Publication)
     translator = models.CharField(max_length=250, blank=True, null=True)
     edition = models.CharField(max_length=20, help_text='Year eg. 1st Edition, 2018', blank=True, null=True)
     isbn = models.CharField(max_length=20, help_text='eg. 9847034301595', blank=True, null=True)
@@ -179,6 +179,7 @@ class BookList(models.Model):
 
 
 def bl_pre_save_receiver(sender, instance, *args, **kwargs):
+    Tag.objects.create(keyword=instance.name)
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
 

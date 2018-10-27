@@ -1,6 +1,8 @@
 from django.http import Http404
 
 from django.views.generic import ListView, DetailView
+
+from rent.models import RentCart
 from .models import BookList
 from carts.forms import CartAddProductForm
 
@@ -25,7 +27,8 @@ class BookDetailView(DetailView):
 
         context = super(BookDetailView, self).get_context_data(*args, **kwargs)
         context['title'] = '{}'.format(self.get_object().title)
-        # cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+        rent_cart_obj, new_obj = RentCart.objects.new_or_get(self.request)
+        context['rent_cart'] = rent_cart_obj
         context['cart_product_form'] = CartAddProductForm()
         return context
 

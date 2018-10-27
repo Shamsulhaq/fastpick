@@ -28,6 +28,7 @@ urlpatterns = [
     path('', include('dashboard.urls')),
     path('', include('addresses.urls')),
     path('', include('review.urls')),
+    path('', include('rent.urls')),
     path('accounts/', include('accounts.password.urls')),
     path('author/', include('author.urls')),
     path('book/', include('product.urls')),
