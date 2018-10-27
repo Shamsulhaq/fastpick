@@ -5,13 +5,12 @@
 <head>
 
     {% include 'include_html/css.html' %}
-    <title>FastPick | Dash-Board</title>
+    <title>Order Admin</title>
 </head>
 <body>
 <div class="container">
     {% for message in messages %}
-        {#            <div class="alert alert-{{ message.tags }}">{{ message }}</div>#}
-        {#            <script> setTimeout(function() { alert('{{ message.tags }} \n {{ message }}')}, 5000);</script>#}
+
         <div class="alert {{ message.tags }}" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                     aria-hidden="true">&times;</span>
@@ -35,14 +34,11 @@
         </div>
     </nav>
 </section>
-
-{% url 'get_logout' as logout_url %}
-{% url 'password_change' as password_change %}
-{% url 'all-order-view-url' as all_order_url %}
-{% url 'db-address-book-url' as address_url %}
-{% url 'db-account-url' as account_url %}
-{% url 'dashboard_home' as dashboard_home %}
-{% url 'all-rent-view-url' as all_rentr_url %}
+<hr>
+{% url 'done_order_url' as done_order_url %}
+{% url 'pending_order_url' as pending_order_url %}
+{% url 'admin_process_order_url' as admin_process_order_url %}
+{% url 'order_admin_index_url' as order_admin_index_url %}
 <div class="container">
     <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-12 ">
@@ -71,20 +67,16 @@
             </div>
         </div>
         <div class="col-lg-9 col-md-8 col-sm-12">
-            <div class="card m-2 ">
-                <div class="card-body">
-                    {% block content %}
 
-                    {% endblock %}
-                </div>
-            </div>
+            {% block content %}
+            {% endblock %}
 
         </div>
 
     </div>
 </div>
+</div>
 {% include 'include_html/js_file.html' %}
-
 </body>
 
 </html>

@@ -88,7 +88,7 @@ class RentManager(models.Manager):
         return obj, created
 
     # for User DashBoard
-    def get_order_paid(self, billing_profile):
+    def get_rent_paid(self, billing_profile):
         qs = self.get_queryset().filter(billing_profile__user=billing_profile, status='paid')
         return qs
 
@@ -99,11 +99,15 @@ class RentManager(models.Manager):
         return qs
 
     def get_all_pending(self, billing_profile):
-        qs = self.get_queryset().filter(billing_profile__user=billing_profile, status='submit')
+        qs = self.get_queryset().filter(billing_profile__user=billing_profile, status='submit' or 'paid')
         return qs
 
     def get_all_done(self, billing_profile):
         qs = self.get_queryset().filter(billing_profile__user=billing_profile, status='shipped')
+        return qs
+
+    def get_all_return(self, billing_profile):
+        qs = self.get_queryset().filter(billing_profile__user=billing_profile, status='returned')
         return qs
 
 

@@ -105,10 +105,12 @@
                         <td>Cart is Empty</td>
                     </tr>
                 {% endfor %}
-                <tr>
-                    <td style="background-color:#aaa;"><b>Shipping Address:</b></td>
-                    <td>{{ obj.shipping_address.get_address }}</td>
-                </tr>
+                {% if obj.shipping_address %}
+                    <tr>
+                        <td style="background-color:#aaa;"><b>Shipping Address:</b></td>
+                        <td>{{ obj.shipping_address.get_address }}</td>
+                    </tr>
+                {% endif %}
                 <tr>
                     <td style="background-color:#aaa;"><b>Billing Address:</b></td>
                     <td>{{ obj.billing_address.get_address }}</td>
@@ -121,10 +123,12 @@
                     <td style="background-color:#aaa;"><b>Shipping Method:</b></td>
                     <td>{{ obj.shipping_method.get_method_display }}</td>
                 </tr>
-                <tr>
-                    <td style="background-color:#aaa;"><b>Shipping Total:</b></td>
-                    <td>{{ obj.shipping_total }} Tk</td>
-                </tr>
+                {% if obj.shipping_total %}
+                    <tr>
+                        <td style="background-color:#aaa;"><b>Shipping Total:</b></td>
+                        <td>{{ obj.shipping_total }} Tk</td>
+                    </tr>
+                {% endif %}
                 <tr>
                     <td colspan="2"></td>
                 </tr>

@@ -1,8 +1,8 @@
 {% extends 'dashboard/base/base.html' %}
 {% load static %}
 {% block content %}
-    <div class="row mt-2">
-        <div class="col-lg-5 col-sm-12 col-md-12">
+    <div class="row ">
+        <div class="col-lg col-sm-12 col-md-12">
             <div class="card" style="width: 18rem;">
                 <div class="card-header {% if billing_obj.verify %} bg-success {% else %} bg-warning {% endif %}">
                     Account Info
@@ -21,7 +21,7 @@
                 </ul>
             </div>
         </div>
-        <div class="col-lg-3 col-sm-12 col-md-12">
+        <div class="col-lg col-sm-12 col-md-12">
             <div class="card" style="width: 18rem;">
                 <div class="card-header ">
                     Order Info

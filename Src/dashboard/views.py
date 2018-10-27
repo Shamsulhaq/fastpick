@@ -6,7 +6,7 @@ from dashboard.forms import BillingProfileForm
 from orders.models import Order, OrderItem
 from billing.models import BillingProfile
 from addresses.models import Address
-from rent.models import Rent
+from rent.models import Rent, RentCart
 
 
 @login_required
@@ -47,25 +47,6 @@ def on_process_order(request):
         'object': order,
     }
     return render(request, 'dashboard/order.html', context)
-
-
-@login_required
-def all_rent(request):
-    user = request.user
-    rent_obj = Rent.objects.get_all_rent(user)
-    page = request.GET.get('page', 1)
-
-    paginator = Paginator(rent_obj, 15)
-    try:
-        order = paginator.page(page)
-    except PageNotAnInteger:
-        order = paginator.page(1)
-    except EmptyPage:
-        order = paginator.page(paginator.num_pages)
-    context = {
-        'object': order,
-    }
-    return render(request, 'dashboard/rent.html', context)
 
 
 @login_required
@@ -163,3 +144,93 @@ def account_info(request):
         messages.success(request, 'Billing Profile Update Successfully')
         return redirect('dashboard_home')
     return render(request, 'dashboard/account_info.html', {'form': form})
+
+
+# Rent Section
+
+@login_required
+def all_rent(request):
+    user = request.user
+    rent_obj = Rent.objects.get_all_rent(user)
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(rent_obj, 15)
+    try:
+        order = paginator.page(page)
+    except PageNotAnInteger:
+        order = paginator.page(1)
+    except EmptyPage:
+        order = paginator.page(paginator.num_pages)
+    context = {
+        'object': order,
+    }
+    return render(request, 'dashboard/rent.html', context)
+
+
+@login_required
+def done_rent(request):
+    user = request.user
+    order_obj = Rent.objects.get_all_done(user)
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(order_obj, 15)
+    try:
+        order = paginator.page(page)
+    except PageNotAnInteger:
+        order = paginator.page(1)
+    except EmptyPage:
+        order = paginator.page(paginator.num_pages)
+    context = {
+        'object': order,
+    }
+    return render(request, 'dashboard/rent.html', context)
+
+
+@login_required
+def pending_rent(request):
+    user = request.user
+    order_obj = Rent.objects.get_all_pending(user)
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(order_obj, 15)
+    try:
+        order = paginator.page(page)
+    except PageNotAnInteger:
+        order = paginator.page(1)
+    except EmptyPage:
+        order = paginator.page(paginator.num_pages)
+    context = {
+        'object': order,
+    }
+    return render(request, 'dashboard/rent.html', context)
+
+
+@login_required
+def return_rent(request):
+    user = request.user
+    order_obj = Rent.objects.get_all_return(user)
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(order_obj, 15)
+    try:
+        order = paginator.page(page)
+    except PageNotAnInteger:
+        order = paginator.page(1)
+    except EmptyPage:
+        order = paginator.page(paginator.num_pages)
+    context = {
+        'object': order,
+    }
+    return render(request, 'dashboard/rent.html', context)
+
+
+@login_required
+def rent_info_view(request, id):
+    user = request.user
+    object = Rent.objects.get(id=id)
+    context = {
+        'obj': object,
+    }
+    if user.is_authenticated:
+        return render(request, 'dashboard/rent.html', context)
+    return redirect('login-url')

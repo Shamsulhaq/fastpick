@@ -25,7 +25,7 @@ def index(request):
         context = {
             'object': order
         }
-        return render(request, 'order-manager/index.html', context)
+        return render(request, 'control_panel/index.html', context)
     return redirect('dashboard_home')
 
 
@@ -45,7 +45,7 @@ def done_order(request):
         context = {
             'object': order
         }
-        return render(request, 'order-manager/index.html', context)
+        return render(request, 'control_panel/index.html', context)
     return redirect('dashboard_home')
 
 
@@ -65,7 +65,7 @@ def on_process_order(request):
         context = {
             'object': order
         }
-        return render(request, 'order-manager/index.html', context)
+        return render(request, 'control_panel/index.html', context)
     return redirect('dashboard_home')
 
 
@@ -85,7 +85,7 @@ def pending_order(request):
         context = {
             'object': order
         }
-        return render(request, 'order-manager/index.html', context)
+        return render(request, 'control_panel/index.html', context)
     return redirect('dashboard_home')
 
 
@@ -109,7 +109,7 @@ def search_order(request):
         context = {
             'object': order
         }
-        return render(request, 'order-manager/index.html', context)
+        return render(request, 'control_panel/index.html', context)
     return redirect('dashboard_home')
 
 
@@ -129,6 +129,6 @@ def single_order(request, id):
             'form':form,
             'cart_obj':cart_obj
         }
-        return render(request,'order-manager/single_order.html',context)
+        return render(request, 'control_panel/single_order.html', context)
     return redirect('dashboard_home')
 
