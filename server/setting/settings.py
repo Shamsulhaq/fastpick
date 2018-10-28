@@ -34,7 +34,7 @@ SECRET_KEY = 'la2ypn3$%o_@(o3#cy*g@b=9zsk_nuh9nti%(4a6ny&#c05w5v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['fastpick.xyz', 'http://fastpick.xyz']
 
 # Application definition
 
@@ -164,11 +164,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
-STATIC_ROOT = "/static/"
+STATIC_ROOT = "/home/zboka3/webapps/fastpickstatic"
 
-MEDIA_URL = '/media/'
+MEDIA_URL = "/media/"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = "home/zboka3/webapps/fastpickmedia"
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

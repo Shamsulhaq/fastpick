@@ -37,7 +37,11 @@ class Category(models.Model):
 
 
 def tag_pre_save_reciver(sender, instance, *args, **kwargs):
-    Tag.objects.create(keyword=instance.keyword)
+    qs = Tag.objects.filter(keyword=instance.keyword)
+    if qs.count() == 1:
+        pass
+    else:
+        Tag.objects.create(keyword=instance.keyword)
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
 

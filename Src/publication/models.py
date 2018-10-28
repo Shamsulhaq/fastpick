@@ -34,7 +34,11 @@ class Publication(models.Model):
 
 
 def pub_pre_save_reciver(sender, instance, *args, **kwargs):
-    Tag.objects.create(keyword=instance.name)
+    qs = Tag.objects.filter(keyword=instance.name)
+    if qs.count() == 1:
+        pass
+    else:
+        Tag.objects.create(keyword=instance.name)
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
 

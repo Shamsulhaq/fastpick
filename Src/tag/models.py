@@ -6,9 +6,9 @@ from fastpick.utils import unique_slug_generator
 
 
 class Tag(models.Model):
-    keyword = models.CharField(max_length=155,help_text='Enter Tag keyword')
+    keyword = models.CharField(max_length=155, help_text='Enter Tag keyword', unique=True)
     active = models.BooleanField(default=True)
-    slug = models.SlugField(blank=True, null=True, unique=True,allow_unicode=True)
+    slug = models.SlugField(blank=True, null=True, unique=True, allow_unicode=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
