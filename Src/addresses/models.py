@@ -11,11 +11,11 @@ ADDRESS_TYPE = (
 class Address(models.Model):
     billing_profile = models.ForeignKey(BillingProfile, on_delete=models.CASCADE)
     address_type = models.CharField(max_length=120, choices=ADDRESS_TYPE)
+    full_name = models.CharField(max_length=155)
+    phone = models.CharField(max_length=15)
     address_line_1 = models.CharField(max_length=120)
-    address_line_2 = models.CharField(max_length=120, blank=True, null=True)
     city = models.CharField(max_length=120, default='Dhaka')
     country = models.CharField(max_length=120, default='Bangladesh')
-    state = models.CharField(max_length=120, default='Bangladesh',null=True,blank='get_address')
     postal_code = models.CharField(max_length=120)
     active = models.BooleanField(default=True)
 
@@ -23,11 +23,10 @@ class Address(models.Model):
         return self.address_line_1
 
     def get_address(self):
-        return "{address1}\n{address2}\n{city}\n{state}, {postal}\n{country}".format(
+        return "{full_name}\n{address1}\n{city}\n{postal}\n{country}".format(
+            full_name= self.full_name,
             address1=self.address_line_1,
-            address2=self.address_line_2 or "",
             city=self.city,
-            state=self.state or "",
             postal=self.postal_code,
             country=self.country
         )

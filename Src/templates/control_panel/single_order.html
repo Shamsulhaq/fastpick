@@ -43,36 +43,34 @@
             </ul>
         </div>
     </div>
+    {% if obj.billing_address.exist %}
     <div class="card-deck mt-2">
         <div class="card" style="width: 18rem;">
             <div class="card-header ">
                 Address Info (Billing)
             </div>
             <ul class="list-group list-group-flush">
+                <li class="list-group-item">Full Name: {{ obj.billing_address.full_name }}</li>
+                <li class="list-group-item">Phone: {{ obj.billing_address.phone }}</li>
                 <li class="list-group-item">Address line 1 : {{ obj.billing_address.address_line_1 }}</li>
-                {% if obj.billing_address.address_line_2 %}
-                    <li class="list-group-item">Address line 2 : {{ obj.billing_address.address_line_2 }}</li>
-                {% endif %}
                 <li class="list-group-item">Postal Code: {{ obj.billing_address.postal_code }}</li>
                 <li class="list-group-item">City : {{ obj.billing_address.city }}</li>
-                <li class="list-group-item">State: {{ obj.billing_address.state }}</li>
                 <li class="list-group-item">Country : {{ obj.billing_address.country }}</li>
                 <li class="list-group-item">Active: {{ obj.billing_address.active }}</li>
             </ul>
         </div>
-        {% if obj.shipping_address %}
+    {% endif %}
+        {% if obj.shipping_address.exist %}
             <div class="card" style="width: 18rem;">
                 <div class="card-header ">
                     Address Info (Shipping)
                 </div>
                 <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Full Name: {{ obj.shipping_address.full_name }}</li>
+                    <li class="list-group-item">Phone: {{ obj.shipping_address.phone }}</li>
                     <li class="list-group-item">Address line 1 : {{ obj.shipping_address.address_line_1 }}</li>
-                    {% if obj.billing_address.address_line_2 %}
-                        <li class="list-group-item">Address line 2 : {{ obj.shipping_address.address_line_2 }}</li>
-                    {% endif %}
                     <li class="list-group-item">Postal Code: {{ obj.shipping_address.postal_code }}</li>
                     <li class="list-group-item">City : {{ obj.shipping_address.city }}</li>
-                    <li class="list-group-item">State: {{ obj.shipping_address.state }}</li>
                     <li class="list-group-item">Country : {{ obj.shipping_address.country }}</li>
                     <li class="list-group-item">Active: {{ obj.shipping_address.active }}</li>
                 </ul>

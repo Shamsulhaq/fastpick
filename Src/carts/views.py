@@ -1,7 +1,13 @@
 from django.contrib import messages
+from django.core.mail import EmailMessage
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.template.loader import get_template, render_to_string
 from django.utils.http import is_safe_url
 from django.views.decorators.http import require_POST
+
+from fastpick import settings
+from fastpick.utils import render_to_pdf
 from .cart import Cart
 
 from accounts.forms import LoginForm, GuestRegisterForm
@@ -12,6 +18,7 @@ from product.models import BookList
 from orders.models import Order, ShippingMethod, OrderItem
 from orders.forms import ShippingMethodForm
 from .forms import CartAddProductForm
+from payment.models import RequestPayment
 
 
 # Create your views here.
@@ -176,8 +183,8 @@ def checkout_home(request):
     guest_register_form = GuestRegisterForm()
     shipping_method_form = ShippingMethodForm()
     address_form = AddressForm()
-    order_obj =None
-    order_items =None
+    order_obj = None
+    order_items = None
     billing_address_id = request.session.get("billing_address_id", None)
     shipping_address_id = request.session.get("shipping_address_id", None)
     shipping_method_id = request.session.get("shipping_method_id", None)
@@ -225,7 +232,9 @@ def checkout_home(request):
             order_obj.mark_submit()
             if not request.user.is_authenticated:
                 del request.session['guest_email_id']
-            return render(request, 'carts/success.html', {'object': order_obj,'order_items':order_items})
+            print(order_obj)
+            return redirect('success_view_url', order_obj.id)
+
     context = {
         'object': order_obj,
         'order_items': order_items,
@@ -237,4 +246,61 @@ def checkout_home(request):
         'shipping_method_form': shipping_method_form,
 
     }
-    return render(request, 'carts/checkout.html', context)
+    if order_items or cart:
+        return render(request, 'carts/checkout.html', context)
+    else:
+        return redirect('book-list-view-url')
+
+
+def success_view(request, id):
+    if id is None:
+        return redirect('book-list-view-url')
+    else:
+        order_obj = Order.objects.get_by_id(id=id)
+        if order_obj is None:
+            return redirect('book-list-view-url')
+
+        order_items = OrderItem.objects.filter(order=order_obj)
+        payment = RequestPayment.objects.get_by_order_id(order_obj.order_id)
+        print(payment)
+        context = {
+            'object': order_obj,
+            'order_items': order_items,
+            'payment': payment,
+        }
+        return render(request, 'carts/success.html', context)
+
+#  data = {
+#             'order_id': order_obj.order_id,
+#             'order_date': order_obj.timestamp,
+#             'payment': payment.status,
+#             'name': order_obj.billing_profile.full_name,
+#             'email': order_obj.billing_profile.email,
+#             'order_items': order_items,
+#             'shipping': order_obj.shipping_total,
+#             'totla': order_obj.total,
+#
+#         }
+#
+# pdf = render_to_pdf('invoice.html', data)
+# if pdf:
+#     response = HttpResponse(pdf, content_type='application/pdf')
+#     filename = f"Invoice_{order_obj.order_id}.pdf"
+#     content = "inline; filename='%s'" % (filename)
+#     download = request.GET.get("download")
+#     if download:
+#         content = "attachment; filename='%s'" % (filename)
+#     response['Content-Disposition'] = content
+#     return response
+# return HttpResponse("Not found")
+# mail_subject = f"Invoice-{order_obj.order_id}"
+# message = get_template('invoice.html').render(data)
+# to_email = order_obj.billing_profile.email
+# email_from = settings.EMAIL_HOST_USER
+# email = EmailMessage(
+#     mail_subject, message, email_from, to=[to_email, email_from]
+# )
+# # email.attach(f'{mail_subject}.pdf', pdf, 'application/pdf')
+# email.content_subtype = 'html'
+# email.send()
+# return HttpResponse(pdf, content_type='application/pdf')

@@ -9,11 +9,11 @@ class AddressForm(forms.ModelForm):
         fields = [
             # 'billing_profile',
             # 'address_type',
+            'full_name',
+            'phone',
             'address_line_1',
-            'address_line_2',
             'city',
             'country',
-            'state',
             'postal_code',
         ]
 

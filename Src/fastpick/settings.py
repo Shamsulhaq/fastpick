@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     #     text editor
     'tinymce',
+    'payment',
 
 ]
 

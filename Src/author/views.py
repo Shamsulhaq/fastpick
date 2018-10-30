@@ -22,6 +22,8 @@ class AuthorDetailsView(DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(AuthorDetailsView, self).get_context_data(*args, **kwargs)
         books_obj = BookList.objects.get_by_author(self.object)
+        if not books_obj:
+            books_obj = BookList.objects.get_by_translator(self.object)
         context['object_list'] = books_obj
         return context
 

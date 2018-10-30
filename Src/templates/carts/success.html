@@ -1,29 +1,95 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-    <div class="col-6 mx-auto border bg-success">
-        <p>Your Payable Amount: {{ object.total }} Tk.</p>
-        <p>Your Choosing Shipping Method: {{ object.shipping_method.get_method_display }}</p>
-        {% if object.shipping_method.method == 'home delivery' %}
-            <p>Your Shipping Address: {{ object.shipping_address }}</p>
-        {% endif %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mx-lg-auto col-md-12 col-sm-12 ">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <address>
+                            <img width="90px" src="{% static 'img/logo.png' %}">
+                            <br>
+                            117/1 East Tejturi Bazar
+                            <br>
+                            Tejgaon 1215 Dhaka
+                            <br>
+                            <abbr>Phone:</abbr> 01628 050401
+                        </address>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                        <p>
+                            <em>Date: {{ object.timestamp|date }}</em>
+                        </p>
+                        <p>
+                            <em>Receipt #: {{ object.order_id }}</em>
+                        </p>
+                        <p>
+                            <em>Payment Status : <b>{{ payment.get_status_display }}</b></em>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="text-center">
+                        <h1>Receipt</h1>
+                    </div>
+                    </span>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th class="text-center">Price</th>
+                            <th class="text-center">Total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for cart in order_items %}
+                            <tr>
+                                <td class="col-md-9"><em>{{ cart.product.name }}</em></h4></td>
+                                <td class="col-md-1" style="text-align: center"> {{ cart.quantity }} </td>
+                                <td class="col-md-1 text-center">{{ cart.price }}৳</td>
+                                <td class="col-md-1 text-center">{{ cart.item_total }}৳</td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td>  </td>
+                            <td>  </td>
+                            <td class="text-right">
+                                <p>
+                                    <strong>Subtotal: </strong>
+                                </p>
+                                {% if object.shipping_total %}
+                                    <p>
+                                        <strong>Shipping Charg: </strong>
+                                    </p>{% endif %}
+                            </td>
 
-        <p class="lead-1">How to Pay </p>
-        <p class="lead-1">Rocket Payment</p>
-        <hr>
-        <ul>
-            <li>Dial *322# </li>
-            <li>Select Payment option 1</li>
-            <li>Select Bill pay option 1</li>
-            <li>Write Biller ID "78659"</li>
-            <li>Write Order ID in Bill Number Box "{{ object.order_id }}"</li>
-            <li>Write Your Amount "{{ object.total}}"</li>
-            <li>Write your Secret PIN (XXXX)</li>
-            <li>You will get a confirmation SMS</li>
-        </ul>
-    <p class="lead">After Payment</p>
-     <p>Order ID:"{{ object.order_id }}"</p>
-     <p>Txnid:"getting by return SMS"</p>
-     <p class="lead">Send: 01628050401</p>
+                            <td class="text-center">
+                                <p>
+                                    <strong>{{ object.cart_total }}৳</strong>
+                                </p>
+                                {% if object.shipping_total %}
+                                    <p>
+                                        <strong>{{ object.shipping_total }}৳</strong>
+                                    </p>
+                                {% endif %}
+                            </td>
 
+                        </tr>
+                        <tr>
+                            <td>  </td>
+                            <td>  </td>
+                            <td class="text-right"><h4><strong>Total: </strong></h4></td>
+                            <td class="text-center text-danger"><h4><strong>{{ object.total }}৳</strong></h4></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <a href="{% url 'payment_request_url' object.order_id %}" class="btn btn-success btn-lg btn-block">
+                        Pay Now   <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a></td>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
+

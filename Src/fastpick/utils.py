@@ -1,7 +1,13 @@
 import random
 import string
+
 from django.utils.text import slugify
-from pytz import unicode
+
+from io import BytesIO
+from django.http import HttpResponse
+from django.template.loader import get_template
+
+from xhtml2pdf import pisa
 
 '''
 random_string_generator is located here:
@@ -51,3 +57,22 @@ def unique_slug_generator(instance, new_slug=None):
         return unique_slug_generator(instance, new_slug=new_slug)
 
     return slug
+
+    # PDF Marker
+
+
+def render_to_pdf(template_src, context_dict={}):
+    template = get_template(template_src)
+    html = template.render(context_dict)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), result, encoding='utf-8')
+
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None
+
+
+# pisaStatus = pisa.CreatePDF(
+#     StringIO(sourceHtml.encode('utf-8')),
+#     dest=resultFile,
+#     encoding='utf-8')

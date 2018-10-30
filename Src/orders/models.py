@@ -9,7 +9,7 @@ from addresses.models import Address
 from billing.models import BillingProfile
 from fastpick import settings
 from fastpick.utils import unique_order_id_generator
-
+from payment.models import RequestPayment
 # Create your models here.
 from product.models import BookList
 
@@ -49,6 +49,16 @@ class OrderManager(models.Manager):
             created = True
         return obj, created
 
+    def get_by_id(self, id):
+        qs = self.get_queryset().filter(id=id)
+        if qs.count() == 1:
+            return qs.first()
+
+    def get_by_order_id(self, id):
+        qs = self.get_queryset().filter(order_id=id)
+        if qs.count() == 1:
+            return qs.first()
+
     # for User DashBoard
     def get_order_paid(self, billing_profile):
         qs = self.get_queryset().filter(billing_profile__user=billing_profile, status='paid')
@@ -72,9 +82,10 @@ class OrderManager(models.Manager):
 class Order(models.Model):
     billing_profile = models.ForeignKey(BillingProfile, on_delete=models.CASCADE, blank=True, null=True)
     order_id = models.CharField(max_length=120, blank=True)
-    billing_address = models.ForeignKey(Address, related_name='billing_address', on_delete=models.CASCADE, blank=True,
+    billing_address = models.ForeignKey(Address, related_name='billing_address', on_delete=models.SET_NULL, blank=True,
                                         null=True)
-    shipping_address = models.ForeignKey(Address, related_name='shipping_address', on_delete=models.CASCADE, blank=True,
+    shipping_address = models.ForeignKey(Address, related_name='shipping_address', on_delete=models.SET_NULL,
+                                         blank=True,
                                          null=True)
     # cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     cart_total = models.DecimalField(default=0.00, decimal_places=0, max_digits=9)
@@ -130,6 +141,7 @@ class Order(models.Model):
         if self.check_done():
             self.status = 'submit'
             self.save()
+            RequestPayment.objects.create(order_id=self.order_id, amount=self.total, status='unpaid')
             self.book_order_count()
 
         return self.status
@@ -246,3 +258,13 @@ def post_save_order(sender, instance, created, *args, **kwargs):
 # pre_save.connect(pre_save_order_id_receiver, sender=Order)
 # post_save.connect(post_save_cart_total, sender=Cart)
 post_save.connect(post_save_order, sender=Order)
+
+
+def post_save_receiver(sender, instance, *args, **kwargs):
+    if instance.status == 'paid':
+        order = Order.objects.get_by_order_id(instance.order_id)
+        order.status = 'paid'
+        order.save()
+
+
+pre_save.connect(post_save_receiver, sender=RequestPayment)

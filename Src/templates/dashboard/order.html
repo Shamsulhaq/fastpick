@@ -189,9 +189,9 @@
                     </ul>
                     <p class="lead">After Payment</p>
                     <hr>
-                    <p>Order ID:"{{ obj.order_id }}"</p>
-                    <p>Txnid:"getting by return SMS"</p>
-                    <p class="lead">Send: 01628050401</p>
+                    {% if obj %}
+                    <a href="{% url 'payment_request_url' id=obj.order_id %}" class="lead">Click Hear</a>
+                    {% endif %}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

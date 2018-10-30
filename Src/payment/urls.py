@@ -1,7 +1,7 @@
-"""fastpick URL Configuration
+"""Store URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.1/topics/http/urls/
+    https://docs.djangoproject.com/en/2.0/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -14,14 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from .views import cart_home, cart_add, cart_remove, checkout_home,success_view
-    # ,shipping_method
+from .views import request_paymet_view,print_invoice_view
 
 urlpatterns = [
-    path('', cart_home, name ='cart-home-url'),
-    path('add/<id>', cart_add, name ='cart-add-url'),
-    path('remove/<id>', cart_remove, name ='cart-remove-url'),
-    path('checkout/', checkout_home, name ='checkout-home-url'),
-    path('checkout/success/<id>', success_view, name ='success_view_url'),
+    path('request/<id>', request_paymet_view, name='payment_request_url'),
+    path('print-invoice/<id>', print_invoice_view, name='print_invoice_url'),
 
 ]

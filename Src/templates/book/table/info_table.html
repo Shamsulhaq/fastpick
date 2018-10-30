@@ -1,10 +1,15 @@
 <div class="col-sm-12 col-md-12 col-lg-12">
     <table class="table table-striped">
         <tbody>
-        {% if object.translator %}
+        {% if object.translator.all %}
             <tr>
                 <td style="background-color:#aaa;"><b>Translator:</b></td>
-                <td>{{ object.translator }}</td>
+                <td>
+                    {% for author in object.translator.all %}
+                        <a href="{% url 'author-details-url' slug=author.slug %}">
+                            {{ author }}{% if not forloop.last %},{% endif %}</a>
+                    {% endfor %}
+                </td>
             </tr>
         {% endif %}
         <tr>

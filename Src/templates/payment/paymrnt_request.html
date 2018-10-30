@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="text-center">
+    <h3>Payment Submit </h3>
+    <hr>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-3 mx-lg-auto">
+            <p>Order ID #: {{ payment.order_id }}</p>
+            <p>Create Date : {{ payment.timestamp|date }}</p>
+            <p>Amount : {{ payment.amount }}</p>
+            <p>Status : {{ payment.get_status_display }}</p>
+            {% if payment.txn_id %}
+                <p>Pay by: {{ payment.get_payment_by_display }}</p>
+                <p>Txn ID: {{ payment.txn_id }}</p>
+                <p>Phone: {{ payment.phone }}</p>
+            {% endif %}
+            <p class="bg-warning">If You Want To Pay by Cash leave it </p>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 mx-lg-auto">
+            {% if form %}
+            <form method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit">Conform</button>
+            </form>
+            {% else %}
+            <p class="bg-success">Please Wait For Confirmation</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row ">
+    <div class="col-lg-4 col-md-6 col-sm-6 mx-lg-auto">
+        <center><a href="{% url 'print_invoice_url' payment.order_id %}" class="btn-lg btn-info" target="_blank"> Print Invoice</a></center>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6 mx-lg-auto">
+            <center><a type="button" class="btn-success btn-lg" href="{% url 'book-list-view-url' %}">Continue Shopping</a></center>
+
+    </div>
+    </div>
+
+{% endblock %}

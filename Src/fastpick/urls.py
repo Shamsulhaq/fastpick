@@ -17,12 +17,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from .viwes import IndexView,SearchView
-
+from .viwes import IndexView, SearchView
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
-    path('admin/', admin.site.urls, name ='admin'),
+    path('admin/', admin.site.urls, name='admin'),
     path('', include('accounts.urls')),
     path('', include('control_panel.urls')),
     path('', include('dashboard.urls')),
@@ -36,8 +35,10 @@ urlpatterns = [
     path('category/', include('category.urls')),
     path('contact/', include('contact.urls')),
     path('publication/', include('publication.urls')),
+    path('payment/', include('payment.urls')),
     path('search/', SearchView.as_view(), name='search'),
-    path('tinymce/',include('tinymce.urls')),
+    path('tinymce/', include('tinymce.urls')),
+
 ]
 
 if settings.DEBUG:
