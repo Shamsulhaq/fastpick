@@ -30,12 +30,13 @@
             {% endif %}
         </div>
     </div>
+    <hr>
     <div class="row ">
     <div class="col-lg-4 col-md-6 col-sm-6 mx-lg-auto">
         <center><a href="{% url 'print_invoice_url' payment.order_id %}" class="btn-lg btn-info" target="_blank"> Print Invoice</a></center>
     </div>
     <div class="col-lg-4 col-md-6 col-sm-6 mx-lg-auto">
-            <center><a type="button" class="btn-success btn-lg" href="{% url 'book-list-view-url' %}">Continue Shopping</a></center>
+            <center><a type="button" class="btn-lg btn-info" href="{% url 'book-list-view-url' %}">Continue Shopping</a></center>
 
     </div>
     </div>

@@ -131,7 +131,7 @@ class BookList(models.Model):
     author = models.ManyToManyField(BookAuthor, related_name='author')
     category = models.ManyToManyField(Category)
     publication = models.ManyToManyField(Publication)
-    translator = models.ManyToManyField(BookAuthor, related_name='translator')
+    translator = models.ManyToManyField(BookAuthor, related_name='translator',blank=True)
     edition = models.CharField(max_length=20, help_text='Year eg. 1st Edition, 2018', blank=True, null=True)
     isbn = models.CharField(max_length=20, help_text='eg. 9847034301595', blank=True, null=True)
     country = models.CharField(max_length=20, choices=COUNTRY_CHOOSE, default='bangladesh')

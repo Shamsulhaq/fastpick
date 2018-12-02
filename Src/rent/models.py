@@ -5,6 +5,7 @@ from django.db.models.signals import m2m_changed, pre_save, post_save
 
 from billing.models import BillingProfile
 from fastpick.utils import unique_order_id_generator
+from payment.models import RequestPayment
 from product.models import BookList
 
 # Create your models here.
@@ -148,6 +149,7 @@ class Rent(models.Model):
         if self.check_done():
             self.status = 'submit'
             self.save()
+            RequestPayment.objects.create(order_id=self.order_id, amount=self.total, status='unpaid')
         return self.status
 
 
