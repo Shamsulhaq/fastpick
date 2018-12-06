@@ -146,21 +146,7 @@
 
     </div>
     {% if object.has_other_pages %}
-        <div class="pagination justify-content-center bg-info">
-    <span class="step-links">
-        {% if object.has_previous %}
-            <a href="?page={{ object.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ object.number }} of {{ object.paginator.num_pages }}.
-        </span>
-
-        {% if object.has_next %}
-            <a href="?page={{ object.next_page_number }}">next</a>
-        {% endif %}
-    </span>
-        </div>
+       {% include 'include_html/pagination.html' with page_obj=object %}
     {% endif %}
 
     <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"

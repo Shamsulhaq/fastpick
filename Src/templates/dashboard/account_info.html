@@ -1,22 +1,23 @@
 {% extends 'dashboard/base/base.html' %}
 {% block content %}
- <form action="" method="POST" enctype="multipart/form-data" >
-                {% csrf_token %}
 
-                {% for field in form %}
-                    {% for error in field.errors %}
-                      <p style="color: red">{{ error }}</p>
-                    {% endfor %}
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
 
-                  <p>
-                    {{ field.label_tag }}<br>
-                    {{ field }}
-                    {% if field.help_text %}
-                      <small style="color: grey">{{ field.help_text }}</small>
-                    {% endif %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+            {% endfor %}
 
-                              </p>
-                {% endfor %}
-                <button type="submit" class="btn btn-success">Update</button>
-              </form>
+            <p>
+                {{ field.label_tag }}<br>
+                {{ field }}
+                {% if field.help_text %}
+                    <small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+
+            </p>
+        {% endfor %}
+        <button type="submit" class="btn btn-success">Update</button>
+    </form>
 {% endblock %}

@@ -1,4 +1,3 @@
-from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.messages.views import messages
@@ -34,37 +33,41 @@ def guest_register_view(request):
 
 
 def login_page(request):
-    form = LoginForm(request.POST or None)
-    template_name = 'accounts/login.html'
-    context = {
-        "form": form
-    }
-    next_ = request.GET.get('next')
-    next_post = request.POST.get('next')
-    redirect_path = next_ or next_post or None
-    if form.is_valid():
-        eamil = form.cleaned_data.get("email")
-        password = form.cleaned_data.get("password")
-        user = authenticate(request, username=eamil, password=password)
-        if user is not None:
-            login(request, user)
-            try:
-                del request.session['guest_email_id']
-                print("del session guest email")
-            except:
-                pass
-                print("Error del session guest email")
+    if request.user.is_authenticated:
+        return redirect('dashboard_home')
+    else:
+        form = LoginForm(request.POST or None)
+        template_name = 'accounts/login.html'
+        context = {
+            "form": form
+        }
+        next_ = request.GET.get('next')
+        next_post = request.POST.get('next')
+        redirect_path = next_ or next_post or None
 
-            if is_safe_url(redirect_path, request.get_host()):
-                return redirect(redirect_path)
+        if form.is_valid():
+            eamil = form.cleaned_data.get("email")
+            password = form.cleaned_data.get("password")
+            user = authenticate(request, username=eamil, password=password)
+            if user is not None:
+                login(request, user)
+                try:
+                    del request.session['guest_email_id']
+                    print("del session guest email")
+                except:
+                    pass
+                    print("Error del session guest email")
+
+                if is_safe_url(redirect_path, request.get_host()):
+                    return redirect(redirect_path)
+                else:
+                    return redirect('dashboard_home')
+            # elif not user or not user.is_active:
+            #     raise ValidationError("Sorry, that login was invalid. Please try again.")
             else:
-                return redirect('dashboard_home')
-        # elif not user or not user.is_active:
-        #     raise ValidationError("Sorry, that login was invalid. Please try again.")
-        else:
-            if is_safe_url(redirect_path, request.get_host()):
-                return redirect(redirect_path)
-    return render(request, template_name, context)
+                if is_safe_url(redirect_path, request.get_host()):
+                    return redirect(redirect_path)
+        return render(request, template_name, context)
 
 
 def register_page(request):

@@ -143,7 +143,7 @@ def account_info(request):
         instance.save()
         messages.success(request, 'Billing Profile Update Successfully')
         return redirect('dashboard_home')
-    return render(request, 'dashboard/account_info.html', {'form': form})
+    return render(request, 'dashboard/account_info.html', {'form': form,'object':billing_obj})
 
 
 # Rent Section
