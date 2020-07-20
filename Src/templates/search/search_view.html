@@ -46,7 +46,13 @@
                             {% endif %}
 
                             <td>{{ obj.name }}</td>
-                            <td>{{ obj.author }}</td>
+                            {% for author in obj.author.all %}
+                                {% if author %}
+                                    <td>{{ author }}</td>
+                                {% else %}
+                                    <td>Not Found</td>
+                                {% endif %}
+                            {% endfor %}
                             <td>{{ obj.price }} ৳</td>
                             {% if obj.is_rent_available %}
                                 <td>{{ obj.rent_charge }} ৳</td>

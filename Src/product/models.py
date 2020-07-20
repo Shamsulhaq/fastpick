@@ -53,7 +53,7 @@ class BookQuerySet(models.query.QuerySet):
                 Q(category__keyword__icontains=keyword) |
                 Q(publication__name__icontains=keyword) |
                 Q(author__name__icontains=keyword) |
-                Q(translator__icontains=keyword) |
+                Q(translator__name__icontains=keyword) |
                 Q(author__bio__icontains=keyword) |
                 Q(tag__keyword__icontains=keyword))
 

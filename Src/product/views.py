@@ -5,6 +5,7 @@ from django.views.generic import ListView, DetailView
 from rent.models import RentCart
 from .models import BookList
 from carts.forms import CartAddProductForm
+from orders.models import OrderItem
 
 
 class BookListView(ListView):
